@@ -1,4 +1,4 @@
-package wazi.parser.jsontransformer.parser;
+package wazi.parser.jsontransformer.expression.parser;
 
 import org.junit.Test;
 
