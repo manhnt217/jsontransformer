@@ -1,4 +1,4 @@
-package wazi.parser.jsontransformer.expression;
+package wazi.parser.jsontransformer.expression.parser;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
@@ -9,11 +9,11 @@ import com.jayway.jsonpath.JsonPath;
  * @author wazi
  *
  */
-public class J {
+public class JsonPathParser {
 
 	private Object json;
 
-	public J(String jsonString) {
+	public JsonPathParser(String jsonString) {
 		json = Configuration.defaultConfiguration().jsonProvider().parse(jsonString);
 	}
 	
@@ -22,7 +22,7 @@ public class J {
 	 * @param jsonPath
 	 * @return
 	 */
-	public Object s(String jsonPath) {
+	public Object select(String jsonPath) {
 		return JsonPath.read(json, jsonPath);
 	}
 }

@@ -1,6 +1,7 @@
-package wazi.parser.jsontransformer.expression;
+package wazi.parser.jsontransformer.expression.function;
 
-public class LiteralValue {
+public class LiteralValueParser {
+	
 	public static Object parseLiteral(String literal) {
 
 		if (literal == null || literal.length() == 0) {

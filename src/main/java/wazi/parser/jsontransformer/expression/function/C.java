@@ -1,4 +1,4 @@
-package wazi.parser.jsontransformer.expression;
+package wazi.parser.jsontransformer.expression.function;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class C {
 		return null;
 	}
 
-	public static Object foreach(List avx) {
+	public static Object foreach(List<?> avx) {
 
 		return null;
 	}
