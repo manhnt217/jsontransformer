@@ -18,15 +18,24 @@ public class ExpressionParser {
 	 * Match example: "f.s ( 1 ,  3 , "1a2")"
 	 */
 	static final Pattern PATTERN_FUNCTION = Pattern.compile("\\w+\\.\\w+\\(.*\\)");
-	static final Pattern PATTERN_PARAM = Pattern.compile("\\w+\\.\\w+\\(.*\\)");
-
-
+	/**
+	 * String literal pattern: "((\\[tbnrf'"\\])|[^\\]|(\\u[a-fA-F0-9]{4}))*?" (include 2 double-quotes at start and end) <br>
+	 * String = "<valid charaters>" <br>
+	 * Valid charater 	= \t, \b, \n, \r, \f, \', \\ <br>
+	 * 					OR not \ character <br>
+	 * 					OR \ u following by 4 hexadecimal characters
+	 */
+	static final Pattern PATTERN_STRING_LITERAL = Pattern.compile("\"((\\\\[tbnrf'\"\\\\])|[^\\\\]|(\\\\u[a-fA-F0-9]{4}))*?\"");
+	static final Pattern PATTERN_NUMBER_LITERAL = Pattern.compile("");
+	
 	private JsonPathParser jsonPath;
 
 	public ExpressionParser(String originalJson) {
 
 		jsonPath = new JsonPathParser(originalJson);
 	}
+	
+	
 
 	/**
 	 * Evaluate transforming expression
