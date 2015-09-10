@@ -32,7 +32,7 @@ public class ExpressionParserTest {
 				"  \"temp\": 12\n" + 
 				"}";
 		
-		String expression = "D.add($.temp, 15)";
+		String expression = "D.add(J.s($.temp), 15, J.s($.temp), 443)";
 		
 		ExpressionParser expressionParser = new ExpressionParser(json);
 		
