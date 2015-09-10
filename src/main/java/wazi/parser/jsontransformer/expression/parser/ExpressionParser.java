@@ -20,6 +20,7 @@ public class ExpressionParser {
 	static final Pattern PATTERN_FUNCTION = Pattern.compile("\\w+\\.\\w+\\(.*\\)");
 	static final Pattern PATTERN_PARAM = Pattern.compile("\\w+\\.\\w+\\(.*\\)");
 
+
 	private JsonPathParser jsonPath;
 
 	public ExpressionParser(String originalJson) {
