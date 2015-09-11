@@ -19,7 +19,7 @@ public class ExpressionParserTest {
 
 		String expression = "$.temp";
 
-		ExpressionParser expressionParser = new ExpressionParser(json);
+		ExpressionParser expressionParser = new ExpressionParser();
 
 		assertEquals(12, expressionParser.eval(expression));
 	}
@@ -33,7 +33,7 @@ public class ExpressionParserTest {
 
 		String expression = "D.add(J.s($.temp), 15, J.s($.temp), 443)";
 
-		ExpressionParser expressionParser = new ExpressionParser(json);
+		ExpressionParser expressionParser = new ExpressionParser();
 
 		assertEquals(27, expressionParser.eval(expression));
 	}
@@ -47,7 +47,7 @@ public class ExpressionParserTest {
 
 		String function = "D.add($.temp, 15)";
 
-		ExpressionParser expressionParser = new ExpressionParser(json);
+		ExpressionParser expressionParser = new ExpressionParser();
 
 		Matcher matcher = ExpressionParser.PATTERN_FUNCTION.matcher(function);
 		ExpressionParser.FunctionCall functionCall = expressionParser.extractFunctionCall(matcher);

@@ -60,4 +60,12 @@ public class JTEX {
 
 		return nextPosition;
 	}
+	
+	/**
+	 * @return based 1 next position number
+	 */
+	public int getNextPosition() {
+		
+		return nextPosition + 1;
+	}
 }
