@@ -11,5 +11,7 @@ public class HelloWorld {
 		System.out.println(abc.length());
 		System.out.println(abc.charAt(0) == '\u3a9f');
 		System.out.println(abc.getBytes(Charset.forName("UTF8")).length);
+		
+		System.out.println(12%5);
 	}
 }

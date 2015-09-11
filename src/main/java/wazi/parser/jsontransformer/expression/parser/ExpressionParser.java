@@ -5,9 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import wazi.parser.jsontransformer.expression.function.LiteralValueParser;
+import wazi.parser.jsontransformer.expression.parser.jtex.EndOfJtexException;
+import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
 
 /**
  * Expression evaluation class
+ * 
  * @author wazi
  *
  */
@@ -19,23 +22,40 @@ public class ExpressionParser {
 	 */
 	static final Pattern PATTERN_FUNCTION = Pattern.compile("\\w+\\.\\w+\\(.*\\)");
 	/**
-	 * String literal pattern: "((\\[tbnrf'"\\])|[^\\]|(\\u[a-fA-F0-9]{4}))*?" (include 2 double-quotes at start and end) <br>
+	 * String literal pattern: "((\\[tbnrf'"\\])|[^\\]|(\\u[a-fA-F0-9]{4}))*?"
+	 * (include 2 double-quotes at start and end) <br>
 	 * String = "<valid charaters>" <br>
-	 * Valid charater 	= \t, \b, \n, \r, \f, \', \\ <br>
-	 * 					OR not \ character <br>
-	 * 					OR \ u following by 4 hexadecimal characters
+	 * Valid charater = \t, \b, \n, \r, \f, \', \\ <br>
+	 * OR not \ character <br>
+	 * OR \ u following by 4 hexadecimal characters
 	 */
-	static final Pattern PATTERN_STRING_LITERAL = Pattern.compile("\"((\\\\[tbnrf'\"\\\\])|[^\\\\]|(\\\\u[a-fA-F0-9]{4}))*?\"");
+	static final Pattern PATTERN_STRING_LITERAL = Pattern
+			.compile("\"((\\\\[tbnrf'\"\\\\])|[^\\\\]|(\\\\u[a-fA-F0-9]{4}))*?\"");
 	static final Pattern PATTERN_NUMBER_LITERAL = Pattern.compile("");
-	
+
 	private JsonPathParser jsonPath;
 
 	public ExpressionParser(String originalJson) {
 
 		jsonPath = new JsonPathParser(originalJson);
 	}
-	
-	
+
+	public Object readNumber(JTEX jtex) {
+
+		try {
+			boolean isNegative = false;
+
+			if ('+' == jtex.retrieveNext()) {
+				jtex.next();
+			} else if ('-' == jtex.retrieveNext()) {
+				isNegative = true;
+			}
+
+		} catch (EndOfJtexException e) {
+			throw new ParserException(jtex.getPosition(), "Exception while reading number", e);
+		}
+		return null;
+	}
 
 	/**
 	 * Evaluate transforming expression

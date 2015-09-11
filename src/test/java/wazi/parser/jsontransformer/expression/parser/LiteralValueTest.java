@@ -1,13 +1,9 @@
-package wazi.parser.jsontransformer.expression;
+package wazi.parser.jsontransformer.expression.parser;
 
 import org.junit.Test;
 
 import wazi.parser.jsontransformer.expression.function.LiteralValueParser;
-<<<<<<< HEAD
 
-=======
-
->>>>>>> master
 import static org.junit.Assert.*;
 
 /**
