@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import wazi.parser.jsontransformer.expression.function.LiteralValueParser;
-import wazi.parser.jsontransformer.expression.parser.jtex.EndOfJtexException;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
-
 /**
  * Expression evaluation class
  * 
@@ -40,23 +36,6 @@ public class ExpressionParser {
 		jsonPath = new JsonPathParser(originalJson);
 	}
 
-	public Object readNumber(JTEX jtex) {
-
-		try {
-			boolean isNegative = false;
-
-			if ('+' == jtex.retrieveNext()) {
-				jtex.next();
-			} else if ('-' == jtex.retrieveNext()) {
-				isNegative = true;
-			}
-
-		} catch (EndOfJtexException e) {
-			throw new ParserException(jtex.getPosition(), "Exception while reading number", e);
-		}
-		return null;
-	}
-
 	/**
 	 * Evaluate transforming expression
 	 * 
@@ -80,7 +59,7 @@ public class ExpressionParser {
 			return evalFunction(jtex);
 
 		} else {
-			return LiteralValueParser.parseLiteral(jtex);
+			return null;
 		}
 	}
 
