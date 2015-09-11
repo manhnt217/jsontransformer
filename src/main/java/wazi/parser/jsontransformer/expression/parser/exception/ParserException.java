@@ -1,13 +1,13 @@
-package wazi.parser.jsontransformer.expression.parser;
+package wazi.parser.jsontransformer.expression.parser.exception;
 
 public class ParserException extends RuntimeException {
 
 	private static final long serialVersionUID = -5787743504440870274L;
 
-	private int position;
+	protected int position;
 
 	public ParserException(int position, String message, Throwable cause) {
-		super(message + ". At position: " + position + ".", cause);
+		super(message + " at position " + position + ".", cause);
 		this.position = position;
 	}
 
@@ -16,7 +16,6 @@ public class ParserException extends RuntimeException {
 	}
 
 	public int getPosition() {
-
 		return position;
 	}
 }
