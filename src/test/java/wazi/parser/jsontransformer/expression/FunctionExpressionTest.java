@@ -15,7 +15,7 @@ public class FunctionExpressionTest {
 	public void testSimple() throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 		assertEquals(0.5, ReflectionUtil.invoke("wazi.parser.jsontransformer.expression.function.D", "div", new Integer(4), new Integer(8)));
-		assertEquals(12, ReflectionUtil.invoke("wazi.parser.jsontransformer.expression.function.I", "add", 4, 8));
+		assertEquals("abc48x", ReflectionUtil.invoke("wazi.parser.jsontransformer.expression.function.I", "dummy", "abc", 4, 8, "x"));
 		assertEquals(2, ReflectionUtil.invoke("wazi.parser.jsontransformer.expression.function.I", "div", 9, 4));
 		assertEquals("Hello", ReflectionUtil.invoke("wazi.parser.jsontransformer.expression.function.S", "concat", "Hell", "o"));
 		assertEquals("null8", ReflectionUtil.invoke("wazi.parser.jsontransformer.expression.function.S", "concat", null, 8));

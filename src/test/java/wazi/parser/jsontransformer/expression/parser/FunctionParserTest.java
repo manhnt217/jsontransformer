@@ -13,12 +13,13 @@ import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
 public class FunctionParserTest {
 	
 	@Test
-	public void testReadFunction() {
+	public void testReadFunction() throws Exception {
 		
 		ExpressionParser exParser = new ExpressionParser();
 		FunctionParser parser = new FunctionParser(exParser);
-		FunctionExpression funcEx = parser.readFunction(new JTEX("I.add ( 23, \"ad24\",  I.add(1, 2)  )"));
-		assertFunction(funcEx, "I", "add", 1);
+		FunctionExpression funcEx = parser.readFunction(new JTEX("I.add ( 23,  I.add(1, 2)  )"));
+		assertFunction(funcEx, exParser.packagePrefixString + "I", "add", 1);
+		assertEquals(26, funcEx.val());
 	}
 
 	@Test(expected = UnexpectedCharacterException.class)

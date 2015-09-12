@@ -19,7 +19,7 @@ public class FunctionParser {
 
 	public FunctionExpression readFunction(JTEX jtex) {
 
-		StringBuilder className = new StringBuilder();
+		StringBuilder className = new StringBuilder(exParser.packagePrefixString);
 		StringBuilder methodName = new StringBuilder();
 
 		Character firstChar = jtex.next();
