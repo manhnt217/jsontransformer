@@ -5,31 +5,25 @@ package wazi.parser.jsontransformer.expression;
  * @author wazi
  *
  */
-public class LiteralExpression implements Expression {
+public class BaseExpression implements Expression {
 	
 	protected Object val;
 	private int position;
 	
 	
-	public LiteralExpression(Object val, int position) {
+	public BaseExpression(Object val, int position) {
 		this.val = val;
 		this.position = position;
 	}
 
 	@Override
-	public boolean isEvaluatable() {
-
-		return true;
-	}
-
-	@Override
-	public Object val() {
+	public Object val() throws Exception {
 
 		return this.val;
 	}
 
 	@Override
-	public int getPostion() {
+	public int getPosition() {
 	
 		return this.position;
 	}

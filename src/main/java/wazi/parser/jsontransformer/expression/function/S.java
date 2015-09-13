@@ -5,8 +5,14 @@ package wazi.parser.jsontransformer.expression.function;
  */
 public class S {
 
-    public static String concat(Object str1, Object str2) {
-        return String.valueOf(str1) + String.valueOf(str2);
+    public static String concat(Object... args) {
+    	
+    	StringBuilder builder = new StringBuilder();
+    	for (Object object : args) {
+    		if(object == null) continue;
+    		builder.append(object.toString());
+		}
+    	return builder.toString();
     }
 
     public static String upper(String str) {
