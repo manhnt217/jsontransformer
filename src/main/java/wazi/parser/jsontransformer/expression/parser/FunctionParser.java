@@ -53,65 +53,54 @@ public class FunctionParser {
 			jtex.next();
 		}
 
-		if (jtex.next() != '(') throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Missing parentheses after method name.");
-
 		funcEx.setArguments(readArgumentList(jtex));
-
-		if (jtex.retrieveNext() != ')')
-			throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Missing parentheses after argument list.");
 
 		return funcEx;
 	}
 
 	private List<Expression> readArgumentList(JTEX jtex) {
 
+		if (jtex.next() != '(') throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Missing parentheses after method name.");
+
 		List<Expression> args = new LinkedList<>();
 		Expression arg = null;
-		do {
-			arg = readArgument(jtex);
-			if (arg == null && args.size() == 0) {//empty argument list
-				return null;
-			}
-			args.add(arg);
-			if (jtex.retrieveNext() == ')') {
-				break;
-			}
-			
-		} while (arg != null);
 
-		if (arg == null) {
-			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(),
-					"Exception while reading argument. Expect an expression.");
+		//read arguments
+		while (true) {
+			//skip spaces
+			while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
+				jtex.next();
+			}
+
+			if (jtex.retrieveNext() == ')') {//only valid in case of empty argument list
+				if (args.size() == 0) return null; //empty argument list
+				else {
+					throw new UnexpectedCharacterException(jtex.getPosition(), jtex.retrieveNext(), "Exception while reading argument");
+				}
+			} else {
+
+				arg = exParser.readExpression(jtex);
+				args.add(arg);
+
+				//skip spaces
+				while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
+					jtex.next();
+				}
+
+				if (jtex.retrieveNext() == ',') {//normal case, finish reading an argument
+					jtex.next();//move to next argument
+					continue;
+				} else if (jtex.retrieveNext() == ')') {//finish reading all arguments
+					//read ')' and break to close argument list and return
+					jtex.next();
+					break;
+				} else {
+					throw new UnexpectedCharacterException(jtex.getPosition(), jtex.retrieveNext(), "Exception while reading argument");
+				}
+			}
 		}
+
 		return args;
-	}
-
-	private Expression readArgument(JTEX jtex) {
-
-		//skip spaces
-		while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
-			jtex.next();
-		}
-
-		if (jtex.retrieveNext() == ')') {//only valid in case of empty argument list
-			return null;
-		}
-
-		Expression expression = exParser.readExpression(jtex);
-
-		//skip spaces
-		while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
-			jtex.next();
-		}
-
-		if (jtex.retrieveNext() == ',') {//finish reading an argument
-			jtex.next();//move to next argument
-			return expression;
-		} else if (jtex.retrieveNext() == ')') {//finish reading all arguments
-			return expression;
-		} else {
-			throw new UnexpectedCharacterException(jtex.getPosition(), jtex.retrieveNext(), "Exception while reading argument");
-		}
 	}
 
 	private boolean isValidJavaNameCharacter(char c) {

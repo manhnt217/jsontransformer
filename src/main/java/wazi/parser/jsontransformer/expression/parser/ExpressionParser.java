@@ -1,9 +1,5 @@
 package wazi.parser.jsontransformer.expression.parser;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import wazi.parser.jsontransformer.expression.BaseExpression;
 import wazi.parser.jsontransformer.expression.Expression;
 import wazi.parser.jsontransformer.expression.parser.exception.UnexpectedCharacterException;

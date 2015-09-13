@@ -41,9 +41,9 @@ public class FunctionExpression extends BaseExpression {
 			for (Expression expression : arguments) {
 				args.add(expression.val());
 			}
-			return ReflectionUtil.invoke(className, methodName, args.toArray());
+			return ReflectionUtil.invokeStatic(className, methodName, args.toArray());
 		} else {
-			return ReflectionUtil.invoke(className, methodName, (Object[])null);
+			return ReflectionUtil.invokeStatic(className, methodName, (Object[])null);
 		}
 
 	}
@@ -80,7 +80,7 @@ public class FunctionExpression extends BaseExpression {
 
 	public static class ReflectionUtil {
 
-		public static Object invoke(String className, String methodName, Object... args) throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException,
+		public static Object invokeStatic(String className, String methodName, Object... args) throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException,
 				InvocationTargetException {
 
 			Class<?> clazz = Class.forName(className);

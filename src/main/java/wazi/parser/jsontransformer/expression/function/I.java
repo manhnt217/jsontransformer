@@ -29,4 +29,20 @@ public class I {
 
 		return a / b;
 	}
+	
+	public static Boolean gt(Integer a, Integer b) {
+		return a > b;
+	}
+	
+	public static Boolean lt(Integer a, Integer b) {
+		return a < b;
+	}
+	
+	public static Boolean gte(Integer a, Integer b) {
+		return a >= b;
+	}
+	
+	public static Boolean lte(Integer a, Integer b) {
+		return a <= b;
+	}
 }
