@@ -1,6 +1,5 @@
 package wazi.parser.jsontransformer.expression;
 
-import net.minidev.json.JSONObject;
 import wazi.parser.jsontransformer.expression.function.J;
 
 public class JsonPathExpression extends FunctionExpression {
@@ -9,7 +8,7 @@ public class JsonPathExpression extends FunctionExpression {
 		super(J.class.getName(), "p", position);
 	}
 
-	public void setInputJson(JSONObject jsonObject) {
+	public void setInputJson(Object jsonObject) {
 
 		// we no need to care about this argument's position because it comes from outside jtex expression
 		addArgument(new BaseExpression(jsonObject, -1));

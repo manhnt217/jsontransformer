@@ -1,13 +1,17 @@
 package wazi.parser.jsontransformer.expression.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 
+import com.jayway.jsonpath.Configuration;
+
 import wazi.parser.jsontransformer.expression.FunctionExpression;
 import wazi.parser.jsontransformer.expression.FunctionExpression.ReflectionUtil;
+import wazi.parser.jsontransformer.expression.JsonPathExpression;
 import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.EndOfJtexException;
 import wazi.parser.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
@@ -56,6 +60,20 @@ public class FunctionParserTest {
 		FunctionExpression funcEx2 = funcParser
 				.readFunction(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.gt(10, 5), \"10 > 5\"), C.ift(true, \"Default case\"))"));//notice I.gt(10, 5)
 		assertEquals("10 > 5", funcEx2.val());
+	}
+
+	@Test
+	public void testEvaluateJTEXFunction() throws Exception {
+
+		String inputJSONString = "{\"status\":\"OK\"}";
+
+		ExpressionParser exParser = new ExpressionParser();
+		exParser.setInputJSON(Configuration.defaultConfiguration().jsonProvider().parse(inputJSONString));
+
+		FunctionParser funcParser = new FunctionParser(exParser);
+		FunctionExpression funcEx = funcParser.readFunction(new JTEX("J.p(\"$.status\")"));
+		assertTrue(funcEx instanceof JsonPathExpression);
+		assertEquals("OK", funcEx.val());
 	}
 
 	@Test(expected = UnexpectedCharacterException.class)

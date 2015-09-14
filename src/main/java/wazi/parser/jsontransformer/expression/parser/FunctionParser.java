@@ -42,8 +42,9 @@ public class FunctionParser {
 
 		FunctionExpression funcEx;
 
-		if ("J".equals(className.toString()) && "p".equals(methodName.toString())) {
+		if ((exParser.packagePrefixString + "J").equals(className.toString()) && "p".equals(methodName.toString())) {
 			funcEx = new JsonPathExpression(position);
+			((JsonPathExpression)funcEx).setInputJson(exParser.getInputJSON());
 		} else {
 			funcEx = new FunctionExpression(className.toString(), methodName.toString(), position);
 		}
@@ -53,16 +54,15 @@ public class FunctionParser {
 			jtex.next();
 		}
 
-		funcEx.setArguments(readArgumentList(jtex));
+		readArgumentList(jtex, funcEx);
 
 		return funcEx;
 	}
 
-	private List<Expression> readArgumentList(JTEX jtex) {
+	private void readArgumentList(JTEX jtex, FunctionExpression funcEx) {
 
 		if (jtex.next() != '(') throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Missing parentheses after method name.");
 
-		List<Expression> args = new LinkedList<>();
 		Expression arg = null;
 
 		//read arguments
@@ -73,14 +73,14 @@ public class FunctionParser {
 			}
 
 			if (jtex.retrieveNext() == ')') {//only valid in case of empty argument list
-				if (args.size() == 0) return null; //empty argument list
+				if (funcEx.getArguments().size() == 0) return; //empty argument list
 				else {
 					throw new UnexpectedCharacterException(jtex.getPosition(), jtex.retrieveNext(), "Exception while reading argument");
 				}
 			} else {
 
 				arg = exParser.readExpression(jtex);
-				args.add(arg);
+				funcEx.addArgument(arg);
 
 				//skip spaces
 				while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
@@ -99,8 +99,6 @@ public class FunctionParser {
 				}
 			}
 		}
-
-		return args;
 	}
 
 	private boolean isValidJavaNameCharacter(char c) {
