@@ -21,3 +21,4 @@ then your JTEX (JSON transformation expression) will look like (`C.ite(D.gt(J.p(
     "feeling": "{[C.ite(D.gt(J.p(\"$.temperature\"), 50), \"hot\", \"cold\")]}"
 }
 ```
+_The next version will focus on simplify JTEX syntax (I know that currently it looks a bit messy :D)_
