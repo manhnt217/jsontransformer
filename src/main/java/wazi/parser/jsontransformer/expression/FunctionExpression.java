@@ -5,8 +5,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Express the function call in jtex
@@ -43,7 +45,7 @@ public class FunctionExpression extends BaseExpression {
 			}
 			return ReflectionUtil.invokeStatic(className, methodName, args.toArray());
 		} else {
-			return ReflectionUtil.invokeStatic(className, methodName, (Object[])null);
+			return ReflectionUtil.invokeStatic(className, methodName, (Object[]) null);
 		}
 
 	}
@@ -80,8 +82,8 @@ public class FunctionExpression extends BaseExpression {
 
 	public static class ReflectionUtil {
 
-		public static Object invokeStatic(String className, String methodName, Object... args) throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException,
-				InvocationTargetException {
+		public static Object invokeStatic(String className, String methodName, Object... args)
+				throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 			Class<?> clazz = Class.forName(className);
 
@@ -96,9 +98,9 @@ public class FunctionExpression extends BaseExpression {
 					} else {
 
 						Parameter[] parameters = method.getParameters();
-						LinkedList<Object> argList = new LinkedList<Object>();
-						argList.addAll(Arrays.asList(args));
-						Object[] applyingArgs = matchParameters(parameters, argList);
+						//						LinkedList<Object> argList = new LinkedList<Object>();
+						//						argList.addAll(Arrays.asList(args));
+						Object[] applyingArgs = matchParameters(parameters, args);
 						if (applyingArgs == null) {
 							continue;
 						} else {
@@ -111,15 +113,15 @@ public class FunctionExpression extends BaseExpression {
 			throw new RuntimeException("Method not found: " + className + "." + methodName);
 		}
 
-		private static Object[] matchParameters(Parameter[] parameters, LinkedList<Object> args) {
+		private static Object[] matchParameters(Parameter[] parameters, Object[] args) {
 
-			if (parameters.length > args.size()) { // not enough argument
+			if (parameters.length > args.length) { // not enough argument
 
 			}
 			List<Object> applyingArgsList = new LinkedList<>();
 
 			int i = 0;
-			while (!args.isEmpty()) {
+			while (i < args.length) {
 
 				if (i > parameters.length - 1) {
 					return null;// not match
@@ -127,32 +129,91 @@ public class FunctionExpression extends BaseExpression {
 
 				if (!parameters[i].isVarArgs()) {
 					//if(!parameters[i].getType().isAssignableFrom(args.peek().getClass())) return null;
-					applyingArgsList.add(args.pop());
+					applyingArgsList.add(args[i]);
+					i++;
 				} else {
-					
 					Class<?> varArgClazz = parameters[i].getType().getComponentType();
-					
-					Object[] varArgArrayObject = (Object[]) Array.newInstance(varArgClazz, args.size());
-					System.arraycopy(args.toArray(), 0, varArgArrayObject, 0, varArgArrayObject.length);
-					args.clear();
-					applyingArgsList.add(varArgArrayObject);
+
+					if (varArgClazz.isPrimitive()) {
+						//						Class<?> arrayType = primitiveArrayTypeMap.get(varArgClazz);
+						//						Object varArgArrayObject = primitiveArrayTypeMap.get(varArgClazz).cast(Array.newInstance(varArgClazz, args.size()));
+						//						args.clear();
+
+						//						Object varArgArrayObject = Array.newInstance(varArgClazz, args.length);
+						//						
+						//						System.arraycopy(args, i, varArgArrayObject, 0, args.length - i);
+						applyingArgsList.add(copyPrimitiveArray(args, i, args.length - i, varArgClazz));
+					} else {
+						Object[] varArgArrayObject = (Object[]) Array.newInstance(varArgClazz, args.length - i);
+						System.arraycopy(args, i, varArgArrayObject, 0, args.length - i);
+						applyingArgsList.add(varArgArrayObject);
+					}
+					break;//vararg is always the last argument
 				}
-				i++;
 			}
 
 			return applyingArgsList.toArray();
+		}
 
-			// for (int i = 0; i < args.length; i++) {
+		private static Object copyPrimitiveArray(Object[] args, int from, int length, Class<?> primitiveClazz) {
 
-			// if(!parameterTypes[i].isAssignableFrom(args[i].getClass()))
-			// return false;
-
-			// try {
-			// parameterTypes[i].cast(args[i]);
-			// } catch (ClassCastException e) {
-			// return false;
-			// }
-			// }
+			if (int.class.equals(primitiveClazz)) {
+				int[] rs = new int[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (int) args[from + k];
+				}
+				return rs;
+			}
+			if (double.class.equals(primitiveClazz)) {
+				double[] rs = new double[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (double) args[from + k];
+				}
+				return rs;
+			}
+			if (boolean.class.equals(primitiveClazz)) {
+				boolean[] rs = new boolean[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (boolean) args[from + k];
+				}
+				return rs;
+			}
+			if (byte.class.equals(primitiveClazz)) {
+				byte[] rs = new byte[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (byte) args[from + k];
+				}
+				return rs;
+			}
+			if (short.class.equals(primitiveClazz)) {
+				short[] rs = new short[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (short) args[from + k];
+				}
+				return rs;
+			}
+			if (char.class.equals(primitiveClazz)) {
+				char[] rs = new char[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (char) args[from + k];
+				}
+				return rs;
+			}
+			if (long.class.equals(primitiveClazz)) {
+				long[] rs = new long[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (long) args[from + k];
+				}
+				return rs;
+			}
+			if (float.class.equals(primitiveClazz)) {
+				float[] rs = new float[length];
+				for (int k = 0; k < length; k++) {
+					rs[k] = (float) args[from + k];
+				}
+				return rs;
+			}
+			throw new RuntimeException("Primitive type not found");
 		}
 	}
 

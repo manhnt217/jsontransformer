@@ -6,7 +6,7 @@ package wazi.parser.jsontransformer.expression.function;
  */
 public class I {
 
-	public static Integer add(Integer... args) {
+	public static int add(int... args) {
 
 		int sum = 0;
 		for (int i : args) {
@@ -25,24 +25,24 @@ public class I {
 		return builder.toString();
 	}
 	
-	public static Integer div(Integer a, Integer b) {
+	public static int div(int a, int b) {
 
 		return a / b;
 	}
 	
-	public static Boolean gt(Integer a, Integer b) {
+	public static Boolean gt(int a, int b) {
 		return a > b;
 	}
 	
-	public static Boolean lt(Integer a, Integer b) {
+	public static Boolean lt(int a, int b) {
 		return a < b;
 	}
 	
-	public static Boolean gte(Integer a, Integer b) {
+	public static Boolean gte(int a, int b) {
 		return a >= b;
 	}
 	
-	public static Boolean lte(Integer a, Integer b) {
+	public static Boolean lte(int a, int b) {
 		return a <= b;
 	}
 }

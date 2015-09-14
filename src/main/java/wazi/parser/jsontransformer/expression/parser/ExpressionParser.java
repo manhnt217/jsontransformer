@@ -1,6 +1,5 @@
 package wazi.parser.jsontransformer.expression.parser;
 
-import net.minidev.json.JSONObject;
 import wazi.parser.jsontransformer.expression.BaseExpression;
 import wazi.parser.jsontransformer.expression.Expression;
 import wazi.parser.jsontransformer.expression.jtex.JTEX;
