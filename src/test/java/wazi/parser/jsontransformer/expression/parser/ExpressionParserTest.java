@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import org.junit.Test;
 
 import wazi.parser.jsontransformer.expression.Expression;
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.ExpressionParser;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
 
 public class ExpressionParserTest {
 	@Test

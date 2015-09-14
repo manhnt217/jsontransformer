@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.EndOfJtexException;
 
 public class JTEXTest {

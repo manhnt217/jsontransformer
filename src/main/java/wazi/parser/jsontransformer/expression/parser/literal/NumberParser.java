@@ -1,8 +1,8 @@
-package wazi.parser.jsontransformer.expression.parser;
+package wazi.parser.jsontransformer.expression.parser.literal;
 
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.EndOfJtexException;
 import wazi.parser.jsontransformer.expression.parser.exception.ParserException;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
 
 public class NumberParser {
 

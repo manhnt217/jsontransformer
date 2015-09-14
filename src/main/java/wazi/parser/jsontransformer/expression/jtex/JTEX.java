@@ -1,4 +1,4 @@
-package wazi.parser.jsontransformer.expression.parser.jtex;
+package wazi.parser.jsontransformer.expression.jtex;
 
 import wazi.parser.jsontransformer.expression.parser.exception.EndOfJtexException;
 
