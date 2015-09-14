@@ -8,9 +8,9 @@ import org.junit.Test;
 
 import wazi.parser.jsontransformer.expression.FunctionExpression;
 import wazi.parser.jsontransformer.expression.FunctionExpression.ReflectionUtil;
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.EndOfJtexException;
 import wazi.parser.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
 
 public class FunctionParserTest {
 

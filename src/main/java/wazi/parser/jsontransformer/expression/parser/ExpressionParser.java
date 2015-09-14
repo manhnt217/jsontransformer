@@ -2,8 +2,12 @@ package wazi.parser.jsontransformer.expression.parser;
 
 import wazi.parser.jsontransformer.expression.BaseExpression;
 import wazi.parser.jsontransformer.expression.Expression;
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
+import wazi.parser.jsontransformer.expression.parser.literal.BooleanParser;
+import wazi.parser.jsontransformer.expression.parser.literal.NullParser;
+import wazi.parser.jsontransformer.expression.parser.literal.NumberParser;
+import wazi.parser.jsontransformer.expression.parser.literal.StringParser;
 
 /**
  * Expression evaluation class

@@ -6,8 +6,8 @@ import java.util.List;
 import wazi.parser.jsontransformer.expression.Expression;
 import wazi.parser.jsontransformer.expression.FunctionExpression;
 import wazi.parser.jsontransformer.expression.JsonPathExpression;
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
 
 public class FunctionParser {
 

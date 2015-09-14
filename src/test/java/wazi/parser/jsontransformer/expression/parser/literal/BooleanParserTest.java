@@ -1,12 +1,13 @@
-package wazi.parser.jsontransformer.expression.parser;
+package wazi.parser.jsontransformer.expression.parser.literal;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import wazi.parser.jsontransformer.expression.jtex.JTEX;
 import wazi.parser.jsontransformer.expression.parser.exception.EndOfJtexException;
 import wazi.parser.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
-import wazi.parser.jsontransformer.expression.parser.jtex.JTEX;
+import wazi.parser.jsontransformer.expression.parser.literal.BooleanParser;
 
 public class BooleanParserTest {
 	@Test
