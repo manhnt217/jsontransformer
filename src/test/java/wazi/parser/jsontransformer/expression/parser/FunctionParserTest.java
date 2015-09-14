@@ -80,7 +80,7 @@ public class FunctionParserTest {
 	public void testReflectionSimple()
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
 
-		assertEquals(0.5, ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.D", "div", new Integer(4), new Integer(8)));
+		assertEquals(0.5, ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.D", "div", 4.0, 8.0));
 		assertEquals(2, ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.I", "div", 9, 4));
 		assertEquals("Hello", ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.S", "concat", "Hell", "o"));
 		assertEquals("8", ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.S", "concat", null, 8));

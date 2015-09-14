@@ -13,6 +13,11 @@ public class C {
 		}
 		return null;
 	}
+	
+	public static Object ite(Boolean ifCond, Object thenEx, Object elseEx) {
+		if(ifCond) return thenEx;
+		else return elseEx;
+	}
 
 	public static Object foreach(List<?> avx) {
 

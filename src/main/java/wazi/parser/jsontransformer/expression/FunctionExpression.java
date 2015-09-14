@@ -126,6 +126,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 
 				if (!parameters[i].isVarArgs()) {
+					//if(!parameters[i].getType().isAssignableFrom(args.peek().getClass())) return null;
 					applyingArgsList.add(args.pop());
 				} else {
 					
