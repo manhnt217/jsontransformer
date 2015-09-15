@@ -11,3 +11,4 @@ bin
 project
 .idea
 *.iml
+.springBeans
