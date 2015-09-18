@@ -12,3 +12,5 @@ project
 .idea
 *.iml
 .springBeans
+server.js
+node_modules

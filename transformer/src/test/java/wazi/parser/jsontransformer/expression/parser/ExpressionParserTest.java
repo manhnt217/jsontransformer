@@ -2,16 +2,12 @@ package wazi.parser.jsontransformer.expression.parser;
 
 import static org.junit.Assert.*;
 
-import java.util.regex.Matcher;
-
 import org.junit.Test;
 
 import net.minidev.json.JSONObject;
-import net.minidev.json.parser.ParseException;
 import wazi.parser.jsontransformer.JSONTransformer;
 import wazi.parser.jsontransformer.expression.Expression;
 import wazi.parser.jsontransformer.expression.jtex.JTEX;
-import wazi.parser.jsontransformer.expression.parser.ExpressionParser;
 
 public class ExpressionParserTest {
 

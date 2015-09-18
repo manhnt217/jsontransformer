@@ -1,8 +1,5 @@
 package wazi.parser.jsontransformer.expression.parser;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import wazi.parser.jsontransformer.expression.Expression;
 import wazi.parser.jsontransformer.expression.FunctionExpression;
 import wazi.parser.jsontransformer.expression.JsonPathExpression;
