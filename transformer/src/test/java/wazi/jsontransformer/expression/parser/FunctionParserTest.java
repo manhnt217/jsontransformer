@@ -108,19 +108,19 @@ public class FunctionParserTest {
 	public void testReflectionSimple()
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
 
-		assertEquals(0.5, ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.D", "div", 4.0, 8.0));
-		assertEquals(2, ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.I", "div", 9, 4));
-		assertEquals("Hello", ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.S", "concat", "Hell", "o"));
-		assertEquals("8", ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.S", "concat", null, 8));
-		assertEquals("true", ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.S", "concat", true, null));
+		assertEquals(0.5, ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.D", "div", 4.0, 8.0));
+		assertEquals(2, ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.I", "div", 9, 4));
+		assertEquals("Hello", ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.S", "concat", "Hell", "o"));
+		assertEquals("8", ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.S", "concat", null, 8));
+		assertEquals("true", ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.S", "concat", true, null));
 	}
 
 	@Test
 	public void testReflectionVarargMethod()
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
-		assertEquals(10, ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.I", "add", 1, 2, 3, 4));
-		assertEquals("xyz10.0", ReflectionUtil.invokeStatic("wazi.parser.jsontransformer.expression.function.I", "dummy", "xyz", 1.0, 2.0, 3.0, 4.0));
+		assertEquals(10, ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.I", "add", 1, 2, 3, 4));
+		assertEquals("xyz10.0", ReflectionUtil.invokeStatic("wazi.jsontransformer.expression.function.I", "dummy", "xyz", 1.0, 2.0, 3.0, 4.0));
 	}
 
 	private void assertEqualsFunction(FunctionExpression funcEx, String className, String methodName, int position) {

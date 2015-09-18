@@ -12,5 +12,10 @@ project
 .idea
 *.iml
 .springBeans
+<<<<<<< HEAD
 node_modules
 server.js
+=======
+server.js
+node_modules
+>>>>>>> e81fedd5642a806064ab8c47cfeed4b8905a1a00

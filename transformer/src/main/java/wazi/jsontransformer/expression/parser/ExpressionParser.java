@@ -1,6 +1,5 @@
 package wazi.jsontransformer.expression.parser;
 
-import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.Expression;
 import wazi.jsontransformer.expression.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
@@ -24,7 +23,7 @@ public class ExpressionParser {
 	private BooleanParser booleanParser;
 	private NullParser nullParser;
 	private Object inputJSON;
-	String packagePrefixString = "wazi.parser.jsontransformer.expression.function.";
+	String packagePrefixString = "wazi.jsontransformer.expression.function.";
 
 	public ExpressionParser() {
 

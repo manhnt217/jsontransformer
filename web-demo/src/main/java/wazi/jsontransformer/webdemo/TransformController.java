@@ -1,4 +1,4 @@
-package wazi.jsontransformer;
+package wazi.jsontransformer.webdemo;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
