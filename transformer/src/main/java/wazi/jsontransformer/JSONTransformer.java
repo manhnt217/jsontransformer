@@ -7,6 +7,7 @@ import com.jayway.jsonpath.Configuration;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
+import wazi.jsontransformer.expression.exception.TransformException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.parser.ExpressionParser;
 
@@ -27,7 +28,7 @@ public class JSONTransformer {
 			JSONArray jsonArray = (JSONArray) parse;
 			return processJSONArray(jsonArray, expressionParser);
 		} else {
-			throw new RuntimeException("Tranformer object is neither JSONObject nor JSONArray");
+			throw new TransformException("Tranformer object is neither JSONObject nor JSONArray");
 		}
 	}
 

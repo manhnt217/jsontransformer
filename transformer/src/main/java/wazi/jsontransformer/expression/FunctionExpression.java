@@ -1,5 +1,7 @@
 package wazi.jsontransformer.expression;
 
+import wazi.jsontransformer.expression.exception.TransformException;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -107,7 +109,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 			}
 
-			throw new RuntimeException("Method not found: " + className + "." + methodName);
+			throw new TransformException("Method not found: " + className + "." + methodName);
 		}
 
 		private static Object[] matchParameters(Parameter[] parameters, Object[] args) {
@@ -210,7 +212,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 				return rs;
 			}
-			throw new RuntimeException("Primitive type not found");
+			throw new TransformException("Primitive type not found");
 		}
 	}
 

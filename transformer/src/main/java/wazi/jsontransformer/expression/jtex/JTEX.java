@@ -16,7 +16,7 @@ public class JTEX {
 
 	public Character next() throws EndOfJtexException {
 
-		if(!hasNext()) {
+		if (!hasNext()) {
 			throw new EndOfJtexException(nextPosition + 1);
 		}
 
@@ -32,18 +32,18 @@ public class JTEX {
 	}
 
 	public Character retrieveNext() throws EndOfJtexException {
-		
-		if(!hasNext()) {
+
+		if (!hasNext()) {
 			throw new EndOfJtexException(nextPosition + 1);
 		}
-		
+
 		if (nextChar == null) {
 			nextChar = ex.charAt(nextPosition);//store next char for better performance
 		}
-		
+
 		return nextChar;
 	}
-	
+
 	public Character current() {
 		return currentChar;
 	}
@@ -52,7 +52,13 @@ public class JTEX {
 
 		return nextPosition < ex.length();
 	}
-	
+
+	public void skipBlank() {
+		while (retrieveNext() == ' ' || retrieveNext() == '\t') {
+			next();
+		}
+	}
+
 	/**
 	 * @return based 1 position number
 	 */
@@ -60,12 +66,12 @@ public class JTEX {
 
 		return nextPosition;
 	}
-	
+
 	/**
 	 * @return based 1 next position number
 	 */
 	public int getNextPosition() {
-		
+
 		return nextPosition + 1;
 	}
 }

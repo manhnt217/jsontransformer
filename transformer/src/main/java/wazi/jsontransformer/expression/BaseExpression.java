@@ -8,7 +8,7 @@ package wazi.jsontransformer.expression;
 public class BaseExpression implements Expression {
 	
 	protected Object val;
-	private int position;
+	protected int position;
 	
 	
 	public BaseExpression(Object val, int position) {

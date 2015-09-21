@@ -46,10 +46,7 @@ public class FunctionParser {
 			funcEx = new FunctionExpression(className.toString(), methodName.toString(), position);
 		}
 
-		//skip spaces
-		while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
-			jtex.next();
-		}
+		jtex.skipBlank();
 
 		readArgumentList(jtex, funcEx);
 
@@ -64,10 +61,8 @@ public class FunctionParser {
 
 		//read arguments
 		while (true) {
-			//skip spaces
-			while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
-				jtex.next();
-			}
+
+			jtex.skipBlank();
 
 			if (jtex.retrieveNext() == ')') {//only valid in case of empty argument list
 				if (funcEx.getArguments().size() == 0) return; //empty argument list
@@ -79,10 +74,7 @@ public class FunctionParser {
 				arg = exParser.readExpression(jtex);
 				funcEx.addArgument(arg);
 
-				//skip spaces
-				while (jtex.retrieveNext() == ' ' || jtex.retrieveNext() == '\t') {
-					jtex.next();
-				}
+				jtex.skipBlank();
 
 				if (jtex.retrieveNext() == ',') {//normal case, finish reading an argument
 					jtex.next();//move to next argument
