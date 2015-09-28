@@ -1,14 +1,17 @@
 package wazi.jsontransformer.expression.parser.literal;
 
+import wazi.jsontransformer.expression.Expression;
+import wazi.jsontransformer.expression.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
+import wazi.jsontransformer.expression.parser.ExpressionParser;
 import wazi.jsontransformer.expression.parser.exception.EndOfJtexException;
 import wazi.jsontransformer.expression.parser.exception.ParserException;
 
-public class NumberParser {
+public class NumberParser implements ExpressionParser {
 
 	private StringBuilder numberBuilder;
 
-	public Object readNumber(JTEX jtex) {
+	public Expression readExpression (JTEX jtex) {
 		numberBuilder = new StringBuilder();
 		boolean isInteger = true;
 		EndOfJtexException endOfJtexException = null;
@@ -34,15 +37,15 @@ public class NumberParser {
 		
 		try {
 			if (isInteger) {
-				return Integer.parseInt(numberBuilder.toString());
+				return new LiteralExpression(Integer.parseInt(numberBuilder.toString()), jtex.getNextPosition() - numberBuilder.length(), jtex.getNextPosition() - 1);
 			} else {
-				return Double.parseDouble(numberBuilder.toString());
+				return new LiteralExpression(Double.parseDouble(numberBuilder.toString()), jtex.getNextPosition() - numberBuilder.length(), jtex.getNextPosition() - 1);
 			}
 		} catch (NumberFormatException ex) {
 			if(endOfJtexException != null) {
 				throw new ParserException(endOfJtexException.getPosition(), "Exception while reading number", endOfJtexException);
 			} else {
-				throw new ParserException(jtex.getPosition(), "Number format exception");
+				throw new ParserException(jtex.getNextPosition(), "Number format exception");
 			}
 		}
 	}

@@ -15,7 +15,7 @@ public class NullParser {
 			return null;// explicit null
 			//@formatter:on
 		} else {
-			throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Exception while reading null value.");
+			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading null value.");
 		}
 	}
 }

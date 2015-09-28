@@ -1,17 +1,20 @@
 package wazi.jsontransformer.expression;
 
+import wazi.jsontransformer.expression.exception.TransformException;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Express the function call in jtex
- * 
- * @author wazi
  *
+ * @author wazi
  */
 public class FunctionExpression extends BaseExpression {
 
@@ -19,11 +22,12 @@ public class FunctionExpression extends BaseExpression {
 	String methodName;
 	List<Expression> arguments;
 
-	public FunctionExpression(String className, String methodName, int position) {
-		super(null, position);
+	public FunctionExpression(String className, String methodName, int start, int end) {
+		super(start, end);
 		this.className = className;
 		this.methodName = methodName;
 		this.arguments = new LinkedList<>();
+		this.symbolList = new LinkedList<>();
 	}
 
 	public void addArgument(Expression arg) {
@@ -32,20 +36,35 @@ public class FunctionExpression extends BaseExpression {
 	}
 
 	@Override
-	public Object val() throws Exception {
-
-		if (this.arguments != null && this.arguments.size() > 0) {
-
-			List<Object> args = new LinkedList<>();
-			for (Expression expression : arguments) {
-				args.add(expression.val());
+	public Object eval(Map<String, Object> symbolMap) {
+		try {
+			if (this.arguments != null && this.arguments.size() > 0) {
+				List<Object> args = arguments.stream().map(arg -> arg.eval(symbolMap)).collect(Collectors.toList());
+				return ReflectionUtil.invokeStatic(className, methodName, args.toArray());
+			} else {
+				return ReflectionUtil.invokeStatic(className, methodName, (Object[]) null);
 			}
-			return ReflectionUtil.invokeStatic(className, methodName, args.toArray());
-		} else {
-			return ReflectionUtil.invokeStatic(className, methodName, (Object[]) null);
+		} catch (IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Not implemented yet");
 		}
-
 	}
+
+	@Override
+	public List<String> symbolList() {
+		return this.symbolList;
+	}
+
+//	@Override
+//	public Object apply(Map<String, Object> symbolMap) {
+//		for (int i = 0; i < this.arguments.size(); i++) {
+//			Expression arg = arguments.get(i);
+//			if (arg.symbolList().size() > 0) {
+//				this.arguments.set(i, new LiteralExpression(arg.apply(symbolMap), arg.getStart(), arg.getEnd()));
+//			}
+//		}
+//		return eval(null);
+//	}
 
 	public String getClassName() {
 
@@ -80,7 +99,7 @@ public class FunctionExpression extends BaseExpression {
 	public static class ReflectionUtil {
 
 		public static Object invokeStatic(String className, String methodName, Object... args)
-				throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+						throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 			Class<?> clazz = Class.forName(className);
 
@@ -107,7 +126,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 			}
 
-			throw new RuntimeException("Method not found: " + className + "." + methodName);
+			throw new TransformException("Method not found: " + className + "." + methodName);
 		}
 
 		private static Object[] matchParameters(Parameter[] parameters, Object[] args) {
@@ -210,7 +229,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 				return rs;
 			}
-			throw new RuntimeException("Primitive type not found");
+			throw new TransformException("Primitive type not found");
 		}
 	}
 

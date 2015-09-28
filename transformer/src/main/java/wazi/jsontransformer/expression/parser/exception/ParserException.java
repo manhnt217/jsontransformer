@@ -1,5 +1,10 @@
 package wazi.jsontransformer.expression.parser.exception;
 
+import wazi.jsontransformer.expression.Expression;
+
+/**
+ * Base class for all exceptions that occur while parsing JTEX expression
+ */
 public class ParserException extends RuntimeException {
 
 	private static final long serialVersionUID = -5787743504440870274L;

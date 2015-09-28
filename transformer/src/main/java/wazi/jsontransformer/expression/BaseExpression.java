@@ -1,30 +1,42 @@
 package wazi.jsontransformer.expression;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Express literal values in jtex, include String, Number, Boolean, Null
- * @author wazi
  *
+ * @author wazi
  */
-public class BaseExpression implements Expression {
-	
-	protected Object val;
-	private int position;
-	
-	
-	public BaseExpression(Object val, int position) {
-		this.val = val;
-		this.position = position;
+public abstract class BaseExpression implements Expression {
+
+	protected int start;
+	protected int end;
+	protected List<String> symbolList;
+
+
+	public BaseExpression(int start, int end) {
+		this.start = start;
+		this.end = end;
 	}
 
 	@Override
-	public Object val() throws Exception {
+	public int getStart() {
 
-		return this.val;
+		return this.start;
 	}
 
 	@Override
-	public int getPosition() {
-	
-		return this.position;
+	public int getEnd() {
+		
+		return this.end;
+	}
+
+	public List<String> getSymbolList() {
+		return symbolList;
+	}
+
+	public void addSymbol(String symbol) {
+		this.symbolList.add(symbol);
 	}
 }

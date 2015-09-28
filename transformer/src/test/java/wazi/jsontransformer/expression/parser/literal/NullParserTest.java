@@ -7,7 +7,6 @@ import org.junit.Test;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.parser.exception.EndOfJtexException;
 import wazi.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
-import wazi.jsontransformer.expression.parser.literal.NullParser;
 
 public class NullParserTest {
 

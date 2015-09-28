@@ -1,46 +1,60 @@
 package wazi.jsontransformer.expression.parser.literal;
 
+import wazi.jsontransformer.expression.Expression;
+import wazi.jsontransformer.expression.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
+import wazi.jsontransformer.expression.parser.ExpressionParser;
 import wazi.jsontransformer.expression.parser.exception.UnexpectedCharacterException;
 
-public class StringParser {
+public class StringParser implements ExpressionParser {
 
 	StringBuilder builder;
 
-	public String readString(JTEX jtex) {
+	@Override
+	public Expression readExpression(JTEX jtex) {
+		int start = jtex.getNextPosition();
 		if (jtex.next() != '"')
-			throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Exception while reading string");
+			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading string. Expected \".");
 		builder = new StringBuilder();
-		Character nextChar = null;
+		Character nextChar;
 		while ((nextChar = readChar(jtex)) != null) {
 			builder.append(nextChar);
 		}
+		jtex.next();//character quote (")
 
-		return builder.toString();
+		return new LiteralExpression(builder.toString(), start, jtex.getNextPosition() - 1);// 2 is for open and close quote character
 	}
 
 	Character readChar(JTEX jtex) {
 		if (jtex.retrieveNext() == '"') {
-			jtex.next();
 			return null;// end of string
 		}
 		if (jtex.retrieveNext() != '\\')
 			return jtex.next();
-		
+
 		jtex.next(); // character '\'
 		//@formatter:off
 		switch (jtex.next()) {
-			case 't':	return '\t';
-			case 'b':	return '\b';
-			case 'n':	return '\n';
-			case 'r':	return '\r';
-			case 'f':	return '\f';
-			case '\'':	return '\'';
-			case '"':	return '"';
-			case '\\':	return '\\';
-			case 'u':	return readUnicodeCharacter(jtex);
+			case 't':
+				return '\t';
+			case 'b':
+				return '\b';
+			case 'n':
+				return '\n';
+			case 'r':
+				return '\r';
+			case 'f':
+				return '\f';
+			case '\'':
+				return '\'';
+			case '"':
+				return '"';
+			case '\\':
+				return '\\';
+			case 'u':
+				return readUnicodeCharacter(jtex);
 			default:
-				throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Exception while reading escaped character.");
+				throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading escaped character.");
 		}
 		//@formatter:on
 	}
@@ -54,7 +68,7 @@ public class StringParser {
 			degree -= 4;
 		}
 		if (hexChar == -1) {
-			throw new UnexpectedCharacterException(jtex.getPosition(), jtex.current(), "Exception while reading unicode character.");
+			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading unicode character.");
 		}
 		return (char) charCode;
 	}

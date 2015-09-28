@@ -1,22 +1,28 @@
 package wazi.jsontransformer.expression;
 
+import java.util.List;
+import java.util.Map;
+
 public interface Expression {
-	
-	//	/**
-	//	 * @return <code>true</code> if this expression does not contain Json Path selector<br>
-	//	 * 			Otherwise return <code>false</code>.
-	//	 */
-	//	public boolean isEvaluatable();
-	
+
 	/**
-	 * @return the value of expression if <code>Expression.isEvaluatable() == true</code><br>
-	 * 			Otherwise return <code>null</code>.
-	 * @throws Exception 
+	 * @return the value of expression while applying values to symbols in this expression.
+	 * @throws Exception
+	 * @param symbolMap
 	 */
-	public Object val() throws Exception;
-	
+	Object eval(Map<String, Object> symbolMap);
+
+	/**
+	 * List all symbols in expression that can pass value to.
+	 * Every symbol in list must be unique.
+	 * @return
+	 */
+	List<String> symbolList();
+
 	/**
 	 * @return position of this expression in entire jtex expression for tracing purpose
 	 */
-	public int getPosition();
+	int getStart();
+
+	int getEnd();
 }
