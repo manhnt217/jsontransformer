@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.expression.parser.ExpressionParser;
+import wazi.jsontransformer.parser.ExpressionParser;
 
 public class JSONTransformer {
 

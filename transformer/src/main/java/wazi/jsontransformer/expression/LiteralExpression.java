@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class LiteralExpression extends BaseExpression {
 
-	private final Object val;
+	protected final Object val;
 
 	public LiteralExpression(Object val, int start, int end) {
 		super(start, end);
@@ -14,7 +14,6 @@ public class LiteralExpression extends BaseExpression {
 
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
-
 		return val;
 	}
 
@@ -25,5 +24,9 @@ public class LiteralExpression extends BaseExpression {
 	@Override
 	public List<String> symbolList() {
 		return null;
+	}
+
+	public Object val() {
+		return val;
 	}
 }

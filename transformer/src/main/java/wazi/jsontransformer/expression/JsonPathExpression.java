@@ -1,5 +1,7 @@
 package wazi.jsontransformer.expression;
 
+import wazi.jsontransformer.expression.BaseExpression;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public class JsonPathExpression extends BaseExpression {
 
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
-		throw new UnsupportedOperationException("Dont use this method, use apply instead");
+		throw new UnsupportedOperationException("Not implemented yet");
 	}
 
 	@Override

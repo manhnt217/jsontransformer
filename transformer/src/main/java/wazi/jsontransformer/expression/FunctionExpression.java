@@ -1,6 +1,6 @@
 package wazi.jsontransformer.expression;
 
-import wazi.jsontransformer.expression.exception.TransformException;
+import wazi.jsontransformer.exception.TransformException;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +20,7 @@ public class FunctionExpression extends BaseExpression {
 
 	String className;
 	String methodName;
-	List<Expression> arguments;
+	List<BaseExpression> arguments;
 
 	public FunctionExpression(String className, String methodName, int start, int end) {
 		super(start, end);
@@ -30,7 +30,7 @@ public class FunctionExpression extends BaseExpression {
 		this.symbolList = new LinkedList<>();
 	}
 
-	public void addArgument(Expression arg) {
+	public void addArgument(BaseExpression arg) {
 
 		this.arguments.add(arg);
 	}
@@ -76,7 +76,7 @@ public class FunctionExpression extends BaseExpression {
 		return methodName;
 	}
 
-	public List<Expression> getArguments() {
+	public List<BaseExpression> getArguments() {
 
 		return arguments;
 	}
@@ -91,7 +91,7 @@ public class FunctionExpression extends BaseExpression {
 		this.methodName = methodName;
 	}
 
-	public void setArguments(List<Expression> arguments) {
+	public void setArguments(List<BaseExpression> arguments) {
 
 		this.arguments = arguments;
 	}

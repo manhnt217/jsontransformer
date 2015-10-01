@@ -1,5 +1,6 @@
 package wazi.jsontransformer.expression;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,31 +9,39 @@ import java.util.Map;
  *
  * @author wazi
  */
-public abstract class BaseExpression implements Expression {
+public abstract class BaseExpression {
 
 	protected int start;
 	protected int end;
 	protected List<String> symbolList;
 
-
 	public BaseExpression(int start, int end) {
 		this.start = start;
 		this.end = end;
+		symbolList = new LinkedList<>();
 	}
 
-	@Override
 	public int getStart() {
-
 		return this.start;
 	}
 
-	@Override
 	public int getEnd() {
-		
 		return this.end;
 	}
 
-	public List<String> getSymbolList() {
+	/**
+	 * @return the value of expression while applying values to symbols in this expression.
+	 * @throws RuntimeException if evaluation fails
+	 * @param symbolMap
+	 */
+	public abstract Object eval(Map<String, Object> symbolMap);
+
+	/**
+	 * List all symbols in expression that can pass value to.
+	 * Every symbol in list must be unique.
+	 * @return
+	 */
+	public List<String> symbolList() {
 		return symbolList;
 	}
 

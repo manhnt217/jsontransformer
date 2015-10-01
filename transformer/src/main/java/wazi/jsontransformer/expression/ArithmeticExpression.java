@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class ArithmeticExpression extends BaseExpression {
 
-	List<Term> terms;
+	List<TermExpression> terms;
 	Operator currentOp;
 
 	public ArithmeticExpression(int start, int end) {
@@ -26,20 +26,13 @@ public class ArithmeticExpression extends BaseExpression {
 		return null;
 	}
 
-	static class Term extends ArithmeticExpression {
+	static class TermExpression extends ArithmeticExpression {
 
-		List<ArithmeticExpression> factors;
+		List<BaseExpression> factors;
 		boolean isNegative;
 
-		public Term(int start, int end, char sign) {
+		public TermExpression(int start, int end) {
 			super(start, end);
-		}
-	}
-
-	static class Number extends Term {
-
-		public Number(int start, int end, char sign) {
-			super(start, end, sign);
 		}
 	}
 }

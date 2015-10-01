@@ -1,6 +1,6 @@
 package wazi.jsontransformer.expression.jtex;
 
-import wazi.jsontransformer.expression.parser.exception.EndOfJtexException;
+import wazi.jsontransformer.parser.exception.EndOfJtexException;
 
 public class JTEX {
 
