@@ -1,6 +1,6 @@
 package wazi.jsontransformer.expression.jtex;
 
-import wazi.jsontransformer.expression.parser.exception.EndOfJtexException;
+import wazi.jsontransformer.parser.exception.EndOfJtexException;
 
 public class JTEX {
 
@@ -10,14 +10,18 @@ public class JTEX {
 	private Character currentChar;
 
 	public JTEX(String jtex) {
+		this(jtex, 0);
+	}
+
+	public JTEX(String jtex, int nextPosition) {
 		this.ex = jtex;
-		this.nextPosition = 0;
+		this.nextPosition = nextPosition;
 	}
 
 	public Character next() throws EndOfJtexException {
 
 		if (!hasNext()) {
-			throw new EndOfJtexException(nextPosition + 1);
+			throw new EndOfJtexException(nextPosition);
 		}
 
 		if (nextChar == null) {
@@ -34,7 +38,7 @@ public class JTEX {
 	public Character retrieveNext() throws EndOfJtexException {
 
 		if (!hasNext()) {
-			throw new EndOfJtexException(nextPosition + 1);
+			throw new EndOfJtexException(nextPosition);
 		}
 
 		if (nextChar == null) {
@@ -59,19 +63,18 @@ public class JTEX {
 		}
 	}
 
-	/**
-	 * @return based 1 position number
-	 */
-	public int getPosition() {
+	public void setNextPosition(int position) {
+		this.nextPosition = position;
+		this.nextChar = null;
+		this.currentChar = null;
+	}
+
+	public int getNextPosition() {
 
 		return nextPosition;
 	}
 
-	/**
-	 * @return based 1 next position number
-	 */
-	public int getNextPosition() {
-
-		return nextPosition + 1;
+	public String getString() {
+		return this.ex;
 	}
 }

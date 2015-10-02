@@ -1,22 +1,24 @@
 package wazi.jsontransformer.expression;
 
-import wazi.jsontransformer.expression.function.J;
+import wazi.jsontransformer.expression.BaseExpression;
 
-public class JsonPathExpression extends FunctionExpression {
+import java.util.List;
+import java.util.Map;
 
-	public JsonPathExpression(int position) {
-		super(J.class.getName(), "p", position);
+public class JsonPathExpression extends BaseExpression {
+
+	public JsonPathExpression(int start, int end) {
+		super(start, end);
 	}
 
-	public void setInputJson(Object jsonObject) {
-
-		// we no need to care about this argument's position because it comes from outside jtex expression
-		addArgument(new BaseExpression(jsonObject, -1));
-	}
-	
 	@Override
-	public Object val() throws Exception {
-	
-		return super.val();
+	public Object eval(Map<String, Object> symbolMap) {
+		throw new UnsupportedOperationException("Not implemented yet");
 	}
+
+	@Override
+	public List<String> symbolList() {
+		return null;
+	}
+
 }

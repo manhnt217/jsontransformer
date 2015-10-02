@@ -1,44 +1,38 @@
 package wazi.jsontransformer.expression;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wazi on 2015-09-20 020.
  */
 public class ArithmeticExpression extends BaseExpression {
 
-	List<Term> terms;
+	List<TermExpression> terms;
+	Operator currentOp;
 
-	public ArithmeticExpression(int position) {
-		super(null, position);
+	public ArithmeticExpression(int start, int end) {
+		super(start, end);
+		currentOp = Operator.PLUS;
 	}
 
 	@Override
-	public Object val() throws Exception {
+	public Object eval(Map<String, Object> symbolMap) {
 		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 
-	public static class Term extends ArithmeticExpression {
-
-		List<ArithmeticExpression> factors;
-
-		public Term(int position, char sign) {
-			super(position);
-		}
+	@Override
+	public List<String> symbolList() {
+		return null;
 	}
 
-	public enum Sign {
-		PLUS, MINUS, MULTIPLY, DIVIDE;
+	static class TermExpression extends ArithmeticExpression {
 
-		@Override
-		public String toString() {
-			switch (this) {
-				case PLUS: return "+";
-				case MINUS: return "-";
-				case MULTIPLY: return "-";
-				case DIVIDE: return "-";
-				default: return null;
-			}
+		List<BaseExpression> factors;
+		boolean isNegative;
+
+		public TermExpression(int start, int end) {
+			super(start, end);
 		}
 	}
 }

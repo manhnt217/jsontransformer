@@ -2,34 +2,31 @@ package wazi.jsontransformer;
 
 import java.util.Map.Entry;
 
-import com.jayway.jsonpath.Configuration;
-
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import wazi.jsontransformer.expression.exception.TransformException;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.expression.parser.ExpressionParser;
+import wazi.jsontransformer.parser.ExpressionParser;
 
 public class JSONTransformer {
 
 	public static Object transform(String srcJson, String transformer) throws Exception {
 
-		ExpressionParser expressionParser = new ExpressionParser();
-		expressionParser.setInputJSON(Configuration.defaultConfiguration().jsonProvider().parse(srcJson));
-
-		JSONParser jsonParser = new JSONParser(JSONParser.MODE_PERMISSIVE);
-		Object parse = jsonParser.parse(transformer);
-
-		if (parse instanceof JSONObject) {
-			JSONObject jsonObject = (JSONObject) parse;
-			return processJSONObject(jsonObject, expressionParser);
-		} else if (parse instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray) parse;
-			return processJSONArray(jsonArray, expressionParser);
-		} else {
-			throw new TransformException("Tranformer object is neither JSONObject nor JSONArray");
-		}
+//		ExpressionParser expressionParser = new ExpressionParser();
+//		expressionParser.setInputJSON(Configuration.defaultConfiguration().jsonProvider().parse(srcJson));
+//
+//		JSONParser jsonParser = new JSONParser(JSONParser.MODE_PERMISSIVE);
+//		Object parse = jsonParser.parse(transformer);
+//
+//		if (parse instanceof JSONObject) {
+//			JSONObject jsonObject = (JSONObject) parse;
+//			return processJSONObject(jsonObject, expressionParser);
+//		} else if (parse instanceof JSONArray) {
+//			JSONArray jsonArray = (JSONArray) parse;
+//			return processJSONArray(jsonArray, expressionParser);
+//		} else {
+//			throw new TransformException("Tranformer object is neither JSONObject nor JSONArray");
+//		}
+		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 
 	private static JSONArray processJSONArray(JSONArray jsonArray, ExpressionParser expressionParser) throws Exception {
@@ -56,7 +53,7 @@ public class JSONTransformer {
 			String expString = (String) exp;
 			if (expString.charAt(0) == '=') {
 				if (expString.charAt(1) != '=') {//JTEX expression
-					return parser.readExpression(new JTEX(expString.substring(1))).val();
+					return parser.readExpression(new JTEX(expString.substring(1))).eval(null);
 				} else {
 					return expString.substring(1);
 				}

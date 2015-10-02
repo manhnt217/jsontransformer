@@ -6,13 +6,13 @@ package wazi.jsontransformer.expression.function;
 public class S {
 
     public static String concat(Object... args) {
-    	
-    	StringBuilder builder = new StringBuilder();
-    	for (Object object : args) {
-    		if(object == null) continue;
-    		builder.append(object.toString());
-		}
-    	return builder.toString();
+
+        StringBuilder builder = new StringBuilder();
+        for (Object object : args) {
+            if(object == null) continue;
+            builder.append(object.toString());
+        }
+        return builder.toString();
     }
 
     public static String upper(String str) {
