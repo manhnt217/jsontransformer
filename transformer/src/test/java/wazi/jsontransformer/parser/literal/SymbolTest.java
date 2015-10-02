@@ -22,7 +22,7 @@ public class SymbolTest {
 		assertEquals("#a", symbolExpression.symbolList().get(0));
 		assertEquals(15, symbolExpression.eval(new HashMap<String, Object>() {
 			{
-				put("#a", 215);
+				put("#a", 15);
 			}
 		}));
 	}

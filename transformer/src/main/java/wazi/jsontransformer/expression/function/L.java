@@ -1,6 +1,5 @@
 package wazi.jsontransformer.expression.function;
 
-
 import java.util.Arrays;
 import java.util.List;
 
