@@ -1,4 +1,4 @@
-package wazi.jsontransformer.expression.function;
+package wazi.jsontransformer.expression.helper.function;
 
 /**
  * Boolean functions

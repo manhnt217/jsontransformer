@@ -7,11 +7,11 @@ import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
 import static org.junit.Assert.assertEquals;
 
-public class StringParserTest {
+public class StringExpressionParserTest {
 
 	@Test
 	public void testReadString() {
-		StringParser parser = new StringParser();
+		StringExpressionParser parser = new StringExpressionParser();
 		JTEX jtex = new JTEX("\"Hello World\"F#ds");
 		assertEquals("Hello World", parser.read(jtex).eval(null));
 		assertEquals('F', (char) jtex.retrieveNext());
@@ -22,13 +22,13 @@ public class StringParserTest {
 	
 	@Test
 	public void testReadUnicodeChar() {
-		StringParser parser = new StringParser();
+		StringExpressionParser parser = new StringExpressionParser();
 		assertEquals(0x7a0f, (int) parser.readUnicodeCharacter(new JTEX("7a0F")));
 	}
 	
 	@Test
 	public void testReadChar() {
-		StringParser parser = new StringParser();
+		StringExpressionParser parser = new StringExpressionParser();
 		JTEX jtex = new JTEX("\\u3a9fXmd");
 		assertEquals('㪟', (int) parser.readChar(jtex));
 		assertEquals('X', (char) jtex.retrieveNext());
@@ -39,19 +39,19 @@ public class StringParserTest {
 	
 	@Test(expected = UnexpectedCharacterException.class)
 	public void testReadStringFailed1() {
-		StringParser parser = new StringParser();
+		StringExpressionParser parser = new StringExpressionParser();
 		parser.read(new JTEX("\"\\kMD\""));//"\kMD"
 	}
 	
 	@Test(expected = UnexpectedCharacterException.class)
 	public void testReadStringFailed2() {
-		StringParser parser = new StringParser();
+		StringExpressionParser parser = new StringExpressionParser();
 		parser.read(new JTEX("\"String \\u19H6\""));//"String \ u19H6" without space between \ and u
 	}
 	
 	@Test(expected = EndOfJtexException.class)
 	public void testReadStringFailed3() {
-		StringParser parser = new StringParser();
+		StringExpressionParser parser = new StringExpressionParser();
 		parser.read(new JTEX("\"Hello"));//"Hello
 	}
 }

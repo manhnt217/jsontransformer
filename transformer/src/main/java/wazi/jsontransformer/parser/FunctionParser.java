@@ -4,58 +4,73 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.FunctionExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
+import wazi.jsontransformer.parser.helper.ExpressionParser;
+import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 
-public class FunctionParser {
+import java.util.LinkedList;
+import java.util.List;
 
-	private TokenParser<BaseExpression> exParser;
+public class FunctionParser implements TokenParser<FunctionExpression> {
 
-	public FunctionParser(TokenParser exParser) {
-		this.exParser = exParser;
+	private MultiChoiceParser<BaseExpression> expressionParser;
+
+	public FunctionParser(ExpressionParser expressionParser) {
+		this.expressionParser = expressionParser;
 	}
 
-	public FunctionExpression readExpression(JTEX jtex) {
+	@Override
+	public FunctionExpression read(JTEX jtex) {
 
-		StringBuilder className = new StringBuilder(exParser.packagePrefixString);
-		StringBuilder methodName = new StringBuilder();
+		jtex.skipBlank();
 
-		Character firstChar = jtex.next();
-		int position = jtex.getNextPosition();
-		if ('A' <= firstChar && firstChar <= 'Z') {
-			className.append(firstChar);
+		FunctionExpression functionExpression = new FunctionExpression();
+		functionExpression.setStart(jtex.getNextPosition());
+
+		if ('A' <= jtex.retrieveNext() && jtex.retrieveNext() <= 'Z') {
+			functionExpression.setClassName(readClassName(jtex));
 		} else {
-			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Class name's first character must be in upper case.");
+			functionExpression.setClassName(FunctionExpression.DEFAULT_FUNCTION_CLASS);
 		}
 
+		functionExpression.setMethodName(readMethodName(jtex));
+
+		jtex.skipBlank();
+
+		functionExpression.setArguments(readArgumentList(jtex));
+
+		functionExpression.setEnd(jtex.getNextPosition() - 1);
+		return functionExpression;
+	}
+
+	private String readMethodName(JTEX jtex) {
+		StringBuilder methodName = new StringBuilder();
+		while (isValidJavaNameCharacter(jtex.retrieveNext())) {
+			methodName.append(jtex.next());
+		}
+		return methodName.toString();
+	}
+
+	private String readClassName(JTEX jtex) {
+
+		StringBuilder className = new StringBuilder(FunctionExpression.DEFAULT_FUNCTION_PACKAGE);
 		while (isValidJavaNameCharacter(jtex.retrieveNext())) {
 			className.append(jtex.next());
 		}
 
-		if (jtex.next() != '.') throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Missing dot sign after class name.");
-
-		while (isValidJavaNameCharacter(jtex.retrieveNext())) {
-			methodName.append(jtex.next());
+		if (jtex.next() != '.') {
+			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Missing dot sign after class name.");
 		}
-
-		FunctionExpression funcEx = null;
-//		if ((exParser.packagePrefixString + "J").equals(className.toString()) && "p".equals(methodName.toString())) {
-//			funcEx = new JsonPathExpression(position);
-//			((JsonPathExpression)funcEx).setInputJson(exParser.getInputJSON());
-//		} else {
-//			funcEx = new FunctionExpression(className.toString(), methodName.toString(), position);
-//		}
-
-		jtex.skipBlank();
-
-		readArgumentList(jtex, funcEx);
-
-		throw new UnsupportedOperationException("Not implemented yet");
+		return className.toString();
 	}
 
-	private void readArgumentList(JTEX jtex, FunctionExpression funcEx) {
+	private List<BaseExpression> readArgumentList(JTEX jtex) {
 
-		if (jtex.next() != '(') throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Missing parentheses after method name.");
+		List<BaseExpression> argList = new LinkedList<>();
 
-		BaseExpression arg = null;
+		if (jtex.next() != '(')
+			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Missing parentheses after method name.");
+
+		BaseExpression arg;
 
 		//read arguments
 		while (true) {
@@ -63,14 +78,14 @@ public class FunctionParser {
 			jtex.skipBlank();
 
 			if (jtex.retrieveNext() == ')') {//only valid in case of empty argument list
-				if (funcEx.getArguments().size() == 0) return; //empty argument list
+				if (argList.size() == 0) return argList; //empty argument list
 				else {
 					throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "Exception while reading argument");
 				}
 			} else {
 
-				arg = exParser.read(jtex);
-				funcEx.addArgument(arg);
+				arg = expressionParser.read(jtex);
+				argList.add(arg);
 
 				jtex.skipBlank();
 
@@ -86,6 +101,8 @@ public class FunctionParser {
 				}
 			}
 		}
+
+		return argList;
 	}
 
 	private boolean isValidJavaNameCharacter(char c) {

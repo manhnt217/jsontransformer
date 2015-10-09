@@ -5,7 +5,7 @@ import wazi.jsontransformer.expression.literal.BooleanExpression;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
-public class BooleanParser implements TokenParser<BooleanExpression> {
+public class BooleanExpressionParser implements TokenParser<BooleanExpression> {
 
 	public BooleanExpression read(JTEX jtex) {
 		if (jtex.retrieveNext() == 't') {

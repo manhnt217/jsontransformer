@@ -11,7 +11,7 @@ import wazi.jsontransformer.expression.jtex.JTEX;
  */
 public interface TokenParser<T extends Token> {
 
-	String packagePrefixString = "wazi.jsontransformer.expression.function.";
-
 	T read(JTEX jtex);
+
+
 }

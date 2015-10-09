@@ -5,7 +5,7 @@ import wazi.jsontransformer.expression.literal.NullExpression;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
-public class NullParser implements TokenParser<NullExpression> {
+public class NullExpressionParser implements TokenParser<NullExpression> {
 
 	@Override
 	public NullExpression read(JTEX jtex) {

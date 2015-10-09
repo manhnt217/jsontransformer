@@ -5,12 +5,12 @@ import wazi.jsontransformer.expression.arithmetic.TermExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.operator.Operator;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.parser.literal.OperatorParser;
+import wazi.jsontransformer.parser.helper.OperatorParser;
 
 /**
  * Created by wazi on 10/9/15.
  */
-public class TermExpressionParser implements TokenParser<TermExpression> {
+class TermExpressionParser implements TokenParser<TermExpression> {
 
 	FactorExpressionParser factorParser;
 	OperatorParser operatorParser;

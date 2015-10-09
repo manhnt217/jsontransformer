@@ -1,9 +1,8 @@
-package wazi.jsontransformer.parser.literal;
+package wazi.jsontransformer.parser.helper;
 
 import wazi.jsontransformer.expression.Token;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.operator.Operator;
-import wazi.jsontransformer.parser.MultiChoiceParser;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.exception.parser.ParserException;
 

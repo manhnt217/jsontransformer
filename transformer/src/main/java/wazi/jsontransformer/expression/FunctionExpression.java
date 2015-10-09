@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  */
 public class FunctionExpression extends BaseExpression {
 
+	public static final String DEFAULT_FUNCTION_PACKAGE = "wazi.jsontransformer.expression.helper.function.";
+	public static final String DEFAULT_FUNCTION_CLASS = "wazi.jsontransformer.expression.helper.function.Functions";
 	String className;
 	String methodName;
 	List<BaseExpression> arguments;
@@ -26,7 +28,10 @@ public class FunctionExpression extends BaseExpression {
 		super(start, end);
 		this.className = className;
 		this.methodName = methodName;
-		this.arguments = new LinkedList<>();
+	}
+
+	public FunctionExpression() {
+		this(null, null, -1, -1);
 	}
 
 	public void addArgument(BaseExpression arg) {
@@ -93,7 +98,7 @@ public class FunctionExpression extends BaseExpression {
 	public static class ReflectionUtil {
 
 		public static Object invokeStatic(String className, String methodName, Object... args)
-						throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+				throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 			Class<?> clazz = Class.forName(className);
 

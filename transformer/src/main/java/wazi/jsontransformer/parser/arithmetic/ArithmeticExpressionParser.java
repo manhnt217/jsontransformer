@@ -17,7 +17,7 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 
 	public ArithmeticExpressionParser() {
 		numberExpressionParser = new NumberExpressionParser();
-		factorParser = new FactorExpressionParser(numberExpressionParser, this);
+		factorParser = new FactorExpressionParser(this);
 		termParser = new TermExpressionParser(factorParser);
 	}
 

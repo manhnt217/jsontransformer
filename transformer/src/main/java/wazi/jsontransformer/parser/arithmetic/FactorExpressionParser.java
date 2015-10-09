@@ -5,20 +5,23 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.arithmetic.ArithmeticExpression;
 import wazi.jsontransformer.expression.arithmetic.FactorExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.MultiChoiceParser;
+import wazi.jsontransformer.parser.helper.MultiChoiceParser;
+import wazi.jsontransformer.parser.literal.SymbolParser;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.parser.literal.NumberExpressionParser;
 
 /**
  * Created by wazi on 10/9/15.
  */
-public class FactorExpressionParser implements TokenParser<FactorExpression> {
+class FactorExpressionParser implements TokenParser<FactorExpression> {
 
 	private final NumberExpressionParser numberExpressionParser;
+	private final SymbolParser symbolExpressionParser;
 	private final ArithmeticExpressionParser arithmeticExpressionParser;
 
-	public FactorExpressionParser(NumberExpressionParser numberExpressionParser, ArithmeticExpressionParser arithmeticExpressionParser) {
-		this.numberExpressionParser = numberExpressionParser;
+	public FactorExpressionParser(ArithmeticExpressionParser arithmeticExpressionParser) {
+		this.numberExpressionParser = new NumberExpressionParser();
+		symbolExpressionParser = new SymbolParser();
 		this.arithmeticExpressionParser = arithmeticExpressionParser;
 	}
 
@@ -41,6 +44,7 @@ public class FactorExpressionParser implements TokenParser<FactorExpression> {
 		jtex.skipBlank();
 		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<BaseExpression>(
 				numberExpressionParser,
+				symbolExpressionParser,
 				jtExp -> {
 					//check parenthesis
 					if (jtExp.retrieveNext() != '(') {

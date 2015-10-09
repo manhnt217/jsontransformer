@@ -1,9 +1,10 @@
-package wazi.jsontransformer.parser;
+package wazi.jsontransformer.parser.helper;
 
 import wazi.jsontransformer.expression.Token;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
+import wazi.jsontransformer.parser.TokenParser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,10 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 				this.parsers.add(parser);
 			}
 		}
+	}
+
+	public void addParser(TokenParser<? extends T> parser) {
+		this.parsers.add(parser);
 	}
 
 	@Override

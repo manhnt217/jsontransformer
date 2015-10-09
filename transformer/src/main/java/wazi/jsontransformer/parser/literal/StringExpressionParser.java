@@ -5,7 +5,7 @@ import wazi.jsontransformer.expression.literal.StringExpression;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
-public class StringParser implements TokenParser<StringExpression> {
+public class StringExpressionParser implements TokenParser<StringExpression> {
 
 	StringBuilder builder;
 

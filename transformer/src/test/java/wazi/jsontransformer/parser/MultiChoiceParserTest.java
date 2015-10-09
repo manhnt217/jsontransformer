@@ -6,9 +6,10 @@ import wazi.jsontransformer.expression.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.EndOfJtexException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
-import wazi.jsontransformer.parser.literal.BooleanParser;
+import wazi.jsontransformer.parser.helper.MultiChoiceParser;
+import wazi.jsontransformer.parser.literal.BooleanExpressionParser;
 import wazi.jsontransformer.parser.literal.NumberExpressionParser;
-import wazi.jsontransformer.parser.literal.StringParser;
+import wazi.jsontransformer.parser.literal.StringExpressionParser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -20,7 +21,7 @@ public class MultiChoiceParserTest {
 
 	@Test
 	public void testReadExpression() throws Exception {
-		MultiChoiceParser<BaseExpression> parser = new MultiChoiceParser(new NumberExpressionParser(), new StringParser(), new BooleanParser());
+		MultiChoiceParser<BaseExpression> parser = new MultiChoiceParser(new NumberExpressionParser(), new StringExpressionParser(), new BooleanExpressionParser());
 		JTEX jtex = new JTEX("1234e13adf");
 		BaseExpression ex1 = parser.read(jtex);
 		assertEquals(0, ex1.getStart());
@@ -69,8 +70,8 @@ public class MultiChoiceParserTest {
 		public LiteralExpression read(JTEX jtex) {
 			int start = jtex.getNextPosition();
 			NumberExpressionParser numberExpressionParser = new NumberExpressionParser();
-			StringParser stringParser = new StringParser();
-			return new LiteralExpression(numberExpressionParser.read(jtex).eval(null).toString() + stringParser.read(jtex).eval(null), start, jtex.getNextPosition() - 1);
+			StringExpressionParser stringExpressionParser = new StringExpressionParser();
+			return new LiteralExpression(numberExpressionParser.read(jtex).eval(null).toString() + stringExpressionParser.read(jtex).eval(null), start, jtex.getNextPosition() - 1);
 		}
 	}
 }

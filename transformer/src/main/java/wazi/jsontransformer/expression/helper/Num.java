@@ -4,6 +4,7 @@ import wazi.jsontransformer.expression.operator.Operator;
 
 /**
  * Created by wazi on 2015-10-07 007.
+ * Wrapper class for double and integer
  */
 public class Num {
 	Double value;
@@ -11,10 +12,6 @@ public class Num {
 
 	public Num(Object val) {
 		assign(val);
-	}
-
-	public Num() {
-		this(0);
 	}
 
 	public Object get() {
