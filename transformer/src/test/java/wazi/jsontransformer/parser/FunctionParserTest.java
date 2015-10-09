@@ -8,6 +8,7 @@ import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.parser.helper.ExpressionParser;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -58,17 +59,19 @@ public class FunctionParserTest {
 	}
 
 	@Test
-	public void testEvaluateJTEXFunction() throws Exception {
+	public void testEvaluateJSONPathFunction() throws Exception {
 
-//		String inputJSONString = "{\"status\":\"OK\"}";
-//
-//		ExpressionParser exParser = new ExpressionParser();
-//		exParser.setInputJSON(Configuration.defaultConfiguration().jsonProvider().parse(inputJSONString));
-//
-//		FunctionParser parser = exParser.functionParser;
-//		FunctionExpression funcEx = funcParser.read(new JTEX("J.p(\"$.status\")"));
-//		assertTrue(funcEx instanceof JsonPathExpression);
-//		assertEquals("OK", funcEx.eval());
+		String inputJSONString = "{\"status\":\"OK\"}";
+		Object document = Configuration.defaultConfiguration().jsonProvider().parse(inputJSONString);
+
+		ExpressionParser exParser = new ExpressionParser();
+		FunctionParser parser = exParser.functionParser;
+		FunctionExpression funcEx = parser.read(new JTEX("concat(2, p(\"$.status\"))"));
+		assertEquals("2OK", funcEx.eval(
+				new HashMap<String, Object>() {{
+					put(FunctionExpression.SRC_JSON_SYMBOL, document);
+				}}
+		));
 	}
 
 	@Test

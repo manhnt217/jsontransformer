@@ -20,6 +20,7 @@ public class FunctionExpression extends BaseExpression {
 
 	public static final String DEFAULT_FUNCTION_PACKAGE = "wazi.jsontransformer.expression.helper.function.";
 	public static final String DEFAULT_FUNCTION_CLASS = "wazi.jsontransformer.expression.helper.function.Functions";
+	public static final String SRC_JSON_SYMBOL = "SRC_JSON";
 	String className;
 	String methodName;
 	List<BaseExpression> arguments;
@@ -113,8 +114,6 @@ public class FunctionExpression extends BaseExpression {
 					} else {
 
 						Parameter[] parameters = method.getParameters();
-						//						LinkedList<Object> argList = new LinkedList<Object>();
-						//						argList.addAll(Arrays.asList(args));
 						Object[] applyingArgs = matchParameters(parameters, args);
 						if (applyingArgs == null) {
 							continue;

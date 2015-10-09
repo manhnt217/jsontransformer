@@ -1,5 +1,7 @@
 package wazi.jsontransformer.expression;
 
+import wazi.jsontransformer.exception.EvaluationException;
+
 import java.util.Map;
 
 /**
@@ -17,6 +19,9 @@ public class SymbolExpression extends BaseExpression {
 
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
+		if (!symbolMap.containsKey(this.symbol)) {
+			throw new EvaluationException("Symbol value not found", this.start, this.end);
+		}
 		return symbolMap.get(this.symbol);
 	}
 }
