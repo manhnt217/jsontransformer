@@ -1,13 +1,9 @@
 package wazi.jsontransformer;
 
-import net.minidev.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.HashMap;
+import wazi.jsontransformer.expression.operator.Operator;
 
 public class HelloWorld {
 	public static void main(String[] args) throws Throwable {
-		
-		System.out.println("Hello world!");
+		Integer.parseInt("1111111111111111111");
 	}
 }

@@ -14,9 +14,4 @@ public class NumberExpression extends LiteralExpression {
     public NumberExpression(Double val, int start, int end) {
         super(val, start, end);
     }
-
-    public int intValue() {
-        if (val instanceof Double) return ((Double) val).intValue();
-        return (int) val;
-    }
 }

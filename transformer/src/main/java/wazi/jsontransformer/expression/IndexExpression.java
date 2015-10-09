@@ -1,6 +1,5 @@
 package wazi.jsontransformer.expression;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,10 +24,5 @@ public class IndexExpression extends BaseExpression {
 
 	public void setIndex(int index) {
 		this.index = index;
-	}
-
-	@Override
-	public List<String> symbolList() {
-		return null;
 	}
 }

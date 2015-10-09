@@ -1,6 +1,6 @@
 package wazi.jsontransformer.expression;
 
-import wazi.jsontransformer.exception.TransformException;
+import wazi.jsontransformer.exception.EvaluationException;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  */
 public class FunctionExpression extends BaseExpression {
 
+	public static final String DEFAULT_FUNCTION_PACKAGE = "wazi.jsontransformer.expression.helper.function.";
+	public static final String DEFAULT_FUNCTION_CLASS = "wazi.jsontransformer.expression.helper.function.Functions";
 	String className;
 	String methodName;
 	List<BaseExpression> arguments;
@@ -26,8 +28,10 @@ public class FunctionExpression extends BaseExpression {
 		super(start, end);
 		this.className = className;
 		this.methodName = methodName;
-		this.arguments = new LinkedList<>();
-		this.symbolList = new LinkedList<>();
+	}
+
+	public FunctionExpression() {
+		this(null, null, -1, -1);
 	}
 
 	public void addArgument(BaseExpression arg) {
@@ -48,11 +52,6 @@ public class FunctionExpression extends BaseExpression {
 			e.printStackTrace();
 			throw new RuntimeException("Not implemented yet");
 		}
-	}
-
-	@Override
-	public List<String> symbolList() {
-		return this.symbolList;
 	}
 
 //	@Override
@@ -99,7 +98,7 @@ public class FunctionExpression extends BaseExpression {
 	public static class ReflectionUtil {
 
 		public static Object invokeStatic(String className, String methodName, Object... args)
-						throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+				throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 			Class<?> clazz = Class.forName(className);
 
@@ -126,7 +125,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 			}
 
-			throw new TransformException("Method not found: " + className + "." + methodName);
+			throw new EvaluationException("Method not found: " + className + "." + methodName);
 		}
 
 		private static Object[] matchParameters(Parameter[] parameters, Object[] args) {
@@ -229,7 +228,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 				return rs;
 			}
-			throw new TransformException("Primitive type not found");
+			throw new EvaluationException("Primitive type not found");
 		}
 	}
 
