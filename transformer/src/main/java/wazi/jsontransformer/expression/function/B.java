@@ -6,14 +6,14 @@ package wazi.jsontransformer.expression.function;
 public class B {
 	public Boolean and(Boolean... args) {
 		for (Boolean b : args) {
-			if(!b) return false;
+			if (!b) return false;
 		}
 		return true;
 	}
 
 	public Boolean or(Boolean... args) {
 		for (Boolean b : args) {
-			if(b) return true;
+			if (b) return true;
 		}
 		return false;
 	}
