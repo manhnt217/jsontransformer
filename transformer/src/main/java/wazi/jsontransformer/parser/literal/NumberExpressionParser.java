@@ -1,18 +1,16 @@
 package wazi.jsontransformer.parser.literal;
 
-import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.expression.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.NumberExpression;
-import wazi.jsontransformer.parser.ExpressionParser;
-import wazi.jsontransformer.parser.exception.EndOfJtexException;
-import wazi.jsontransformer.parser.exception.ParserException;
+import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.exception.parser.EndOfJtexException;
+import wazi.jsontransformer.exception.parser.ParserException;
 
-public class NumberParser implements ExpressionParser {
+public class NumberExpressionParser implements TokenParser<NumberExpression> {
 
 	private StringBuilder numberBuilder;
 
-	public BaseExpression readExpression(JTEX jtex) {
+	public NumberExpression read(JTEX jtex) {
 		numberBuilder = new StringBuilder();
 		boolean isInteger = true;
 		EndOfJtexException endOfJtexException = null;

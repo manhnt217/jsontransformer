@@ -3,13 +3,13 @@ package wazi.jsontransformer.parser;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.FunctionExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.exception.UnexpectedCharacterException;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
 public class FunctionParser {
 
-	private ExpressionParser exParser;
+	private TokenParser<BaseExpression> exParser;
 
-	public FunctionParser(ExpressionParser exParser) {
+	public FunctionParser(TokenParser exParser) {
 		this.exParser = exParser;
 	}
 
@@ -69,7 +69,7 @@ public class FunctionParser {
 				}
 			} else {
 
-				arg = exParser.readExpression(jtex);
+				arg = exParser.read(jtex);
 				funcEx.addArgument(arg);
 
 				jtex.skipBlank();

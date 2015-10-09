@@ -1,13 +1,10 @@
-package wazi.jsontransformer.expression.jtex;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+package wazi.jsontransformer.parser.jtex;
 
 import org.junit.Test;
-
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.exception.EndOfJtexException;
+import wazi.jsontransformer.exception.parser.EndOfJtexException;
+
+import static org.junit.Assert.*;
 
 public class JTEXTest {
 

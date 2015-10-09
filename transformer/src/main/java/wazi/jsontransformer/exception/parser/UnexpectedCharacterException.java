@@ -1,4 +1,4 @@
-package wazi.jsontransformer.parser.exception;
+package wazi.jsontransformer.exception.parser;
 
 public class UnexpectedCharacterException extends ParserException {
 

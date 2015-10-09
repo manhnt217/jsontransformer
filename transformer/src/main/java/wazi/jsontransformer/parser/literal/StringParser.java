@@ -1,17 +1,16 @@
 package wazi.jsontransformer.parser.literal;
 
-import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.expression.literal.StringExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.ExpressionParser;
-import wazi.jsontransformer.parser.exception.UnexpectedCharacterException;
+import wazi.jsontransformer.expression.literal.StringExpression;
+import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
-public class StringParser implements ExpressionParser {
+public class StringParser implements TokenParser<StringExpression> {
 
 	StringBuilder builder;
 
 	@Override
-	public BaseExpression readExpression(JTEX jtex) {
+	public StringExpression read(JTEX jtex) {
 		int start = jtex.getNextPosition();
 		if (jtex.next() != '"')
 			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading string. Expected \".");
@@ -25,7 +24,7 @@ public class StringParser implements ExpressionParser {
 		return new StringExpression(builder.toString(), start, jtex.getNextPosition() - 1);// 2 is for open and close quote character
 	}
 
-	Character readChar(JTEX jtex) {
+	public Character readChar(JTEX jtex) {
 		if (jtex.retrieveNext() == '"') {
 			return null;// end of string
 		}
@@ -59,7 +58,7 @@ public class StringParser implements ExpressionParser {
 		//@formatter:on
 	}
 
-	Character readUnicodeCharacter(JTEX jtex) {
+	public Character readUnicodeCharacter(JTEX jtex) {
 		int charCode = 0;
 		int hexChar = 0;
 		int degree = 12;
@@ -73,7 +72,7 @@ public class StringParser implements ExpressionParser {
 		return (char) charCode;
 	}
 
-	int charToHex(char c) {
+	public int charToHex(char c) {
 		if ('0' <= c && c <= '9')
 			return c - '0';
 		else if (('a' <= c && c <= 'f') || ('A' <= c && c <= 'F'))

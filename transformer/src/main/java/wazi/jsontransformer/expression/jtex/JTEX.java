@@ -1,6 +1,6 @@
 package wazi.jsontransformer.expression.jtex;
 
-import wazi.jsontransformer.parser.exception.EndOfJtexException;
+import wazi.jsontransformer.exception.parser.EndOfJtexException;
 
 public class JTEX {
 
@@ -58,7 +58,7 @@ public class JTEX {
 	}
 
 	public void skipBlank() {
-		while (retrieveNext() == ' ' || retrieveNext() == '\t') {
+		while (hasNext() && (retrieveNext() == ' ' || retrieveNext() == '\t')) {
 			next();
 		}
 	}

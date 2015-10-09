@@ -1,12 +1,11 @@
 package wazi.jsontransformer.parser.literal;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.exception.EndOfJtexException;
-import wazi.jsontransformer.parser.exception.UnexpectedCharacterException;
+import wazi.jsontransformer.exception.parser.EndOfJtexException;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
+
+import static org.junit.Assert.assertEquals;
 
 public class StringParserTest {
 
@@ -14,11 +13,11 @@ public class StringParserTest {
 	public void testReadString() {
 		StringParser parser = new StringParser();
 		JTEX jtex = new JTEX("\"Hello World\"F#ds");
-		assertEquals("Hello World", parser.readExpression(jtex).eval(null));
+		assertEquals("Hello World", parser.read(jtex).eval(null));
 		assertEquals('F', (char) jtex.retrieveNext());
 		
 		//a regular expression I've found in my source code :D
-		assertEquals("\"((\\\\[tbnrf'\"\\\\])|[^\\\\]|(\\\\u[a-fA-F0-9]{4}))*?\"", parser.readExpression(new JTEX("\"\\\"((\\\\\\\\[tbnrf'\\\"\\\\\\\\])|[^\\\\\\\\]|(\\\\\\\\u[a-fA-F0-9]{4}))*?\\\"\"")).eval(null));
+		assertEquals("\"((\\\\[tbnrf'\"\\\\])|[^\\\\]|(\\\\u[a-fA-F0-9]{4}))*?\"", parser.read(new JTEX("\"\\\"((\\\\\\\\[tbnrf'\\\"\\\\\\\\])|[^\\\\\\\\]|(\\\\\\\\u[a-fA-F0-9]{4}))*?\\\"\"")).eval(null));
 	}
 	
 	@Test
@@ -41,18 +40,18 @@ public class StringParserTest {
 	@Test(expected = UnexpectedCharacterException.class)
 	public void testReadStringFailed1() {
 		StringParser parser = new StringParser();
-		parser.readExpression(new JTEX("\"\\kMD\""));//"\kMD"
+		parser.read(new JTEX("\"\\kMD\""));//"\kMD"
 	}
 	
 	@Test(expected = UnexpectedCharacterException.class)
 	public void testReadStringFailed2() {
 		StringParser parser = new StringParser();
-		parser.readExpression(new JTEX("\"String \\u19H6\""));//"String \ u19H6" without space between \ and u
+		parser.read(new JTEX("\"String \\u19H6\""));//"String \ u19H6" without space between \ and u
 	}
 	
 	@Test(expected = EndOfJtexException.class)
 	public void testReadStringFailed3() {
 		StringParser parser = new StringParser();
-		parser.readExpression(new JTEX("\"Hello"));//"Hello
+		parser.read(new JTEX("\"Hello"));//"Hello
 	}
 }

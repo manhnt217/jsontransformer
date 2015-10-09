@@ -1,13 +1,12 @@
 package wazi.jsontransformer.parser;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import wazi.jsontransformer.expression.FunctionExpression;
+import wazi.jsontransformer.expression.FunctionExpression.ReflectionUtil;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.junit.Test;
-
-import wazi.jsontransformer.expression.FunctionExpression;
-import wazi.jsontransformer.expression.FunctionExpression.ReflectionUtil;
+import static org.junit.Assert.assertEquals;
 
 public class FunctionParserTest {
 
@@ -16,7 +15,7 @@ public class FunctionParserTest {
 
 //		ExpressionParser exParser = new ExpressionParser();
 //		FunctionParser parser = new FunctionParser(exParser);
-//		FunctionExpression funcEx = parser.readExpression(new JTEX("I.add( I.add(4, 5), 23, 2)"));
+//		FunctionExpression funcEx = parser.read(new JTEX("I.add( I.add(4, 5), 23, 2)"));
 //		assertEqualsFunction(funcEx, exParser.packagePrefixString + "I", "add", 1);
 //		assertEquals(3, funcEx.getArguments().size());
 	}
@@ -27,7 +26,7 @@ public class FunctionParserTest {
 //		ExpressionParser exParser = new ExpressionParser();
 //		FunctionParser parser = new FunctionParser(exParser);
 //		FunctionExpression funcEx = parser
-//				.readExpression(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));
+//				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));
 //		assertEqualsFunction(funcEx, exParser.packagePrefixString + "C", "choice", 1);
 //		assertEquals(3, funcEx.getArguments().size());
 	}
@@ -37,7 +36,7 @@ public class FunctionParserTest {
 
 //		ExpressionParser exParser = new ExpressionParser();
 //		FunctionParser funcParser = new FunctionParser(exParser);
-//		FunctionExpression funcEx = funcParser.readExpression(new JTEX("S.concat(\"a\", \"b\", null, \"c\")"));
+//		FunctionExpression funcEx = funcParser.read(new JTEX("S.concat(\"a\", \"b\", null, \"c\")"));
 //		assertEquals("abc", funcEx.eval());
 	}
 
@@ -47,11 +46,11 @@ public class FunctionParserTest {
 //		ExpressionParser exParser = new ExpressionParser();
 //		FunctionParser funcParser = new FunctionParser(exParser);
 //		FunctionExpression funcEx = funcParser
-//				.readExpression(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));//notice I.lt(10, 5)
+//				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));//notice I.lt(10, 5)
 //		assertEquals("Default case", funcEx.eval());
 //
 //		FunctionExpression funcEx2 = funcParser
-//				.readExpression(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.gt(10, 5), \"10 > 5\"), C.ift(true, \"Default case\"))"));//notice I.gt(10, 5)
+//				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.gt(10, 5), \"10 > 5\"), C.ift(true, \"Default case\"))"));//notice I.gt(10, 5)
 //		assertEquals("10 > 5", funcEx2.eval());
 	}
 
@@ -64,7 +63,7 @@ public class FunctionParserTest {
 //		exParser.setInputJSON(Configuration.defaultConfiguration().jsonProvider().parse(inputJSONString));
 //
 //		FunctionParser funcParser = new FunctionParser(exParser);
-//		FunctionExpression funcEx = funcParser.readExpression(new JTEX("J.p(\"$.status\")"));
+//		FunctionExpression funcEx = funcParser.read(new JTEX("J.p(\"$.status\")"));
 //		assertTrue(funcEx instanceof JsonPathExpression);
 //		assertEquals("OK", funcEx.eval());
 	}
@@ -75,7 +74,7 @@ public class FunctionParserTest {
 //		try {
 //			ExpressionParser exParser = new ExpressionParser();
 //			FunctionParser parser = new FunctionParser(exParser);
-//			FunctionExpression funcEx = parser.readExpression(new JTEX("kI.add(1, 2)"));
+//			FunctionExpression funcEx = parser.read(new JTEX("kI.add(1, 2)"));
 //			assertEqualsFunction(funcEx, "I", "add", 1);
 //			fail("Should not got here");
 //		} catch (UnexpectedCharacterException e) {
@@ -89,7 +88,7 @@ public class FunctionParserTest {
 //		try {
 //			ExpressionParser exParser = new ExpressionParser();
 //			FunctionParser parser = new FunctionParser(exParser);
-//			FunctionExpression funcEx = parser.readExpression(new JTEX("Idf_rr.add(1,  "));
+//			FunctionExpression funcEx = parser.read(new JTEX("Idf_rr.add(1,  "));
 //			assertEqualsFunction(funcEx, "I", "add", 1);
 //		} catch (EndOfJtexException e) {
 //			assertEquals(16, e.getPosition());

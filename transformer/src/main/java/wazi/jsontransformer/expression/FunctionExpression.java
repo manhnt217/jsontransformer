@@ -1,6 +1,6 @@
 package wazi.jsontransformer.expression;
 
-import wazi.jsontransformer.exception.TransformException;
+import wazi.jsontransformer.exception.EvaluationException;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +27,6 @@ public class FunctionExpression extends BaseExpression {
 		this.className = className;
 		this.methodName = methodName;
 		this.arguments = new LinkedList<>();
-		this.symbolList = new LinkedList<>();
 	}
 
 	public void addArgument(BaseExpression arg) {
@@ -48,11 +47,6 @@ public class FunctionExpression extends BaseExpression {
 			e.printStackTrace();
 			throw new RuntimeException("Not implemented yet");
 		}
-	}
-
-	@Override
-	public List<String> symbolList() {
-		return this.symbolList;
 	}
 
 //	@Override
@@ -126,7 +120,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 			}
 
-			throw new TransformException("Method not found: " + className + "." + methodName);
+			throw new EvaluationException("Method not found: " + className + "." + methodName);
 		}
 
 		private static Object[] matchParameters(Parameter[] parameters, Object[] args) {
@@ -229,7 +223,7 @@ public class FunctionExpression extends BaseExpression {
 				}
 				return rs;
 			}
-			throw new TransformException("Primitive type not found");
+			throw new EvaluationException("Primitive type not found");
 		}
 	}
 

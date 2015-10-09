@@ -1,14 +1,13 @@
 package wazi.jsontransformer.parser.literal;
 
-import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.expression.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.ExpressionParser;
-import wazi.jsontransformer.parser.exception.UnexpectedCharacterException;
+import wazi.jsontransformer.expression.literal.BooleanExpression;
+import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
-public class BooleanParser implements ExpressionParser {
+public class BooleanParser implements TokenParser<BooleanExpression> {
 
-	public BaseExpression readExpression(JTEX jtex) {
+	public BooleanExpression read(JTEX jtex) {
 		if (jtex.retrieveNext() == 't') {
 			return readTrueValue(jtex);
 		} else if (jtex.retrieveNext() == 'f') {
@@ -18,24 +17,24 @@ public class BooleanParser implements ExpressionParser {
 		}
 	}
 
-	private BaseExpression readFalseValue(JTEX jtex) {
+	private BooleanExpression readFalseValue(JTEX jtex) {
 		if (jtex.next() == 'f' &&
 						jtex.next() == 'a' &&
 						jtex.next() == 'l' &&
 						jtex.next() == 's' &&
 						jtex.next() == 'e') {
-			return new LiteralExpression(false, jtex.getNextPosition() - 5, jtex.getNextPosition() - 1);//"false" contains 5 character
+			return new BooleanExpression(false, jtex.getNextPosition() - 5);//"false" contains 5 character
 		} else {
 			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading bool value.");
 		}
 	}
 
-	private BaseExpression readTrueValue(JTEX jtex) {
+	private BooleanExpression readTrueValue(JTEX jtex) {
 		if (jtex.next() == 't' &&
 						jtex.next() == 'r' &&
 						jtex.next() == 'u' &&
 						jtex.next() == 'e') {
-			return new LiteralExpression(true, jtex.getNextPosition() - 4, jtex.getNextPosition() - 1);//"true" contains 5 character
+			return new BooleanExpression(true, jtex.getNextPosition() - 4);//"true" contains 5 character
 		} else {
 			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading bool value.");
 		}

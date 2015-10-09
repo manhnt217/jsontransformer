@@ -1,6 +1,5 @@
 package wazi.jsontransformer.expression;
 
-import java.util.List;
 import java.util.Map;
 
 public class LiteralExpression extends BaseExpression {
@@ -14,19 +13,6 @@ public class LiteralExpression extends BaseExpression {
 
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
-		return val;
-	}
-
-	/**
-	 * Literal does not contain symbol
-	 * @return
-	 */
-	@Override
-	public List<String> symbolList() {
-		return null;
-	}
-
-	public Object val() {
 		return val;
 	}
 }

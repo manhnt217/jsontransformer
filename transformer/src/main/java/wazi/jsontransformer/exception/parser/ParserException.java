@@ -1,4 +1,4 @@
-package wazi.jsontransformer.parser.exception;
+package wazi.jsontransformer.exception.parser;
 
 /**
  * Base class for all exceptions that occur while parsing JTEX expression

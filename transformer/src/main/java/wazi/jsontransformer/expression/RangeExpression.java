@@ -1,6 +1,5 @@
 package wazi.jsontransformer.expression;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,11 +17,6 @@ public class RangeExpression extends BaseExpression {
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
 		return this;
-	}
-
-	@Override
-	public List<String> symbolList() {
-		return null;
 	}
 
 	public int getStartIndex() {

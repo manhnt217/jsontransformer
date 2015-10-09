@@ -1,11 +1,12 @@
 package wazi.jsontransformer;
 
-import java.util.Map.Entry;
-
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.ExpressionParser;
+import wazi.jsontransformer.parser.TokenParser;
+
+import java.util.Map.Entry;
 
 public class JSONTransformer {
 
@@ -29,31 +30,31 @@ public class JSONTransformer {
 		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 
-	private static JSONArray processJSONArray(JSONArray jsonArray, ExpressionParser expressionParser) throws Exception {
+	private static JSONArray processJSONArray(JSONArray jsonArray, TokenParser tokenParser) throws Exception {
 
 		JSONArray result = new JSONArray();
 		for (int i = 0; i < jsonArray.size(); i++) {
-			result.add(evaluate(jsonArray.get(i), expressionParser));
+			result.add(evaluate(jsonArray.get(i), tokenParser));
 		}
 		return result;
 	}
 
-	private static JSONObject processJSONObject(JSONObject jsonObject, ExpressionParser expressionParser) throws Exception {
+	private static JSONObject processJSONObject(JSONObject jsonObject, TokenParser tokenParser) throws Exception {
 
 		JSONObject result = new JSONObject();
 		for (Entry<String, Object> entry : jsonObject.entrySet()) {
-			result.put(evaluate(entry.getKey(), expressionParser).toString(), evaluate(entry.getValue(), expressionParser));
+			result.put(evaluate(entry.getKey(), tokenParser).toString(), evaluate(entry.getValue(), tokenParser));
 		}
 		return result;
 	}
 
-	private static Object evaluate(Object exp, ExpressionParser parser) throws Exception {
+	private static Object evaluate(Object exp, TokenParser<BaseExpression> parser) throws Exception {
 
 		if (exp instanceof String) {
 			String expString = (String) exp;
 			if (expString.charAt(0) == '=') {
 				if (expString.charAt(1) != '=') {//JTEX expression
-					return parser.readExpression(new JTEX(expString.substring(1))).eval(null);
+					return parser.read(new JTEX(expString.substring(1))).eval(null);
 				} else {
 					return expString.substring(1);
 				}

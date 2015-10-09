@@ -1,7 +1,5 @@
 package wazi.jsontransformer.expression;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +18,5 @@ public class SymbolExpression extends BaseExpression {
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
 		return symbolMap.get(this.symbol);
-	}
-
-	@Override
-	public List<String> symbolList() {
-		return Arrays.asList(this.symbol);
 	}
 }

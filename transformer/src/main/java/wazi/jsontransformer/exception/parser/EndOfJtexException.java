@@ -1,4 +1,4 @@
-package wazi.jsontransformer.parser.exception;
+package wazi.jsontransformer.exception.parser;
 
 
 public class EndOfJtexException extends ParserException {

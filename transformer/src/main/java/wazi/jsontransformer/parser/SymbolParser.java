@@ -1,16 +1,15 @@
 package wazi.jsontransformer.parser;
 
-import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.SymbolExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.exception.UnexpectedCharacterException;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
 /**
  * Created by wazi on 2015-09-27 027.
  */
-public class SymbolParser implements ExpressionParser {
+public class SymbolParser implements TokenParser<SymbolExpression> {
 	@Override
-	public BaseExpression readExpression(JTEX jtex) {
+	public SymbolExpression read(JTEX jtex) {
 		if (jtex.next() != '#') throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expect '#'.");
 		StringBuilder builder = new StringBuilder("#");
 		while (jtex.retrieveNext() != ' ' && jtex.retrieveNext() != '\t') {
