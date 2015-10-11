@@ -15,6 +15,7 @@ import java.util.List;
 public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 
 	List<TokenParser<? extends T>> parsers;
+	boolean longestMatch = false;//return longest matched token, default = false
 
 	public MultiChoiceParser() {
 		this((TokenParser[])null);
@@ -33,17 +34,43 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 		this.parsers.add(parser);
 	}
 
+//	@Override
+//	public T read(JTEX jtex) {
+//
+//		ParserException ex = new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "");
+//
+//		for (TokenParser<? extends T> parser : parsers) {
+//			try {
+//				JTEX jtexCopy = new JTEX(jtex.getString(), jtex.getNextPosition());
+//				T expression = parser.read(jtexCopy);
+//				jtex.setNextPosition(jtexCopy.getNextPosition());
+//				return expression;
+//			} catch (ParserException e) {
+//				if (e.getPosition() > ex.getPosition()) {
+//					ex = e;
+//				}
+//			}
+//		}
+//
+//		throw ex;
+//	}
+
 	@Override
 	public T read(JTEX jtex) {
 
-		ParserException ex = new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "");
+		final int jtexStartPosition = jtex.getNextPosition();
+		ParserException ex = new UnexpectedCharacterException(jtexStartPosition, jtex.retrieveNext(), "");
+		T exp = null;
+		int furthestPosition = 0;
 
 		for (TokenParser<? extends T> parser : parsers) {
 			try {
 				JTEX jtexCopy = new JTEX(jtex.getString(), jtex.getNextPosition());
 				T expression = parser.read(jtexCopy);
-				jtex.setNextPosition(jtexCopy.getNextPosition());
-				return expression;
+				if (jtexCopy.getNextPosition() > furthestPosition) {
+					furthestPosition = jtexCopy.getNextPosition();
+					exp = expression;
+				}
 			} catch (ParserException e) {
 				if (e.getPosition() > ex.getPosition()) {
 					ex = e;
@@ -51,6 +78,10 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 			}
 		}
 
+		if (exp != null){
+			jtex.setNextPosition(furthestPosition);
+			return exp;
+		}
 		throw ex;
 	}
 }

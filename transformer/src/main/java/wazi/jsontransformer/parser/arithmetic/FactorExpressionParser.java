@@ -45,6 +45,7 @@ class FactorExpressionParser implements TokenParser<FactorExpression> {
 		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<BaseExpression>(
 				numberExpressionParser,
 				symbolExpressionParser,
+				//custom arithmetic expression parser
 				jtExp -> {
 					//check parenthesis
 					if (jtExp.retrieveNext() != '(') {

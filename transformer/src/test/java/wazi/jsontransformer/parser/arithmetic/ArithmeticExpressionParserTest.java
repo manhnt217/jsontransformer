@@ -21,10 +21,9 @@ public class ArithmeticExpressionParserTest extends TestCase {
 	@Test
 	public void testParseExpression() {
 		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
-		ArithmeticExpression expression = parser.read(new JTEX("- 1 + 2 * 3"));
-		assertEquals(2, expression.terms.size());
+		ArithmeticExpression expression = parser.read(new JTEX("- 1 <> 2 * 3"));
+		assertEquals(1, expression.terms.size());
 		assertEquals(1, expression.terms.get(0).factors.size());
-		assertEquals(2, expression.terms.get(1).factors.size());
 	}
 
 	@Test
@@ -37,10 +36,10 @@ public class ArithmeticExpressionParserTest extends TestCase {
 	@Test
 	public void testEvaluateExpression2() {
 		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
-		BaseExpression expression = parser.read(new JTEX("- - 1 - 2 * 3"));
+		BaseExpression expression = parser.read(new JTEX("64 / (10 - 2)"));
 		assertEquals(0, expression.getStart());
 		assertEquals(12, expression.getEnd());
-		assertEquals(-5, expression.eval(null));
+		assertEquals(8, expression.eval(null));
 	}
 
 	@Test

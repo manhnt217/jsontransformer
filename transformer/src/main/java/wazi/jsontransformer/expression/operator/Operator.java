@@ -24,7 +24,7 @@ public class Operator extends Token {
 		PLUS("+"), MINUS("-"), MULTIPLY("*"), DIVIDE("/"), DIV("div"), MOD("%"),
 
 		//Relational operators
-		LT("<"), GT(">"), LTE("<="), GTE(">="), EQ("="),
+		LT("<"), GT(">"), LTE("<="), GTE(">="), EQ("="), NEQ("!="),
 
 		//String operators
 		CONCAT("."),

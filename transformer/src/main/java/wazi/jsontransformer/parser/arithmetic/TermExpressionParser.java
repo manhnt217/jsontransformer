@@ -36,11 +36,9 @@ class TermExpressionParser implements TokenParser<TermExpression> {
 			} catch (ParserException e) {
 				break;
 			}
-			if (operator.op != Operator.Op.MULTIPLY &&
-					operator.op != Operator.Op.DIVIDE &&
-					operator.op != Operator.Op.DIV &&
-					operator.op != Operator.Op.MOD) {
-				throw new ParserException(operator.getStart(), "Expected a term operator (*, /, div, mod). Got " + operator.op.toString());
+			if (!TermExpression.OPERATORS.contains(operator.op)) {
+				jtex.setNextPosition(operator.getStart());//rewind
+				break;
 			}
 			jtex.skipBlank();
 			termExpression.addFactor(operator, factorParser.read(jtex));

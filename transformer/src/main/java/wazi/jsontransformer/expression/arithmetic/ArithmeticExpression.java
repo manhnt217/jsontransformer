@@ -32,7 +32,7 @@ public class ArithmeticExpression extends BaseExpression {
 		for (TermExpression term : terms) {
 			Object val = term.eval(symbolMap);
 			try {
-				sum = sum.exe(Operator.Op.PLUS, new Num(val));
+				sum = sum.apply(Operator.Op.PLUS, new Num(val));
 			} catch (IllegalArgumentException e) {
 				throw new EvaluationException("Value must be integer or double. Got " + val.getClass().getName(), term.getStart(), term.getEnd());
 			}

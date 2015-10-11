@@ -2,15 +2,16 @@ package wazi.jsontransformer.parser;
 
 import com.jayway.jsonpath.Configuration;
 import org.junit.Test;
+import wazi.jsontransformer.exception.parser.EndOfJtexException;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.FunctionExpression;
 import wazi.jsontransformer.expression.FunctionExpression.ReflectionUtil;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.helper.ExpressionParser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class FunctionParserTest {
 
@@ -77,28 +78,30 @@ public class FunctionParserTest {
 	@Test
 	public void testFailed1() {
 
-//		try {
-//			ExpressionParser exParser = new ExpressionParser();
-//			FunctionParser parser = exParser.functionParser;
-//			FunctionExpression funcEx = parser.read(new JTEX("kI.add(1, 2)"));
-//			assertEqualsFunction(funcEx, "I", "add", 1);
-//			fail("Should not got here");
-//		} catch (UnexpectedCharacterException e) {
-//			assertEquals(1, e.getPosition());
-//		}
+		try {
+			ExpressionParser exParser = new ExpressionParser();
+			FunctionParser parser = exParser.functionParser;
+			FunctionExpression funcEx = parser.read(new JTEX("kI.add(1, 2)"));
+			assertEqualsFunction(funcEx, "I", "add", 1);
+			fail("Should not got here");
+		} catch (UnexpectedCharacterException e) {
+			assertEquals(3, e.getPosition());
+		}
 	}
+
+
 
 	@Test
 	public void testFailed2() {
 
-//		try {
-//			ExpressionParser exParser = new ExpressionParser();
-//			FunctionParser parser = exParser.functionParser;
-//			FunctionExpression funcEx = parser.read(new JTEX("Idf_rr.add(1,  "));
-//			assertEqualsFunction(funcEx, "I", "add", 1);
-//		} catch (EndOfJtexException e) {
-//			assertEquals(16, e.getPosition());
-//		}
+		try {
+			ExpressionParser exParser = new ExpressionParser();
+			FunctionParser parser = exParser.functionParser;
+			FunctionExpression funcEx = parser.read(new JTEX("Idf_rr.add(1,  "));
+			assertEqualsFunction(funcEx, "I", "add", 1);
+		} catch (EndOfJtexException e) {
+			assertEquals(15, e.getPosition());
+		}
 	}
 
 	@Test

@@ -26,13 +26,6 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 		ArithmeticExpression arithmeticExpression = new ArithmeticExpression();
 		arithmeticExpression.setStart(jtex.getNextPosition());
 
-//		//check parenthesis
-//		if (jtex.retrieveNext() == '('){
-//			parenthesis = true;
-//			jtex.next();
-//		}
-//		jtex.skipBlank();
-
 		boolean isPositiveTerm = true;
 
 		//read first term
@@ -66,16 +59,6 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 			arithmeticExpression.addTerm(termExpression);
 			jtex.skipBlank();
 		}
-
-//		if (parenthesis) {//read close parenthesis ')'
-//			jtex.skipBlank();
-//			if (jtex.retrieveNext() != ')') {
-//				throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "Expect ')'");
-//			} else {
-//				jtex.next();
-//			}
-//		}
-
 		arithmeticExpression.setEnd(jtex.getNextPosition() - 1);
 		return arithmeticExpression;
 	}
