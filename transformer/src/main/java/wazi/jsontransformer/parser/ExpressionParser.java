@@ -1,42 +1,41 @@
 package wazi.jsontransformer.parser;
 
 import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.parser.FunctionParser;
 import wazi.jsontransformer.parser.arithmetic.ArithmeticExpressionParser;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 import wazi.jsontransformer.parser.literal.*;
-import wazi.jsontransformer.parser.relational.RelationalExpressionParser;
+import wazi.jsontransformer.parser.logical.relational.RelationalExpressionParser;
 
 /**
  * Created by wazi on 10/9/15.
  */
 public class ExpressionParser extends MultiChoiceParser<BaseExpression> {
 
-	public final NullExpressionParser nullExpressionParser;
-	public final BooleanExpressionParser booleanExpressionParser;
-	public final StringExpressionParser stringExpressionParser;
+	public final NullLiteralParser nullLiteralParser;
+	public final BooleanLiteralParser booleanLiteralParser;
+	public final StringLiteralParser stringLiteralParser;
 	public final SymbolParser symbolParser;
 	public final ArithmeticExpressionParser arithmeticExpressionParser;
-	public final FunctionParser functionParser;
+	public final FunctionExpressionParser functionExpressionParser;
 	public final RelationalExpressionParser relationalExpressionParser;
 
 	public ExpressionParser() {
 		super();
-		nullExpressionParser = new NullExpressionParser();
-		booleanExpressionParser = new BooleanExpressionParser();
-		stringExpressionParser = new StringExpressionParser();
+		nullLiteralParser = new NullLiteralParser();
+		booleanLiteralParser = new BooleanLiteralParser();
+		stringLiteralParser = new StringLiteralParser();
 		symbolParser = new SymbolParser();
 		arithmeticExpressionParser = new ArithmeticExpressionParser();
-		functionParser = new FunctionParser(this);
+		functionExpressionParser = new FunctionExpressionParser(this);
 		relationalExpressionParser = new RelationalExpressionParser(this);
 
-		this.addParser(nullExpressionParser);
-		this.addParser(booleanExpressionParser);
+		this.addParser(nullLiteralParser);
+		this.addParser(booleanLiteralParser);
 		//this.addParser(numberExpressionParser);
-		this.addParser(stringExpressionParser);
+		this.addParser(stringLiteralParser);
 		this.addParser(symbolParser);
 		this.addParser(arithmeticExpressionParser);
-		this.addParser(functionParser);
+		this.addParser(functionExpressionParser);
 		this.addParser(relationalExpressionParser);
 	}
 }

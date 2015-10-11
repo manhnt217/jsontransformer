@@ -1,8 +1,8 @@
-package wazi.jsontransformer.parser.relational;
+package wazi.jsontransformer.parser.logical.relational;
 
 import org.junit.Test;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.expression.relational.RelationalExpression;
+import wazi.jsontransformer.expression.logical.relational.RelationalExpression;
 import wazi.jsontransformer.parser.ExpressionParser;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class RelationalExpressionParserTest {
 			put("#a", 3);
 		}});
 		assertTrue(val instanceof Boolean);
-		assertEquals(true, (Boolean) val);
+		assertEquals(true, val);
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class RelationalExpressionParserTest {
 		assertEquals(0, relationalExpression.getStart());
 		assertEquals(30, relationalExpression.getEnd());
 		assertTrue(val instanceof Boolean);
-		assertEquals(true, (Boolean) val);
+		assertEquals(true, val);
 	}
 
 	@Test
@@ -63,6 +63,29 @@ public class RelationalExpressionParserTest {
 		assertEquals(0, relationalExpression.getStart());
 		assertEquals(39, relationalExpression.getEnd());
 		assertTrue(val instanceof Boolean);
-		assertEquals(true, (Boolean) val);
+		assertEquals(true, val);
+	}
+
+	@Test
+	public void testEvaluateExpression4() throws Exception {
+		ExpressionParser expressionParser = new ExpressionParser();
+		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
+		RelationalExpression relationalExpression = parser.read(new JTEX("((64 / (10 - 2) = 3 * 3 / #a + 6) = false) = false"));
+		Object val = relationalExpression.eval(new HashMap<String, Object>() {{
+			put("#a", 3);
+		}});
+
+		assertEquals(0, relationalExpression.getStart());
+		assertEquals(49, relationalExpression.getEnd());
+		assertTrue(val instanceof Boolean);
+		assertEquals(false, val);
+	}
+
+	@Test
+	public void testEvaluateExpression5() throws Exception {
+		ExpressionParser expressionParser = new ExpressionParser();
+		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
+		RelationalExpression relationalExpression = parser.read(new JTEX("9 > 2 * 3 != 11"));
+		assertEquals(true, relationalExpression.eval(null));
 	}
 }

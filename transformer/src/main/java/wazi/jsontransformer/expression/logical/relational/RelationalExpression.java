@@ -1,4 +1,4 @@
-package wazi.jsontransformer.expression.relational;
+package wazi.jsontransformer.expression.logical.relational;
 
 import wazi.jsontransformer.exception.EvaluationException;
 import wazi.jsontransformer.expression.BaseExpression;

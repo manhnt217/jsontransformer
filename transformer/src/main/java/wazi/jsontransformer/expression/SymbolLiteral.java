@@ -8,11 +8,11 @@ import java.util.Map;
  * Describe symbol in expression. For example, #abc, #x
  * Created by wazi on 2015-09-19 019.
  */
-public class SymbolExpression extends BaseExpression {
+public class SymbolLiteral extends BaseExpression {
 
 	private String symbol;
 
-	public SymbolExpression(String symbol, int start, int end) {
+	public SymbolLiteral(String symbol, int start, int end) {
 		super(start, end);
 		this.symbol = symbol;
 	}

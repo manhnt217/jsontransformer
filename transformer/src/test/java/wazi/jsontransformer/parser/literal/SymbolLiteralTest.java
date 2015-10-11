@@ -1,4 +1,4 @@
-package wazi.jsontransformer.expression.literal;
+package wazi.jsontransformer.parser.literal;
 
 import org.junit.Test;
 import wazi.jsontransformer.expression.BaseExpression;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by wazi on 2015-09-19 019.
  */
-public class SymbolTest {
+public class SymbolLiteralTest {
 
 	@Test
 	public void testApply() throws Exception {

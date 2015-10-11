@@ -1,11 +1,11 @@
-package wazi.jsontransformer.parser.relational;
+package wazi.jsontransformer.parser.logical.relational;
 
 import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.operator.Operator;
-import wazi.jsontransformer.expression.relational.RelationalExpression;
+import wazi.jsontransformer.expression.logical.relational.RelationalExpression;
 import wazi.jsontransformer.parser.ExpressionParser;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
@@ -21,12 +21,12 @@ public class RelationalExpressionParser implements TokenParser<RelationalExpress
 	public RelationalExpressionParser(ExpressionParser expressionParser) {
 		this.expressionParser = new MultiChoiceParser<BaseExpression>() {
 			{
-				addParser(expressionParser.nullExpressionParser);
-				addParser(expressionParser.booleanExpressionParser);
-				addParser(expressionParser.stringExpressionParser);
+				addParser(expressionParser.nullLiteralParser);
+				addParser(expressionParser.booleanLiteralParser);
+				addParser(expressionParser.stringLiteralParser);
 				addParser(expressionParser.symbolParser);
 				addParser(expressionParser.arithmeticExpressionParser);
-				addParser(expressionParser.functionParser);
+				addParser(expressionParser.functionExpressionParser);
 				addParser(new NestedRelationalExpressionParser(RelationalExpressionParser.this));
 			}
 		};

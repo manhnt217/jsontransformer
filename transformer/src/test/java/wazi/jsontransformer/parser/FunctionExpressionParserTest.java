@@ -13,13 +13,13 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class FunctionParserTest {
+public class FunctionExpressionParserTest {
 
 	@Test
 	public void testReadFunction() {
 
 		ExpressionParser exParser = new ExpressionParser();
-		FunctionParser parser = exParser.functionParser;
+		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser.read(new JTEX("I.add( I.add(4, 5), 23, 2)"));
 		assertEqualsFunction(funcEx, FunctionExpression.DEFAULT_FUNCTION_PACKAGE + "I", "add", 0);
 		assertEquals(3, funcEx.getArguments().size());
@@ -29,7 +29,7 @@ public class FunctionParserTest {
 	public void testReadFunction2() {
 
 		ExpressionParser exParser = new ExpressionParser();
-		FunctionParser parser = exParser.functionParser;
+		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser
 				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));
 		assertEqualsFunction(funcEx, FunctionExpression.DEFAULT_FUNCTION_PACKAGE + "C", "choice", 0);
@@ -40,7 +40,7 @@ public class FunctionParserTest {
 	public void testEvaluateSimpleFunction() throws Exception {
 
 		ExpressionParser exParser = new ExpressionParser();
-		FunctionParser parser = exParser.functionParser;
+		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser.read(new JTEX("concat(1 + 2, \"adf\")"));
 		assertEquals("3adf", funcEx.eval(null));
 	}
@@ -49,7 +49,7 @@ public class FunctionParserTest {
 	public void testEvaluateChoiceFunction() throws Exception {
 
 		ExpressionParser exParser = new ExpressionParser();
-		FunctionParser parser = exParser.functionParser;
+		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser
 				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));//notice I.lt(10, 5)
 		assertEquals("Default case", funcEx.eval(null));
@@ -66,7 +66,7 @@ public class FunctionParserTest {
 		Object document = Configuration.defaultConfiguration().jsonProvider().parse(inputJSONString);
 
 		ExpressionParser exParser = new ExpressionParser();
-		FunctionParser parser = exParser.functionParser;
+		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser.read(new JTEX("concat(2, p(\"$.status\"))"));
 		assertEquals("2OK", funcEx.eval(
 				new HashMap<String, Object>() {{
@@ -80,7 +80,7 @@ public class FunctionParserTest {
 
 		try {
 			ExpressionParser exParser = new ExpressionParser();
-			FunctionParser parser = exParser.functionParser;
+			FunctionExpressionParser parser = exParser.functionExpressionParser;
 			FunctionExpression funcEx = parser.read(new JTEX("kI.add(1, 2)"));
 			assertEqualsFunction(funcEx, "I", "add", 1);
 			fail("Should not got here");
@@ -96,7 +96,7 @@ public class FunctionParserTest {
 
 		try {
 			ExpressionParser exParser = new ExpressionParser();
-			FunctionParser parser = exParser.functionParser;
+			FunctionExpressionParser parser = exParser.functionExpressionParser;
 			FunctionExpression funcEx = parser.read(new JTEX("Idf_rr.add(1,  "));
 			assertEqualsFunction(funcEx, "I", "add", 1);
 		} catch (EndOfJtexException e) {

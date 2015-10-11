@@ -8,19 +8,19 @@ import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 import wazi.jsontransformer.parser.literal.SymbolParser;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.parser.literal.NumberExpressionParser;
+import wazi.jsontransformer.parser.literal.NumberLiteralParser;
 
 /**
  * Created by wazi on 10/9/15.
  */
 class FactorExpressionParser implements TokenParser<FactorExpression> {
 
-	private final NumberExpressionParser numberExpressionParser;
+	private final NumberLiteralParser numberLiteralParser;
 	private final SymbolParser symbolExpressionParser;
 	private final ArithmeticExpressionParser arithmeticExpressionParser;
 
 	public FactorExpressionParser(ArithmeticExpressionParser arithmeticExpressionParser) {
-		this.numberExpressionParser = new NumberExpressionParser();
+		this.numberLiteralParser = new NumberLiteralParser();
 		symbolExpressionParser = new SymbolParser();
 		this.arithmeticExpressionParser = arithmeticExpressionParser;
 	}
@@ -43,7 +43,7 @@ class FactorExpressionParser implements TokenParser<FactorExpression> {
 
 		jtex.skipBlank();
 		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<BaseExpression>(
-				numberExpressionParser,
+				numberLiteralParser,
 				symbolExpressionParser,
 				//custom arithmetic expression parser
 				jtExp -> {

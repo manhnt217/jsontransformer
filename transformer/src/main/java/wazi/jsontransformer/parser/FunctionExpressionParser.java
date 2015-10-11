@@ -3,7 +3,7 @@ package wazi.jsontransformer.parser;
 import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.FunctionExpression;
-import wazi.jsontransformer.expression.SymbolExpression;
+import wazi.jsontransformer.expression.SymbolLiteral;
 import wazi.jsontransformer.expression.helper.function.Functions;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
@@ -12,11 +12,11 @@ import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FunctionParser implements TokenParser<FunctionExpression> {
+public class FunctionExpressionParser implements TokenParser<FunctionExpression> {
 
 	private MultiChoiceParser<BaseExpression> expressionParser;
 
-	public FunctionParser(ExpressionParser expressionParser) {
+	public FunctionExpressionParser(ExpressionParser expressionParser) {
 		this.expressionParser = expressionParser;
 	}
 
@@ -42,7 +42,7 @@ public class FunctionParser implements TokenParser<FunctionExpression> {
 		functionExpression.setArguments(readArgumentList(jtex));
 
 		if (Functions.SOURCE_PROCESSING_FUNCTIONS.contains(functionExpression.getClassName() + "." + functionExpression.getMethodName())) {
-			functionExpression.addArgument(new SymbolExpression(FunctionExpression.SRC_JSON_SYMBOL, -1, -1));
+			functionExpression.addArgument(new SymbolLiteral(FunctionExpression.SRC_JSON_SYMBOL, -1, -1));
 		}
 
 		functionExpression.setEnd(jtex.getNextPosition() - 1);

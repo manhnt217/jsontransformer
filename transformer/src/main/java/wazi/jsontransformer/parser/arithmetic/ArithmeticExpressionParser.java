@@ -4,7 +4,7 @@ import wazi.jsontransformer.expression.arithmetic.ArithmeticExpression;
 import wazi.jsontransformer.expression.arithmetic.TermExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.parser.literal.NumberExpressionParser;
+import wazi.jsontransformer.parser.literal.NumberLiteralParser;
 
 /**
  * Created by wazi on 2015-09-20 020.
@@ -13,10 +13,10 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 
 	TermExpressionParser termParser;
 	FactorExpressionParser factorParser;
-	NumberExpressionParser numberExpressionParser;
+	NumberLiteralParser numberLiteralParser;
 
 	public ArithmeticExpressionParser() {
-		numberExpressionParser = new NumberExpressionParser();
+		numberLiteralParser = new NumberLiteralParser();
 		factorParser = new FactorExpressionParser(this);
 		termParser = new TermExpressionParser(factorParser);
 	}
