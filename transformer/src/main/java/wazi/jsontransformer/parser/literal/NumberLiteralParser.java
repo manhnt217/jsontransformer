@@ -1,16 +1,16 @@
 package wazi.jsontransformer.parser.literal;
 
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.expression.literal.NumberExpression;
+import wazi.jsontransformer.expression.literal.NumberLiteral;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.exception.parser.EndOfJtexException;
 import wazi.jsontransformer.exception.parser.ParserException;
 
-public class NumberExpressionParser implements TokenParser<NumberExpression> {
+public class NumberLiteralParser implements TokenParser<NumberLiteral> {
 
 	private StringBuilder numberBuilder;
 
-	public NumberExpression read(JTEX jtex) {
+	public NumberLiteral read(JTEX jtex) {
 		numberBuilder = new StringBuilder();
 		boolean isInteger = true;
 		EndOfJtexException endOfJtexException = null;
@@ -36,9 +36,9 @@ public class NumberExpressionParser implements TokenParser<NumberExpression> {
 		
 		try {
 			if (isInteger) {
-				return new NumberExpression(Integer.parseInt(numberBuilder.toString()), jtex.getNextPosition() - numberBuilder.length(), jtex.getNextPosition() - 1);
+				return new NumberLiteral(Integer.parseInt(numberBuilder.toString()), jtex.getNextPosition() - numberBuilder.length(), jtex.getNextPosition() - 1);
 			} else {
-				return new NumberExpression(Double.parseDouble(numberBuilder.toString()), jtex.getNextPosition() - numberBuilder.length(), jtex.getNextPosition() - 1);
+				return new NumberLiteral(Double.parseDouble(numberBuilder.toString()), jtex.getNextPosition() - numberBuilder.length(), jtex.getNextPosition() - 1);
 			}
 		} catch (NumberFormatException ex) {
 			if(endOfJtexException != null) {

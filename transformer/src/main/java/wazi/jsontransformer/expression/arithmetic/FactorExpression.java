@@ -37,7 +37,7 @@ public class FactorExpression extends BaseExpression {
 				throw new EvaluationException(e.getMessage(), e, baseExpression.getStart(), baseExpression.getEnd());
 			}
 		}
-		return n.exe(Operator.Op.MULTIPLY, new Num(isPositive ? 1 : -1));
+		return n.apply(Operator.Op.MULTIPLY, new Num(isPositive ? 1 : -1));
 	}
 
 	public void setBaseExpression(BaseExpression baseExpression) {

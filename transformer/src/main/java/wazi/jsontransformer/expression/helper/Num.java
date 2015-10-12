@@ -47,7 +47,7 @@ public class Num {
 		}
 	}
 
-	public Num exe(Operator.Op op, Num that) {
+	public Num apply(Operator.Op op, Num that) {
 		if (this.isInteger && that.isInteger) {
 			switch (op) {
 				case PLUS:
@@ -84,6 +84,19 @@ public class Num {
 				default:
 					throw new IllegalArgumentException("Expected an arithmetic operator (+, -, *, /, div, %). Got " + op.toString());
 			}
+		}
+	}
+
+	public Boolean is(Operator.Op op, Num that) {
+		switch (op) {
+			case LT: return this.getDouble() < that.getDouble();
+			case LTE: return this.getDouble() <= that.getDouble();
+			case GT: return this.getDouble() > that.getDouble();
+			case GTE: return this.getDouble() >= that.getDouble();
+			case EQ: return this.getDouble() >= that.getDouble();
+			case NEQ: return this.getDouble() != that.getDouble();
+			default:
+				throw new IllegalArgumentException("Expected an relation operator (<,>, <=, >=, =). Got " + op.toString());
 		}
 	}
 }

@@ -5,6 +5,7 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.helper.Num;
 import wazi.jsontransformer.expression.operator.Operator;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,13 @@ import java.util.Map;
  * Created by wazi on 10/9/15.
  */
 public class TermExpression extends BaseExpression {
+
+	public static final List<Operator.Op> OPERATORS = Arrays.asList(
+			Operator.Op.MULTIPLY,
+			Operator.Op.DIV,
+			Operator.Op.DIVIDE,
+			Operator.Op.MOD
+	);
 
 	public List<FactorExpression> factors;
 	List<Operator> operators;
@@ -49,7 +57,7 @@ public class TermExpression extends BaseExpression {
 			Num factorValue = (Num) factors.get(i).eval(symbolMap);
 
 			try {
-				product = product.exe(operators.get(i).op, factorValue);
+				product = product.apply(operators.get(i).op, factorValue);
 			} catch (IllegalArgumentException e) {
 				throw new EvaluationException("Invalid arithmatic operator", e, i > 0 ? factors.get(i - 1).getEnd() : this.getStart(), factors.get(i).getStart());
 			}

@@ -1,16 +1,16 @@
 package wazi.jsontransformer.parser.literal;
 
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.expression.literal.StringExpression;
+import wazi.jsontransformer.expression.literal.StringLiteral;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
-public class StringExpressionParser implements TokenParser<StringExpression> {
+public class StringLiteralParser implements TokenParser<StringLiteral> {
 
 	StringBuilder builder;
 
 	@Override
-	public StringExpression read(JTEX jtex) {
+	public StringLiteral read(JTEX jtex) {
 		int start = jtex.getNextPosition();
 		if (jtex.next() != '"')
 			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading string. Expected \".");
@@ -21,7 +21,7 @@ public class StringExpressionParser implements TokenParser<StringExpression> {
 		}
 		jtex.next();//character quote (")
 
-		return new StringExpression(builder.toString(), start, jtex.getNextPosition() - 1);// 2 is for open and close quote character
+		return new StringLiteral(builder.toString(), start, jtex.getNextPosition() - 1);// 2 is for open and close quote character
 	}
 
 	public Character readChar(JTEX jtex) {

@@ -1,20 +1,22 @@
 package wazi.jsontransformer.parser;
 
+import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.FunctionExpression;
+import wazi.jsontransformer.expression.SymbolLiteral;
+import wazi.jsontransformer.expression.helper.function.Functions;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
-import wazi.jsontransformer.parser.helper.ExpressionParser;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class FunctionParser implements TokenParser<FunctionExpression> {
+public class FunctionExpressionParser implements TokenParser<FunctionExpression> {
 
 	private MultiChoiceParser<BaseExpression> expressionParser;
 
-	public FunctionParser(ExpressionParser expressionParser) {
+	public FunctionExpressionParser(ExpressionParser expressionParser) {
 		this.expressionParser = expressionParser;
 	}
 
@@ -26,6 +28,7 @@ public class FunctionParser implements TokenParser<FunctionExpression> {
 		FunctionExpression functionExpression = new FunctionExpression();
 		functionExpression.setStart(jtex.getNextPosition());
 
+		//If first character is upper case, we read a class name
 		if ('A' <= jtex.retrieveNext() && jtex.retrieveNext() <= 'Z') {
 			functionExpression.setClassName(readClassName(jtex));
 		} else {
@@ -38,16 +41,12 @@ public class FunctionParser implements TokenParser<FunctionExpression> {
 
 		functionExpression.setArguments(readArgumentList(jtex));
 
+		if (Functions.SOURCE_PROCESSING_FUNCTIONS.contains(functionExpression.getClassName() + "." + functionExpression.getMethodName())) {
+			functionExpression.addArgument(new SymbolLiteral(FunctionExpression.SRC_JSON_SYMBOL, -1, -1));
+		}
+
 		functionExpression.setEnd(jtex.getNextPosition() - 1);
 		return functionExpression;
-	}
-
-	private String readMethodName(JTEX jtex) {
-		StringBuilder methodName = new StringBuilder();
-		while (isValidJavaNameCharacter(jtex.retrieveNext())) {
-			methodName.append(jtex.next());
-		}
-		return methodName.toString();
 	}
 
 	private String readClassName(JTEX jtex) {
@@ -61,6 +60,15 @@ public class FunctionParser implements TokenParser<FunctionExpression> {
 			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Missing dot sign after class name.");
 		}
 		return className.toString();
+	}
+
+	private String readMethodName(JTEX jtex) {
+		StringBuilder methodName = new StringBuilder();
+		while (isValidJavaNameCharacter(jtex.retrieveNext())) {
+			methodName.append(jtex.next());
+		}
+		if (methodName.length() == 0) throw new ParserException(jtex.getNextPosition(), "Method name cannot be empty");
+		return methodName.toString();
 	}
 
 	private List<BaseExpression> readArgumentList(JTEX jtex) {

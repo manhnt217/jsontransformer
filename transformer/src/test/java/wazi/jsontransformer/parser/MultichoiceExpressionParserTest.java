@@ -2,14 +2,14 @@ package wazi.jsontransformer.parser;
 
 import org.junit.Test;
 import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.expression.LiteralExpression;
+import wazi.jsontransformer.expression.literal.LiteralExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.EndOfJtexException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
-import wazi.jsontransformer.parser.literal.BooleanExpressionParser;
-import wazi.jsontransformer.parser.literal.NumberExpressionParser;
-import wazi.jsontransformer.parser.literal.StringExpressionParser;
+import wazi.jsontransformer.parser.literal.BooleanLiteralParser;
+import wazi.jsontransformer.parser.literal.NumberLiteralParser;
+import wazi.jsontransformer.parser.literal.StringLiteralParser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -17,11 +17,11 @@ import static org.junit.Assert.fail;
 /**
  * Created by wazi on 9/25/15.
  */
-public class MultiChoiceParserTest {
+public class MultiChoiceExpressionParserTest {
 
 	@Test
 	public void testReadExpression() throws Exception {
-		MultiChoiceParser<BaseExpression> parser = new MultiChoiceParser(new NumberExpressionParser(), new StringExpressionParser(), new BooleanExpressionParser());
+		MultiChoiceParser<BaseExpression> parser = new MultiChoiceParser(new NumberLiteralParser(), new StringLiteralParser(), new BooleanLiteralParser());
 		JTEX jtex = new JTEX("1234e13adf");
 		BaseExpression ex1 = parser.read(jtex);
 		assertEquals(0, ex1.getStart());
@@ -69,9 +69,9 @@ public class MultiChoiceParserTest {
 		@Override
 		public LiteralExpression read(JTEX jtex) {
 			int start = jtex.getNextPosition();
-			NumberExpressionParser numberExpressionParser = new NumberExpressionParser();
-			StringExpressionParser stringExpressionParser = new StringExpressionParser();
-			return new LiteralExpression(numberExpressionParser.read(jtex).eval(null).toString() + stringExpressionParser.read(jtex).eval(null), start, jtex.getNextPosition() - 1);
+			NumberLiteralParser numberLiteralParser = new NumberLiteralParser();
+			StringLiteralParser stringLiteralParser = new StringLiteralParser();
+			return new LiteralExpression(numberLiteralParser.read(jtex).eval(null).toString() + stringLiteralParser.read(jtex).eval(null), start, jtex.getNextPosition() - 1);
 		}
 	}
 }

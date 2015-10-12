@@ -1,4 +1,6 @@
-package wazi.jsontransformer.expression;
+package wazi.jsontransformer.expression.literal;
+
+import wazi.jsontransformer.expression.BaseExpression;
 
 import java.util.Map;
 
