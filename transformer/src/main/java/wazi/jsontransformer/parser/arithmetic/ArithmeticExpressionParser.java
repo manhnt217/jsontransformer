@@ -22,7 +22,6 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 	}
 
 	public ArithmeticExpression read(JTEX jtex) {
-		boolean parenthesis = false;
 		ArithmeticExpression arithmeticExpression = new ArithmeticExpression();
 		arithmeticExpression.setStart(jtex.getNextPosition());
 
@@ -59,7 +58,7 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 			arithmeticExpression.addTerm(termExpression);
 			jtex.skipBlank();
 		}
-		arithmeticExpression.setEnd(jtex.getNextPosition() - 1);
+		arithmeticExpression.setEnd(termExpression.getEnd());
 		return arithmeticExpression;
 	}
 

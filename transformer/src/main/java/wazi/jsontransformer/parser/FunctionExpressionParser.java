@@ -14,10 +14,10 @@ import java.util.List;
 
 public class FunctionExpressionParser implements TokenParser<FunctionExpression> {
 
-	private MultiChoiceParser<BaseExpression> expressionParser;
+	private MultiChoiceParser<BaseExpression> expressionParser = new MultiChoiceParser<>(true);
 
-	public FunctionExpressionParser(ExpressionParser expressionParser) {
-		this.expressionParser = expressionParser;
+	public void addSubParsers(TokenParser<? extends BaseExpression>... parsers) {
+		expressionParser.addAllParsers(parsers);
 	}
 
 	@Override

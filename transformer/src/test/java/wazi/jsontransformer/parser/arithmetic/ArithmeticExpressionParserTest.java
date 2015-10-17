@@ -36,10 +36,10 @@ public class ArithmeticExpressionParserTest extends TestCase {
 	@Test
 	public void testEvaluateExpression2() {
 		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
-		BaseExpression expression = parser.read(new JTEX("64 / (10 - 2)"));
+		BaseExpression expression = parser.read(new JTEX("64 / (2*((10 - 2)))"));
 		assertEquals(0, expression.getStart());
-		assertEquals(12, expression.getEnd());
-		assertEquals(8, expression.eval(null));
+		assertEquals(18, expression.getEnd());
+		assertEquals(4, expression.eval(null));
 	}
 
 	@Test

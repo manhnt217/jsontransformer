@@ -42,7 +42,7 @@ class FactorExpressionParser implements TokenParser<FactorExpression> {
 		factorExpression.setIsPositive(isPositiveFactor);
 
 		jtex.skipBlank();
-		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<BaseExpression>(
+		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<>(
 				numberLiteralParser,
 				symbolExpressionParser,
 				//custom arithmetic expression parser

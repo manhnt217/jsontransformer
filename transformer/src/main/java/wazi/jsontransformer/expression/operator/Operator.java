@@ -19,20 +19,15 @@ public class Operator extends Token {
 		this.op = Op.parseOp(op);
 	}
 
-	public enum Op {
+	public enum Op {//binary operators only
 		//Numeric operators
 		PLUS("+"), MINUS("-"), MULTIPLY("*"), DIVIDE("/"), DIV("div"), MOD("%"),
 
 		//Relational operators
 		LT("<"), GT(">"), LTE("<="), GTE(">="), EQ("="), NEQ("!="),
 
-		//String operators
-		CONCAT("."),
-
 		//Bool operators
 		AND("and"), OR("or"),
-
-		//Bit operators
 		;
 
 		private String opString;

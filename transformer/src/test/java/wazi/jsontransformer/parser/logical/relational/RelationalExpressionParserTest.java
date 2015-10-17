@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 public class RelationalExpressionParserTest {
 
 	@Test
-	public void testReadExpression() throws Exception {
+	public void testReadExpression() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
 		RelationalExpression relationalExpression = parser.read(new JTEX("- 1 > 2 * 3"));
@@ -25,7 +25,7 @@ public class RelationalExpressionParserTest {
 	}
 
 	@Test
-	public void testEvaluateExpression() throws Exception {
+	public void testEvaluateExpression() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
 		RelationalExpression relationalExpression = parser.read(new JTEX("- 64 / (10 - 2) >= -(2 * 3 / #a + 6)"));
@@ -37,7 +37,7 @@ public class RelationalExpressionParserTest {
 	}
 
 	@Test
-	public void testEvaluateExpression2() throws Exception {
+	public void testEvaluateExpression2() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
 		RelationalExpression relationalExpression = parser.read(new JTEX("64 / (10 - 2) != 3 * 3 / #a + 6"));
@@ -52,7 +52,7 @@ public class RelationalExpressionParserTest {
 	}
 
 	@Test
-	public void testEvaluateExpression3() throws Exception {
+	public void testEvaluateExpression3() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
 		RelationalExpression relationalExpression = parser.read(new JTEX("(64 / (10 - 2) = 3 * 3 / #a + 6) = false"));
@@ -67,10 +67,10 @@ public class RelationalExpressionParserTest {
 	}
 
 	@Test
-	public void testEvaluateExpression4() throws Exception {
+	public void testEvaluateExpression4() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
-		RelationalExpression relationalExpression = parser.read(new JTEX("((64 / (10 - 2) = 3 * 3 / #a + 6) = false) = false"));
+		RelationalExpression relationalExpression = parser.read(new JTEX("false = ((64 / (10 - 2) = 3 * 3 / #a + 6) = false)"));
 		Object val = relationalExpression.eval(new HashMap<String, Object>() {{
 			put("#a", 3);
 		}});
@@ -82,10 +82,18 @@ public class RelationalExpressionParserTest {
 	}
 
 	@Test
-	public void testEvaluateExpression5() throws Exception {
+	public void testEvaluateExpression5() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
-		RelationalExpression relationalExpression = parser.read(new JTEX("9 > 2 * 3 != 11"));
+		RelationalExpression relationalExpression = parser.read(new JTEX("(7+8) < 15"));
+		assertEquals(false, relationalExpression.eval(null));
+	}
+
+	@Test
+	public void testEvaluateExpression6() {
+		ExpressionParser expressionParser = new ExpressionParser();
+		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
+		RelationalExpression relationalExpression = parser.read(new JTEX("'12.1' = 12.1"));
 		assertEquals(true, relationalExpression.eval(null));
 	}
 }

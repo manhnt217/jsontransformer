@@ -12,8 +12,8 @@ public class StringLiteralParser implements TokenParser<StringLiteral> {
 	@Override
 	public StringLiteral read(JTEX jtex) {
 		int start = jtex.getNextPosition();
-		if (jtex.next() != '"')
-			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading string. Expected \".");
+		if (jtex.next() != '\'')
+			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading string. Expected (').");
 		builder = new StringBuilder();
 		Character nextChar;
 		while ((nextChar = readChar(jtex)) != null) {
@@ -25,14 +25,13 @@ public class StringLiteralParser implements TokenParser<StringLiteral> {
 	}
 
 	public Character readChar(JTEX jtex) {
-		if (jtex.retrieveNext() == '"') {
+		if (jtex.retrieveNext() == '\'') {
 			return null;// end of string
 		}
 		if (jtex.retrieveNext() != '\\')
 			return jtex.next();
 
 		jtex.next(); // character '\'
-		//@formatter:off
 		switch (jtex.next()) {
 			case 't':
 				return '\t';
@@ -46,8 +45,6 @@ public class StringLiteralParser implements TokenParser<StringLiteral> {
 				return '\f';
 			case '\'':
 				return '\'';
-			case '"':
-				return '"';
 			case '\\':
 				return '\\';
 			case 'u':
@@ -55,7 +52,6 @@ public class StringLiteralParser implements TokenParser<StringLiteral> {
 			default:
 				throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading escaped character.");
 		}
-		//@formatter:on
 	}
 
 	public Character readUnicodeCharacter(JTEX jtex) {

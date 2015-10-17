@@ -6,6 +6,7 @@ import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.parser.TokenParser;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,13 +16,10 @@ import java.util.List;
 public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 
 	List<TokenParser<? extends T>> parsers;
-	boolean longestMatch = false;//return longest matched token, default = false
+	private final boolean longestMatch;//return longest matched token, default = false
 
-	public MultiChoiceParser() {
-		this((TokenParser[])null);
-	}
-
-	public MultiChoiceParser(TokenParser<? extends T>... parsers) {
+	public MultiChoiceParser(boolean longestMatch, TokenParser<? extends T>... parsers) {
+		this.longestMatch = longestMatch;
 		this.parsers = new LinkedList<>();
 		if (parsers != null) {
 			for (TokenParser<? extends T> parser : parsers) {
@@ -30,8 +28,24 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 		}
 	}
 
+	public MultiChoiceParser() {
+		this(true, (TokenParser[]) null);
+	}
+
+	public MultiChoiceParser(boolean longestMatch) {
+		this(longestMatch, (TokenParser[]) null);
+	}
+
+	public MultiChoiceParser(TokenParser<? extends T>... parsers) {
+		this(true, parsers);
+	}
+
 	public void addParser(TokenParser<? extends T> parser) {
 		this.parsers.add(parser);
+	}
+
+	public void addAllParsers(TokenParser<? extends T>... parsers) {
+		this.parsers.addAll(Arrays.asList(parsers));
 	}
 
 //	@Override
@@ -67,7 +81,10 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 			try {
 				JTEX jtexCopy = new JTEX(jtex.getString(), jtex.getNextPosition());
 				T expression = parser.read(jtexCopy);
-				if (jtexCopy.getNextPosition() > furthestPosition) {
+				if (!longestMatch){
+					jtex.setNextPosition(jtexCopy.getNextPosition());
+					return expression;
+				} else if (jtexCopy.getNextPosition() > furthestPosition) {
 					furthestPosition = jtexCopy.getNextPosition();
 					exp = expression;
 				}
@@ -78,7 +95,7 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 			}
 		}
 
-		if (exp != null){
+		if (exp != null) {
 			jtex.setNextPosition(furthestPosition);
 			return exp;
 		}
