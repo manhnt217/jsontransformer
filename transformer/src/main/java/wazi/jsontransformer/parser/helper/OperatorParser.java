@@ -23,7 +23,7 @@ public class OperatorParser implements TokenParser<Operator> {
 	private MultiChoiceParser<Token> operatorTokenParser;
 
 	public OperatorParser() {
-		operatorTokenParser = new MultiChoiceParser<>(opParsers);
+		operatorTokenParser = new MultiChoiceParser<>(true, opParsers); //longestMatch = true
 	}
 
 	@Override

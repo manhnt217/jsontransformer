@@ -29,10 +29,10 @@ public class MultiChoiceExpressionParserTest {
 		assertEquals(1234e13, ex1.eval(null));
 		assertEquals(7, jtex.getNextPosition());
 
-		BaseExpression ex2 = parser.read(new JTEX("\"Hello \\\"World\\\"\\u3287\""));
+		BaseExpression ex2 = parser.read(new JTEX("'Hello \\'World\\'㊇'"));
 		assertEquals(0, ex2.getStart());
-		assertEquals(22, ex2.getEnd());
-		assertEquals("Hello \"World\"\u3287", ex2.eval(null));
+		assertEquals(17, ex2.getEnd());
+		assertEquals("Hello 'World'\u3287", ex2.eval(null));
 
 
 		try {
@@ -43,7 +43,7 @@ public class MultiChoiceExpressionParserTest {
 		}
 
 		try {
-			parser.read(new JTEX("\"- 234a"));
+			parser.read(new JTEX("'- 234a"));
 		} catch (EndOfJtexException e) {
 			assertEquals(7, e.getPosition());
 		}
@@ -56,7 +56,7 @@ public class MultiChoiceExpressionParserTest {
 
 	@Test
 	public void test2() {
-		JTEX jtex = new JTEX("ửaf-0234.3e11\"Test\"", 3);
+		JTEX jtex = new JTEX("ửaf-0234.3e11'Test'", 3);
 		NumberThenStringParser parser = new NumberThenStringParser();
 		BaseExpression expression = parser.read(jtex);
 		assertEquals(3, expression.getStart());

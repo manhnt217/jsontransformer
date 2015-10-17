@@ -4,9 +4,8 @@ import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.expression.operator.Operator;
 import wazi.jsontransformer.expression.logical.relational.RelationalExpression;
-import wazi.jsontransformer.parser.ExpressionParser;
+import wazi.jsontransformer.expression.operator.Operator;
 import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 import wazi.jsontransformer.parser.helper.OperatorParser;
@@ -16,22 +15,11 @@ import wazi.jsontransformer.parser.helper.OperatorParser;
  */
 public class RelationalExpressionParser implements TokenParser<RelationalExpression> {
 
-	private MultiChoiceParser<BaseExpression> expressionParser;
+	private final MultiChoiceParser<BaseExpression> expressionParser = new MultiChoiceParser<>(false);
 
-	public RelationalExpressionParser(ExpressionParser expressionParser) {
-		this.expressionParser = new MultiChoiceParser<BaseExpression>() {
-			{
-				addParser(expressionParser.nullLiteralParser);
-				addParser(expressionParser.booleanLiteralParser);
-				addParser(expressionParser.stringLiteralParser);
-				addParser(expressionParser.symbolParser);
-				addParser(expressionParser.arithmeticExpressionParser);
-				addParser(expressionParser.functionExpressionParser);
-				addParser(new NestedRelationalExpressionParser(RelationalExpressionParser.this));
-			}
-		};
+	public void addSubParsers(TokenParser<? extends BaseExpression>... parsers) {
+		expressionParser.addAllParsers(parsers);
 	}
-
 	@Override
 	public RelationalExpression read(JTEX jtex) {
 		jtex.skipBlank();
@@ -41,6 +29,7 @@ public class RelationalExpressionParser implements TokenParser<RelationalExpress
 		relationalExpression.addFirstExpression(expressionParser.read(jtex));
 		jtex.skipBlank();
 		OperatorParser operatorParser = new OperatorParser();
+		boolean hasOperator = false;
 		while (true) {
 			Operator operator;
 			try {
@@ -49,19 +38,23 @@ public class RelationalExpressionParser implements TokenParser<RelationalExpress
 				break;
 			}
 			if (!RelationalExpression.OPERATORS.contains(operator.op)) {
-				jtex.setNextPosition(operator.getStart());//rewind
+				jtex.setNextPosition(operator.getStart());//rewind if operator is invalid
 				break;
 			}
 			jtex.skipBlank();
 			relationalExpression.addExpression(operator, expressionParser.read(jtex));
+			hasOperator = true;
 			jtex.skipBlank();
 		}
+
+		if (!hasOperator)
+			throw new ParserException(jtex.getNextPosition(), "Relational exp must have at least 1 relational operator (>, <, =, <=, =, !=)");
 
 		relationalExpression.setEnd(jtex.getNextPosition() - 1);
 		return relationalExpression;
 	}
 
-	static class NestedRelationalExpressionParser implements TokenParser<RelationalExpression> {
+	public static class NestedRelationalExpressionParser implements TokenParser<RelationalExpression> {
 
 		private final RelationalExpressionParser relationalExpressionParser;
 
@@ -73,14 +66,17 @@ public class RelationalExpressionParser implements TokenParser<RelationalExpress
 		public RelationalExpression read(JTEX jtex) {
 			jtex.skipBlank();
 			if (jtex.next() != '(') {
-				throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "Expected '(");
+				throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expected '(");
 			}
 			jtex.skipBlank();
 			RelationalExpression relationalExpression = relationalExpressionParser.read(jtex);
 			jtex.skipBlank();
 			if (jtex.next() != ')') {
-				throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "Expected ')");
+				throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expected ')");
 			}
+
+			relationalExpression.setStart(relationalExpression.getStart() - 1); //for character '('
+			relationalExpression.setEnd(relationalExpression.getEnd() + 1); // for character ')'
 			return relationalExpression;
 		}
 	}

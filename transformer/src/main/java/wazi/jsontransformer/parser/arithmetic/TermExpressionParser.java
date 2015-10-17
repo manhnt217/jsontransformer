@@ -1,6 +1,7 @@
 package wazi.jsontransformer.parser.arithmetic;
 
 import wazi.jsontransformer.exception.parser.ParserException;
+import wazi.jsontransformer.expression.arithmetic.FactorExpression;
 import wazi.jsontransformer.expression.arithmetic.TermExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.operator.Operator;
@@ -27,7 +28,8 @@ class TermExpressionParser implements TokenParser<TermExpression> {
 		termExpression.setStart(jtex.getNextPosition());
 
 		Operator operator = new Operator(Operator.Op.MULTIPLY, -1, -1);
-		termExpression.addFactor(operator, factorParser.read(jtex));
+		FactorExpression factorExpression = factorParser.read(jtex);
+		termExpression.addFactor(operator, factorExpression);
 		jtex.skipBlank();
 
 		while (jtex.hasNext() && jtex.retrieveNext() != '+' && jtex.retrieveNext() != '-') {
@@ -41,11 +43,12 @@ class TermExpressionParser implements TokenParser<TermExpression> {
 				break;
 			}
 			jtex.skipBlank();
-			termExpression.addFactor(operator, factorParser.read(jtex));
+			factorExpression = factorParser.read(jtex);
+			termExpression.addFactor(operator, factorExpression);
 			jtex.skipBlank();
 		}
 
-		termExpression.setEnd(jtex.getNextPosition() - 1);
+		termExpression.setEnd(factorExpression.getEnd());
 		return termExpression;
 	}
 

@@ -31,7 +31,7 @@ public class FunctionExpressionParserTest {
 		ExpressionParser exParser = new ExpressionParser();
 		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser
-				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));
+				.read(new JTEX("C.choice(C.ift(3 > 5, '3 > 5'), C.ift(10 < 5, '10 < 5'), C.ift(true, 'Default case'))"));
 		assertEqualsFunction(funcEx, FunctionExpression.DEFAULT_FUNCTION_PACKAGE + "C", "choice", 0);
 		assertEquals(3, funcEx.getArguments().size());
 	}
@@ -41,7 +41,7 @@ public class FunctionExpressionParserTest {
 
 		ExpressionParser exParser = new ExpressionParser();
 		FunctionExpressionParser parser = exParser.functionExpressionParser;
-		FunctionExpression funcEx = parser.read(new JTEX("concat(1 + 2, \"adf\")"));
+		FunctionExpression funcEx = parser.read(new JTEX("concat(1 + 2, 'adf')"));
 		assertEquals("3adf", funcEx.eval(null));
 	}
 
@@ -51,11 +51,11 @@ public class FunctionExpressionParserTest {
 		ExpressionParser exParser = new ExpressionParser();
 		FunctionExpressionParser parser = exParser.functionExpressionParser;
 		FunctionExpression funcEx = parser
-				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.lt(10, 5), \"10 < 5\"), C.ift(true, \"Default case\"))"));//notice I.lt(10, 5)
+				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), '3 > 5'), C.ift(I.lt(10, 5), '10 < 5'), C.ift(true, 'Default case'))"));//notice I.lt(10, 5)
 		assertEquals("Default case", funcEx.eval(null));
 
 		FunctionExpression funcEx2 = parser
-				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), \"3 > 5\"), C.ift(I.gt(10, 5), \"10 > 5\"), C.ift(true, \"Default case\"))"));//notice I.gt(10, 5)
+				.read(new JTEX("C.choice(C.ift(I.gt(3, 5), '3 > 5'), C.ift(I.gt(10, 5), '10 > 5'), C.ift(true, 'Default case'))"));//notice I.gt(10, 5)
 		assertEquals("10 > 5", funcEx2.eval(null));
 	}
 
@@ -67,7 +67,7 @@ public class FunctionExpressionParserTest {
 
 		ExpressionParser exParser = new ExpressionParser();
 		FunctionExpressionParser parser = exParser.functionExpressionParser;
-		FunctionExpression funcEx = parser.read(new JTEX("concat(2, p(\"$.status\"))"));
+		FunctionExpression funcEx = parser.read(new JTEX("concat(2, p('$.status'))"));
 		assertEquals("2OK", funcEx.eval(
 				new HashMap<String, Object>() {{
 					put(FunctionExpression.SRC_JSON_SYMBOL, document);
