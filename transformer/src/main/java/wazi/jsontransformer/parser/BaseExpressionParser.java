@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by wazi on 2015-10-17 017.
  */
-public abstract class ComplexExpressionParser<T extends BaseExpression> implements TokenParser<T> {
+public abstract class BaseExpressionParser<T extends BaseExpression> implements TokenParser<T> {
 
 	protected MultiChoiceParser<BaseExpression> expressionParser = new MultiChoiceParser<>();
 	int nestedLevel = 0;

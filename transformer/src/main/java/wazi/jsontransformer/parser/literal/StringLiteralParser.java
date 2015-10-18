@@ -3,14 +3,14 @@ package wazi.jsontransformer.parser.literal;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.StringLiteral;
-import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.parser.BaseExpressionParser;
 
-public class StringLiteralParser implements TokenParser<StringLiteral> {
+public class StringLiteralParser extends BaseExpressionParser<StringLiteral> {
 
 	StringBuilder builder;
 
 	@Override
-	public StringLiteral read(JTEX jtex) {
+	public StringLiteral read0(JTEX jtex) {
 		int start = jtex.getNextPosition();
 		if (jtex.next() != '\'')
 			throw new UnexpectedCharacterException(jtex.getNextPosition(), jtex.current(), "Exception while reading string. Expected (').");

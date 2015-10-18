@@ -57,7 +57,7 @@ public class IfExpressionParserTest {
 	public void testEvaluateExpression3() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		IfExpressionParser ifExpressionParser = expressionParser.ifExpressionParser;
-		IfExpression ifExpression = ifExpressionParser.read(new JTEX("if 3 > 5 then '3 > 5' else if 5 <= 5 then '10 < 5' else 'Default case'"));
-		assertEquals("10 < 5", ifExpression.eval(null));
+		IfExpression ifExpression = ifExpressionParser.read(new JTEX("if 3 > 5 then '3 > 5' else if 5 < 5 then '10 < 5' else (((('Default case'))))"));
+		assertEquals("Default case", ifExpression.eval(null));
 	}
 }

@@ -3,25 +3,22 @@ package wazi.jsontransformer.parser.arithmetic;
 import wazi.jsontransformer.expression.arithmetic.ArithmeticExpression;
 import wazi.jsontransformer.expression.arithmetic.TermExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.parser.literal.NumberLiteralParser;
+import wazi.jsontransformer.parser.BaseExpressionParser;
 
 /**
  * Created by wazi on 2015-09-20 020.
  */
-public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpression> {
+public class ArithmeticExpressionParser extends BaseExpressionParser<ArithmeticExpression> {
 
 	TermExpressionParser termParser;
 	FactorExpressionParser factorParser;
-	NumberLiteralParser numberLiteralParser;
 
 	public ArithmeticExpressionParser() {
-		numberLiteralParser = new NumberLiteralParser();
 		factorParser = new FactorExpressionParser(this);
 		termParser = new TermExpressionParser(factorParser);
 	}
 
-	public ArithmeticExpression read(JTEX jtex) {
+	public ArithmeticExpression read0(JTEX jtex) {
 		ArithmeticExpression arithmeticExpression = new ArithmeticExpression();
 		arithmeticExpression.setStart(jtex.getNextPosition());
 
@@ -46,11 +43,7 @@ public class ArithmeticExpressionParser implements TokenParser<ArithmeticExpress
 
 		while (jtex.hasNext() && (jtex.retrieveNext() == '+' || jtex.retrieveNext() == '-')) {
 			//read consequence terms
-			if (jtex.retrieveNext() == '+') {
-				isPositiveTerm = true;
-			} else {
-				isPositiveTerm = false;
-			}
+			isPositiveTerm = jtex.retrieveNext() == '+';
 			jtex.next();
 			jtex.skipBlank();
 			termExpression = termParser.read(jtex);

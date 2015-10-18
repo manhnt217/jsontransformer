@@ -8,6 +8,7 @@ import wazi.jsontransformer.expression.arithmetic.FactorExpression;
 import wazi.jsontransformer.expression.arithmetic.TermExpression;
 import wazi.jsontransformer.expression.helper.Num;
 import wazi.jsontransformer.expression.jtex.JTEX;
+import wazi.jsontransformer.parser.ExpressionParser;
 
 import java.util.HashMap;
 
@@ -18,7 +19,8 @@ public class ArithmeticExpressionParserTest extends TestCase {
 
 	@Test
 	public void testParseExpression() {
-		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
 		ArithmeticExpression expression = parser.read(new JTEX("- 1 <> 2 * 3"));
 		assertEquals(1, expression.terms.size());
 		assertEquals(1, expression.terms.get(0).factors.size());
@@ -26,14 +28,16 @@ public class ArithmeticExpressionParserTest extends TestCase {
 
 	@Test
 	public void testEvaluateExpression() {
-		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
 		BaseExpression expression = parser.read(new JTEX("- (- 1 - 2) * 3"));
 		assertEquals(9, expression.eval(null));
 	}
 
 	@Test
 	public void testEvaluateExpression2() {
-		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
 		BaseExpression expression = parser.read(new JTEX("64 / (2*((10 - 2)))"));
 		assertEquals(0, expression.getStart());
 		assertEquals(18, expression.getEnd());
@@ -42,7 +46,8 @@ public class ArithmeticExpressionParserTest extends TestCase {
 
 	@Test
 	public void testEvaluateExpression3() {
-		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
 		BaseExpression expression = parser.read(new JTEX("(- 6 + 9 div 4) * - (5 -11)"));
 		assertEquals(0, expression.getStart());
 		assertEquals(26, expression.getEnd());
@@ -51,10 +56,11 @@ public class ArithmeticExpressionParserTest extends TestCase {
 
 	@Test
 	public void testEvaluateExpression4() {
-		ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
-		BaseExpression expression = parser.read(new JTEX("#_d*(5-#abc)"));
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
+		BaseExpression expression = parser.read(new JTEX("#_d*(5-(((#abc))))"));
 		assertEquals(0, expression.getStart());
-		assertEquals(11, expression.getEnd());
+		assertEquals(17, expression.getEnd());
 		assertEquals(-12, expression.eval(new HashMap<String, Object>() {{
 			put("#abc", new Num(11));
 			put("#_d", new Num(2));
@@ -63,8 +69,9 @@ public class ArithmeticExpressionParserTest extends TestCase {
 
 	@Test
 	public void testFactorParser() {
-		ArithmeticExpressionParser arithmeticExpressionParser = new ArithmeticExpressionParser();
-		FactorExpressionParser factorParser = arithmeticExpressionParser.factorParser;
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
+		FactorExpressionParser factorParser = parser.factorParser;
 		BaseExpression expression = factorParser.read(new JTEX("-123"));
 		assertTrue(expression instanceof FactorExpression);
 		FactorExpression factorExpression = (FactorExpression) expression;
@@ -73,8 +80,9 @@ public class ArithmeticExpressionParserTest extends TestCase {
 
 	@Test
 	public void testTermParser() {
-		ArithmeticExpressionParser arithmeticExpressionParser = new ArithmeticExpressionParser();
-		TermExpressionParser termParser = arithmeticExpressionParser.termParser;
+		ExpressionParser expressionParser = new ExpressionParser();
+		ArithmeticExpressionParser parser = expressionParser.arithmeticExpressionParser;
+		TermExpressionParser termParser = parser.termParser;
 		JTEX jtex = new JTEX("1*2/3");
 		TermExpression termExpression = termParser.read(jtex);
 		assertEquals(0, termExpression.getStart());
