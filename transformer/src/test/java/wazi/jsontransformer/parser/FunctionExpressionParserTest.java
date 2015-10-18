@@ -11,7 +11,8 @@ import wazi.jsontransformer.expression.jtex.JTEX;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class FunctionExpressionParserTest {
 

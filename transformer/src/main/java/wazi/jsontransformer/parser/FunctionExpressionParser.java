@@ -1,27 +1,20 @@
 package wazi.jsontransformer.parser;
 
 import wazi.jsontransformer.exception.parser.ParserException;
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.FunctionExpression;
 import wazi.jsontransformer.expression.SymbolLiteral;
 import wazi.jsontransformer.expression.helper.function.Functions;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
-import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class FunctionExpressionParser implements TokenParser<FunctionExpression> {
-
-	private MultiChoiceParser<BaseExpression> expressionParser = new MultiChoiceParser<>(true);
-
-	public void addSubParsers(TokenParser<? extends BaseExpression>... parsers) {
-		expressionParser.addAllParsers(parsers);
-	}
+public class FunctionExpressionParser extends ComplexExpressionParser<FunctionExpression> {
 
 	@Override
-	public FunctionExpression read(JTEX jtex) {
+	public FunctionExpression read0(JTEX jtex) {
 
 		jtex.skipBlank();
 

@@ -5,7 +5,7 @@ import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.logical.LogicalExpression;
 import wazi.jsontransformer.parser.ExpressionParser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by wazi on 2015-10-15 015.
@@ -43,6 +43,8 @@ public class LogicalExpressionParserTest {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
 		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("(((((2 - 5 < 6) != true))))"));
+		assertEquals(0, logicalExpression.getStart());
+		assertEquals(26, logicalExpression.getEnd());
 		assertEquals(false, logicalExpression.eval(null));
 	}
 

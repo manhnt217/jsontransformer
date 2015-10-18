@@ -1,6 +1,5 @@
 package wazi.jsontransformer.parser;
 
-import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.Token;
 import wazi.jsontransformer.expression.jtex.JTEX;
 

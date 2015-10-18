@@ -4,7 +4,7 @@ import org.junit.Test;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.operator.Operator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by wazi on 2015-10-11 011.

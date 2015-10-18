@@ -1,8 +1,6 @@
 package wazi.jsontransformer.expression.logical;
 
-import wazi.jsontransformer.exception.EvaluationException;
 import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.expression.helper.Num;
 import wazi.jsontransformer.expression.operator.Operator;
 
 import java.util.Arrays;

@@ -1,10 +1,10 @@
 package wazi.jsontransformer.parser.literal;
 
 import org.junit.Test;
+import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.NumberLiteral;
-import wazi.jsontransformer.exception.parser.ParserException;
 
 import static org.junit.Assert.assertEquals;
 

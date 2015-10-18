@@ -1,9 +1,9 @@
 package wazi.jsontransformer.parser.helper;
 
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.Token;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
 /**
  * Created by wazi on 10/8/15.

@@ -1,12 +1,12 @@
-package wazi.jsontransformer.parser;
+package wazi.jsontransformer.parser.helper;
 
 import org.junit.Test;
-import wazi.jsontransformer.expression.BaseExpression;
-import wazi.jsontransformer.expression.literal.LiteralExpression;
-import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.EndOfJtexException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
-import wazi.jsontransformer.parser.helper.MultiChoiceParser;
+import wazi.jsontransformer.expression.BaseExpression;
+import wazi.jsontransformer.expression.jtex.JTEX;
+import wazi.jsontransformer.expression.literal.LiteralExpression;
+import wazi.jsontransformer.parser.TokenParser;
 import wazi.jsontransformer.parser.literal.BooleanLiteralParser;
 import wazi.jsontransformer.parser.literal.NumberLiteralParser;
 import wazi.jsontransformer.parser.literal.StringLiteralParser;
@@ -17,7 +17,7 @@ import static org.junit.Assert.fail;
 /**
  * Created by wazi on 9/25/15.
  */
-public class MultiChoiceExpressionParserTest {
+public class MultiChoiceParserTest {
 
 	@Test
 	public void testReadExpression() throws Exception {

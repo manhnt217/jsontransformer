@@ -4,27 +4,21 @@ import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.IfExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 import wazi.jsontransformer.parser.logical.LogicalExpressionParser;
 
 /**
  * Created by wazi on 10/17/15.
  */
-public class IfExpressionParser implements TokenParser<IfExpression> {
+public class IfExpressionParser extends ComplexExpressionParser<IfExpression> {
 
-	public final LogicalExpressionParser logicalExpressionParser;
-	public final MultiChoiceParser<BaseExpression> expressionParser = new MultiChoiceParser<>(false);
+	private final LogicalExpressionParser logicalExpressionParser;
 
 	public IfExpressionParser(LogicalExpressionParser logicalExpressionParser) {
 		this.logicalExpressionParser = logicalExpressionParser;
 	}
 
-	public void addSubParsers(TokenParser<? extends BaseExpression>... parsers) {
-		expressionParser.addAllParsers(parsers);
-	}
-
 	@Override
-	public IfExpression read(JTEX jtex) {
+	public IfExpression read0(JTEX jtex) {
 		jtex.skipBlank();
 		IfExpression ifExpression = new IfExpression();
 		ifExpression.setStart(jtex.getNextPosition());
@@ -64,30 +58,30 @@ public class IfExpressionParser implements TokenParser<IfExpression> {
 		return ifExpression;
 	}
 
-	public static class NestedIfExpressionParser implements TokenParser<IfExpression> {
-
-		private final IfExpressionParser ifExpressionParser;
-
-		public NestedIfExpressionParser(IfExpressionParser ifExpressionParser) {
-			this.ifExpressionParser = ifExpressionParser;
-		}
-
-		@Override
-		public IfExpression read(JTEX jtex) {
-			jtex.skipBlank();
-			if (jtex.next() != '(') {
-				throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expected '(");
-			}
-			jtex.skipBlank();
-			IfExpression ifExpression = ifExpressionParser.read(jtex);
-			jtex.skipBlank();
-			if (jtex.next() != ')') {
-				throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expected ')");
-			}
-
-			ifExpression.setStart(ifExpression.getStart() - 1); //for character '('
-			ifExpression.setEnd(ifExpression.getEnd() + 1); // for character ')'
-			return ifExpression;
-		}
-	}
+//	public static class NestedIfExpressionParser implements TokenParser<IfExpression> {
+//
+//		private final IfExpressionParser ifExpressionParser;
+//
+//		public NestedIfExpressionParser(IfExpressionParser ifExpressionParser) {
+//			this.ifExpressionParser = ifExpressionParser;
+//		}
+//
+//		@Override
+//		public IfExpression read(JTEX jtex) {
+//			jtex.skipBlank();
+//			if (jtex.next() != '(') {
+//				throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expected '(");
+//			}
+//			jtex.skipBlank();
+//			IfExpression ifExpression = ifExpressionParser.read(jtex);
+//			jtex.skipBlank();
+//			if (jtex.next() != ')') {
+//				throw new UnexpectedCharacterException(jtex.getNextPosition() - 1, jtex.current(), "Expected ')");
+//			}
+//
+//			ifExpression.setStart(ifExpression.getStart() - 1); //for character '('
+//			ifExpression.setEnd(ifExpression.getEnd() + 1); // for character ')'
+//			return ifExpression;
+//		}
+//	}
 }

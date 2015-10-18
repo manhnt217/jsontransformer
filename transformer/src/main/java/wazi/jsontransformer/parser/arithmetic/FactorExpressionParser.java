@@ -5,10 +5,10 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.arithmetic.ArithmeticExpression;
 import wazi.jsontransformer.expression.arithmetic.FactorExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.helper.MultiChoiceParser;
-import wazi.jsontransformer.parser.literal.SymbolParser;
 import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 import wazi.jsontransformer.parser.literal.NumberLiteralParser;
+import wazi.jsontransformer.parser.literal.SymbolParser;
 
 /**
  * Created by wazi on 10/9/15.

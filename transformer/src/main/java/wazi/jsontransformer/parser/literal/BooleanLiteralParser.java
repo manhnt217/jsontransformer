@@ -1,9 +1,9 @@
 package wazi.jsontransformer.parser.literal;
 
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.BooleanLiteral;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
 public class BooleanLiteralParser implements TokenParser<BooleanLiteral> {
 

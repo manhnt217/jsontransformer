@@ -1,9 +1,9 @@
 package wazi.jsontransformer.parser.literal;
 
 import org.junit.Test;
-import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.EndOfJtexException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
+import wazi.jsontransformer.expression.jtex.JTEX;
 
 import static org.junit.Assert.assertEquals;
 

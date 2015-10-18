@@ -3,7 +3,6 @@ package wazi.jsontransformer.parser.literal;
 import org.junit.Test;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.literal.SymbolParser;
 
 import java.util.HashMap;
 

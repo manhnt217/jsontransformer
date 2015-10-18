@@ -2,16 +2,14 @@ package wazi.jsontransformer.parser.arithmetic;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import wazi.jsontransformer.expression.arithmetic.ArithmeticExpression;
 import wazi.jsontransformer.expression.BaseExpression;
+import wazi.jsontransformer.expression.arithmetic.ArithmeticExpression;
 import wazi.jsontransformer.expression.arithmetic.FactorExpression;
+import wazi.jsontransformer.expression.arithmetic.TermExpression;
 import wazi.jsontransformer.expression.helper.Num;
 import wazi.jsontransformer.expression.jtex.JTEX;
 
-import wazi.jsontransformer.expression.arithmetic.TermExpression;
-
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Created by wazi on 2015-10-04 004.

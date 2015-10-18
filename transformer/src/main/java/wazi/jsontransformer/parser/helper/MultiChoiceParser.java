@@ -1,9 +1,9 @@
 package wazi.jsontransformer.parser.helper;
 
-import wazi.jsontransformer.expression.Token;
-import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
+import wazi.jsontransformer.expression.Token;
+import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.parser.TokenParser;
 
 import java.util.Arrays;
@@ -44,30 +44,16 @@ public class MultiChoiceParser<T extends Token> implements TokenParser<T> {
 		this.parsers.add(parser);
 	}
 
-	public void addAllParsers(TokenParser<? extends T>... parsers) {
-		this.parsers.addAll(Arrays.asList(parsers));
+	public void addParsers(TokenParser<? extends T>... parsers) {
+		this.addParsers(Arrays.asList(parsers));
+	}
+	public void addParsers(List<TokenParser<? extends T>> parsers) {
+		this.parsers.addAll(parsers);
 	}
 
-//	@Override
-//	public T read(JTEX jtex) {
-//
-//		ParserException ex = new UnexpectedCharacterException(jtex.getNextPosition(), jtex.retrieveNext(), "");
-//
-//		for (TokenParser<? extends T> parser : parsers) {
-//			try {
-//				JTEX jtexCopy = new JTEX(jtex.getString(), jtex.getNextPosition());
-//				T expression = parser.read(jtexCopy);
-//				jtex.setNextPosition(jtexCopy.getNextPosition());
-//				return expression;
-//			} catch (ParserException e) {
-//				if (e.getPosition() > ex.getPosition()) {
-//					ex = e;
-//				}
-//			}
-//		}
-//
-//		throw ex;
-//	}
+	public List<TokenParser<? extends T>> getParsers() {
+		return parsers;
+	}
 
 	@Override
 	public T read(JTEX jtex) {

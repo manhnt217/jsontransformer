@@ -1,8 +1,8 @@
 package wazi.jsontransformer.parser.jtex;
 
 import org.junit.Test;
-import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.exception.parser.EndOfJtexException;
+import wazi.jsontransformer.expression.jtex.JTEX;
 
 import static org.junit.Assert.*;
 

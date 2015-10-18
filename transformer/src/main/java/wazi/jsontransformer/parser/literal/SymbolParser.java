@@ -1,8 +1,8 @@
 package wazi.jsontransformer.parser.literal;
 
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.SymbolLiteral;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.parser.TokenParser;
 
 /**

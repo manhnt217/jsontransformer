@@ -6,7 +6,7 @@ import wazi.jsontransformer.expression.jtex.JTEX;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by wazi on 10/17/15.

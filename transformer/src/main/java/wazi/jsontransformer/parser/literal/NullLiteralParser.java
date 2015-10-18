@@ -1,9 +1,9 @@
 package wazi.jsontransformer.parser.literal;
 
+import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.NullLiteral;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 
 public class NullLiteralParser implements TokenParser<NullLiteral> {
 

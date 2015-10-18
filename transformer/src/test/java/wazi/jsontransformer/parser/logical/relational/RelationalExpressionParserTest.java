@@ -55,13 +55,13 @@ public class RelationalExpressionParserTest {
 	public void testEvaluateExpression3() {
 		ExpressionParser expressionParser = new ExpressionParser();
 		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
-		RelationalExpression relationalExpression = parser.read(new JTEX("(64 / (10 - 2) = 3 * 3 / #a + 6) = false"));
+		RelationalExpression relationalExpression = parser.read(new JTEX("((((64 / (10 - 2) = 3 * 3 / #a + 6) = false)))"));
 		Object val = relationalExpression.eval(new HashMap<String, Object>() {{
 			put("#a", 3);
 		}});
 
 		assertEquals(0, relationalExpression.getStart());
-		assertEquals(39, relationalExpression.getEnd());
+		assertEquals(45, relationalExpression.getEnd());
 		assertTrue(val instanceof Boolean);
 		assertEquals(true, val);
 	}

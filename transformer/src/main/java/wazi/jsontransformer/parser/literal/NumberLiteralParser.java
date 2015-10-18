@@ -1,10 +1,10 @@
 package wazi.jsontransformer.parser.literal;
 
+import wazi.jsontransformer.exception.parser.EndOfJtexException;
+import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.NumberLiteral;
 import wazi.jsontransformer.parser.TokenParser;
-import wazi.jsontransformer.exception.parser.EndOfJtexException;
-import wazi.jsontransformer.exception.parser.ParserException;
 
 public class NumberLiteralParser implements TokenParser<NumberLiteral> {
 

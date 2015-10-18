@@ -2,7 +2,7 @@ package wazi.jsontransformer.expression.helper;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by wazi on 10/9/15.
