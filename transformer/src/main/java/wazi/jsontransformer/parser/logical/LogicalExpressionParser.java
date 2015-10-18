@@ -27,7 +27,7 @@ public class LogicalExpressionParser extends ComplexExpressionParser<LogicalExpr
 		jtex.skipBlank();
 
 		OperatorParser operatorParser = new OperatorParser();
-		boolean hasOperator = false;
+//		boolean hasOperator = false;
 		while (true) {
 			Operator operator;
 			try {
@@ -60,13 +60,13 @@ public class LogicalExpressionParser extends ComplexExpressionParser<LogicalExpr
 					return !(boolean) boolExpression.eval(symbolMap);
 				}
 			});
-			hasOperator = true;
+//			hasOperator = true;
 			jtexEndPosition = jtex.getNextPosition();
 			jtex.skipBlank();
 		}
 
-		if (!hasOperator)
-			throw new ParserException(jtexEndPosition, "Logical expression must have at least 1 logical operator (and, or)");
+//		if (!hasOperator)
+//			throw new ParserException(jtexEndPosition, "Logical expression must have at least 1 logical operator (and, or)");
 
 		logicalExpression.setEnd(jtexEndPosition - 1);
 

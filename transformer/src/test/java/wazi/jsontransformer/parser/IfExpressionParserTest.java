@@ -46,10 +46,18 @@ public class IfExpressionParserTest {
 		IfExpressionParser ifExpressionParser = expressionParser.ifExpressionParser;
 		IfExpression ifExpression = ifExpressionParser.read(new JTEX("if ( 2 + #a > 8) then ((if null then 4 else 'abc')) else if false then 45.5 else 45"));
 
-		assertEquals(11, ifExpression.eval(new HashMap<String, Object>() {
+		assertEquals(45, ifExpression.eval(new HashMap<String, Object>() {
 			{
-				put("#a", 11);
+				put("#a", 3);
 			}
 		}));
+	}
+
+	@Test
+	public void testEvaluateExpression3() throws Exception {
+		ExpressionParser expressionParser = new ExpressionParser();
+		IfExpressionParser ifExpressionParser = expressionParser.ifExpressionParser;
+		IfExpression ifExpression = ifExpressionParser.read(new JTEX("if 3 > 5 then '3 > 5' else if 5 <= 5 then '10 < 5' else 'Default case'"));
+		assertEquals("10 < 5", ifExpression.eval(null));
 	}
 }

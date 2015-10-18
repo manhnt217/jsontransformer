@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class IfExpression extends BaseExpression {
 
-	LogicalExpression ifClause;
+	BaseExpression ifClause;
 	BaseExpression thenClause;
 	BaseExpression elseClause;
 
@@ -26,7 +26,7 @@ public class IfExpression extends BaseExpression {
 		}
 	}
 
-	public void setIfClause(LogicalExpression ifClause) {
+	public void setIfClause(BaseExpression ifClause) {
 		this.ifClause = ifClause;
 	}
 

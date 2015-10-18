@@ -43,11 +43,11 @@ public class ExpressionParser extends MultiChoiceParser<BaseExpression> {
 		logicalExpressionParser = new LogicalExpressionParser();
 		relationalExpressionParser = new RelationalExpressionParser();
 		functionExpressionParser = new FunctionExpressionParser();
-		ifExpressionParser = new IfExpressionParser(logicalExpressionParser);
+		ifExpressionParser = new IfExpressionParser(logicalExpressionParser, relationalExpressionParser);
 
 		LogicalExpressionParser nestedLogicalExpressionParser = new LogicalExpressionParser();
 		RelationalExpressionParser nestedRelationalExpressionParser = new RelationalExpressionParser();
-		IfExpressionParser nestedIfExpressionParser = new IfExpressionParser(logicalExpressionParser);
+		IfExpressionParser nestedIfExpressionParser = new IfExpressionParser(logicalExpressionParser, relationalExpressionParser);
 
 		//initialize parsers
 		functionExpressionParser.addSubParsers(
@@ -59,7 +59,7 @@ public class ExpressionParser extends MultiChoiceParser<BaseExpression> {
 				symbolParser,
 				arithmeticExpressionParser,
 				functionExpressionParser,
-				nestedLogicalExpressionParser
+				logicalExpressionParser
 		);
 
 		logicalExpressionParser.addSubParsers(

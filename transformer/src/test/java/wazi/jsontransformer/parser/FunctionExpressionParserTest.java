@@ -27,17 +27,6 @@ public class FunctionExpressionParserTest {
 	}
 
 	@Test
-	public void testReadFunction2() {
-
-		ExpressionParser exParser = new ExpressionParser();
-		FunctionExpressionParser parser = exParser.functionExpressionParser;
-		FunctionExpression funcEx = parser
-				.read(new JTEX("C.choice(C.ift(3 > 5, '3 > 5'), C.ift(10 < 5, '10 < 5'), C.ift(true, 'Default case'))"));
-		assertEqualsFunction(funcEx, FunctionExpression.DEFAULT_FUNCTION_PACKAGE + "C", "choice", 0);
-		assertEquals(3, funcEx.getArguments().size());
-	}
-
-	@Test
 	public void testEvaluateSimpleFunction() throws Exception {
 
 		ExpressionParser exParser = new ExpressionParser();
