@@ -5,18 +5,20 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.IfExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
-import wazi.jsontransformer.parser.logical.LogicalExpressionParser;
-import wazi.jsontransformer.parser.logical.relational.RelationalExpressionParser;
 
 /**
  * Created by wazi on 10/17/15.
  */
-public class IfExpressionParser extends ComplexExpressionParser<IfExpression> {
+public class IfExpressionParser extends BaseExpressionParser<IfExpression> {
 
 	private final MultiChoiceParser<BaseExpression> ifClauseParser;
 
-	public IfExpressionParser(LogicalExpressionParser logicalExpressionParser, RelationalExpressionParser relationalExpressionParser) {
-		ifClauseParser = new MultiChoiceParser<>(relationalExpressionParser, logicalExpressionParser);
+	public IfExpressionParser() {
+		ifClauseParser = new MultiChoiceParser<>();
+	}
+
+	public void addIfClauseParsers(TokenParser<? extends BaseExpression>... parsers) {
+		ifClauseParser.addParsers(parsers);
 	}
 
 	@Override

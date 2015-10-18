@@ -3,11 +3,12 @@ package wazi.jsontransformer.parser.literal;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.BooleanLiteral;
-import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.parser.BaseExpressionParser;
 
-public class BooleanLiteralParser implements TokenParser<BooleanLiteral> {
+public class BooleanLiteralParser extends BaseExpressionParser<BooleanLiteral> {
 
-	public BooleanLiteral read(JTEX jtex) {
+	@Override
+	public BooleanLiteral read0(JTEX jtex) {
 		if (jtex.retrieveNext() == 't') {
 			return readTrueValue(jtex);
 		} else if (jtex.retrieveNext() == 'f') {

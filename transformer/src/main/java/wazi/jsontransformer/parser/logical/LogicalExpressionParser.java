@@ -5,7 +5,7 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.logical.LogicalExpression;
 import wazi.jsontransformer.expression.operator.Operator;
-import wazi.jsontransformer.parser.ComplexExpressionParser;
+import wazi.jsontransformer.parser.BaseExpressionParser;
 import wazi.jsontransformer.parser.helper.OperatorParser;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by wazi on 2015-09-20 020.
  */
-public class LogicalExpressionParser extends ComplexExpressionParser<LogicalExpression> {
+public class LogicalExpressionParser extends BaseExpressionParser<LogicalExpression> {
 
 	@Override
 	public LogicalExpression read0(JTEX jtex) {
@@ -27,7 +27,7 @@ public class LogicalExpressionParser extends ComplexExpressionParser<LogicalExpr
 		jtex.skipBlank();
 
 		OperatorParser operatorParser = new OperatorParser();
-//		boolean hasOperator = false;
+		boolean hasOperator = false;
 		while (true) {
 			Operator operator;
 			try {
@@ -60,13 +60,13 @@ public class LogicalExpressionParser extends ComplexExpressionParser<LogicalExpr
 					return !(boolean) boolExpression.eval(symbolMap);
 				}
 			});
-//			hasOperator = true;
+			hasOperator = true;
 			jtexEndPosition = jtex.getNextPosition();
 			jtex.skipBlank();
 		}
 
-//		if (!hasOperator)
-//			throw new ParserException(jtexEndPosition, "Logical expression must have at least 1 logical operator (and, or)");
+		if (!hasOperator)
+			throw new ParserException(jtexEndPosition, "Logical expression must have at least 1 logical operator (and, or)");
 
 		logicalExpression.setEnd(jtexEndPosition - 1);
 

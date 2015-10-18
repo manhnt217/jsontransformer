@@ -3,12 +3,12 @@ package wazi.jsontransformer.parser.literal;
 import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.literal.NullLiteral;
-import wazi.jsontransformer.parser.TokenParser;
+import wazi.jsontransformer.parser.BaseExpressionParser;
 
-public class NullLiteralParser implements TokenParser<NullLiteral> {
+public class NullLiteralParser extends BaseExpressionParser<NullLiteral> {
 
 	@Override
-	public NullLiteral read(JTEX jtex) {
+	public NullLiteral read0(JTEX jtex) {
 		if (jtex.next() == 'n' &&
 				jtex.next() == 'u' &&
 				jtex.next() == 'l' &&

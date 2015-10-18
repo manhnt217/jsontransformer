@@ -19,7 +19,14 @@ public class IfExpression extends BaseExpression {
 
 	@Override
 	public Object eval(Map<String, Object> symbolMap) {
-		if ((boolean) ifClause.eval(symbolMap)) {
+		Object val = ifClause.eval(symbolMap);
+		boolean ifValue;
+		if (val instanceof Boolean) {
+			ifValue = (boolean) val;
+		} else {
+			ifValue = LogicalExpression.convertToBoolean(val);
+		}
+		if (ifValue) {
 			return thenClause.eval(symbolMap);
 		} else {
 			return elseClause.eval(symbolMap);

@@ -4,29 +4,30 @@ import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.logical.relational.RelationalExpression;
 import wazi.jsontransformer.parser.arithmetic.ArithmeticExpressionParser;
 import wazi.jsontransformer.parser.helper.MultiChoiceParser;
-import wazi.jsontransformer.parser.literal.BooleanLiteralParser;
-import wazi.jsontransformer.parser.literal.NullLiteralParser;
-import wazi.jsontransformer.parser.literal.StringLiteralParser;
-import wazi.jsontransformer.parser.literal.SymbolParser;
+import wazi.jsontransformer.parser.literal.*;
 import wazi.jsontransformer.parser.logical.LogicalExpressionParser;
 import wazi.jsontransformer.parser.logical.relational.RelationalExpressionParser;
 
 /**
  * Created by wazi on 10/9/15.
  */
-public class ExpressionParser extends MultiChoiceParser<BaseExpression> {
+public class ExpressionParser {
 
 	//simple parsers
 	public final NullLiteralParser nullLiteralParser;
 	public final BooleanLiteralParser booleanLiteralParser;
 	public final StringLiteralParser stringLiteralParser;
 	public final SymbolParser symbolParser;
+	public final NumberLiteralParser numberLiteralParser;
 	//complex parsers
 	public final ArithmeticExpressionParser arithmeticExpressionParser;
 	public final FunctionExpressionParser functionExpressionParser;
 	public final LogicalExpressionParser logicalExpressionParser;
 	public final RelationalExpressionParser relationalExpressionParser;
 	public final IfExpressionParser ifExpressionParser;
+
+	//top level expression parser
+	public final MultiChoiceParser<BaseExpression> parser;
 
 //	//top level expression parser
 //	public final MultiChoiceParser<BaseExpression> expressionParser;
@@ -39,66 +40,105 @@ public class ExpressionParser extends MultiChoiceParser<BaseExpression> {
 		booleanLiteralParser = new BooleanLiteralParser();
 		stringLiteralParser = new StringLiteralParser();
 		symbolParser = new SymbolParser();
+		numberLiteralParser = new NumberLiteralParser();
+
 		arithmeticExpressionParser = new ArithmeticExpressionParser();
 		logicalExpressionParser = new LogicalExpressionParser();
 		relationalExpressionParser = new RelationalExpressionParser();
 		functionExpressionParser = new FunctionExpressionParser();
-		ifExpressionParser = new IfExpressionParser(logicalExpressionParser, relationalExpressionParser);
+		ifExpressionParser = new IfExpressionParser();
 
 		LogicalExpressionParser nestedLogicalExpressionParser = new LogicalExpressionParser();
 		RelationalExpressionParser nestedRelationalExpressionParser = new RelationalExpressionParser();
-		IfExpressionParser nestedIfExpressionParser = new IfExpressionParser(logicalExpressionParser, relationalExpressionParser);
+		IfExpressionParser nestedIfExpressionParser = new IfExpressionParser();
+		ArithmeticExpressionParser nestedArithmeticExpressionParser = new ArithmeticExpressionParser();
+
+		parser = new MultiChoiceParser<>();
 
 		//initialize parsers
-		functionExpressionParser.addSubParsers(
-				ifExpressionParser,
-				nestedIfExpressionParser,
-				nullLiteralParser,
-				booleanLiteralParser,
-				stringLiteralParser,
+		arithmeticExpressionParser.addSubParsers(
+				numberLiteralParser,
 				symbolParser,
-				arithmeticExpressionParser,
+				nestedIfExpressionParser,
 				functionExpressionParser,
-				logicalExpressionParser
+				nestedArithmeticExpressionParser
 		);
+		functionExpressionParser.addSubParsers(
+				nullLiteralParser,
+				numberLiteralParser,
+				stringLiteralParser,
+				booleanLiteralParser,
+				symbolParser,
+				functionExpressionParser,
+				ifExpressionParser,
+				relationalExpressionParser,
+				logicalExpressionParser,
+				arithmeticExpressionParser
+				);
 
 		logicalExpressionParser.addSubParsers(
-				ifExpressionParser,
-				nestedIfExpressionParser,
 				nullLiteralParser,
-				booleanLiteralParser,
+				numberLiteralParser,
 				stringLiteralParser,
+				booleanLiteralParser,
 				symbolParser,
-				arithmeticExpressionParser,
-//				nestedRelationalExpressionParser,
+				functionExpressionParser,
+				ifExpressionParser,
 				relationalExpressionParser,
-				functionExpressionParser
-		);
+				nestedLogicalExpressionParser,
+				arithmeticExpressionParser
+				);
 
 		relationalExpressionParser.addSubParsers(
-				ifExpressionParser,
-				nestedIfExpressionParser,
 				nullLiteralParser,
-				booleanLiteralParser,
-				nestedLogicalExpressionParser,
+				numberLiteralParser,
 				stringLiteralParser,
-				symbolParser,
-				arithmeticExpressionParser,
-				nestedRelationalExpressionParser,
-				functionExpressionParser
-		);
-
-		ifExpressionParser.addSubParsers(
-				ifExpressionParser,
-				nestedIfExpressionParser,
-				nullLiteralParser,
 				booleanLiteralParser,
-				stringLiteralParser,
 				symbolParser,
-				arithmeticExpressionParser,
 				functionExpressionParser,
-				nestedLogicalExpressionParser
-		);
+				ifExpressionParser,
+				nestedLogicalExpressionParser,
+				nestedRelationalExpressionParser,
+				arithmeticExpressionParser
+				);
+
+		ifExpressionParser.addIfClauseParsers(
+				nullLiteralParser,
+				numberLiteralParser,
+				stringLiteralParser,
+				booleanLiteralParser,
+				symbolParser,
+				functionExpressionParser,
+				ifExpressionParser,
+				logicalExpressionParser,
+				relationalExpressionParser,
+				arithmeticExpressionParser
+				);
+		ifExpressionParser.addSubParsers(
+				nullLiteralParser,
+				numberLiteralParser,
+				stringLiteralParser,
+				booleanLiteralParser,
+				symbolParser,
+				functionExpressionParser,
+				ifExpressionParser,
+				logicalExpressionParser,
+				relationalExpressionParser,
+				arithmeticExpressionParser
+				);
+
+		parser.addParsers(
+				nullLiteralParser,
+				numberLiteralParser,
+				stringLiteralParser,
+				booleanLiteralParser,
+				symbolParser,
+				functionExpressionParser,
+				ifExpressionParser,
+				logicalExpressionParser,
+				relationalExpressionParser,
+				arithmeticExpressionParser
+				);
 
 		nestedLogicalExpressionParser.addSubParsers(logicalExpressionParser.getSubParsers());
 		nestedLogicalExpressionParser.setNestedLevel(1);
@@ -106,5 +146,7 @@ public class ExpressionParser extends MultiChoiceParser<BaseExpression> {
 		nestedRelationalExpressionParser.setNestedLevel(1);
 		nestedIfExpressionParser.addSubParsers(ifExpressionParser.getSubParsers());
 		nestedIfExpressionParser.setNestedLevel(1);
+		nestedArithmeticExpressionParser.addSubParsers(arithmeticExpressionParser.getSubParsers());
+		nestedArithmeticExpressionParser.setNestedLevel(1);
 	}
 }
