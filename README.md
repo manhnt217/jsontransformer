@@ -15,10 +15,10 @@ and other times, you'll receive:
     "feeling": "cold"
 }
 ```
-then your JTEX (JSON transformation expression) will look like (`C.ite(D.gt(J.p("$.temperature"), 50), "hot", "cold")`):
+then your JTEX (JSON transformation expression) will look like `if p('$.temperature') > 50 then 'hot' else 'cold'\"`:
 ```
 {
-    "feeling": "=C.ite(D.gt(J.p(\"$.temperature\"), 50), \"hot\", \"cold\")"
+    "feeling": "if p('$.temperature') > 50 then 'hot' else 'cold'"
 }
 ```
 ## Code Example
@@ -52,10 +52,8 @@ String json1 = "{"
 		JSONObject result3 = (JSONObject) JSONTransformer.transform(json2, transformer2);
 		assertEquals("{\"234\":false,\"info\":{\"realFeel\":40.6,\"feeling\":\"cold\"}}", result3.toJSONString());
 ```
-
-_* This version only support basic types (Int, Double, String, Boolean, Null) and function call for arithmatic and logical operations.The next version will focus on simplify JTEX syntax (I know that currently it looks a bit messy :D)_
 #### Next version
-- Support control statement: **if ... then ... else ...** and **for (... in ...) yeild ...**
+- Support for statement: **for (... in ...) yeild ...**
 
 #### Info
 - Author: Nguyen Tien Manh (aka Wazi Armstrong)
