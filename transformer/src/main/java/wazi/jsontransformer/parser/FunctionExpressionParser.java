@@ -34,6 +34,7 @@ public class FunctionExpressionParser extends BaseExpressionParser<FunctionExpre
 
 		functionExpression.setArguments(readArgumentList(jtex));
 
+		//for all the functions that process source json document
 		if (Functions.INPUT_JSON_FUNCTIONS.contains(functionExpression.getClassName() + "." + functionExpression.getMethodName())) {
 			functionExpression.addArgument(new SymbolLiteral(FunctionExpression.SRC_JSON_SYMBOL, -1, -1));
 		}
