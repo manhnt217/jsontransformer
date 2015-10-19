@@ -96,4 +96,12 @@ public class RelationalExpressionParserTest {
 		RelationalExpression relationalExpression = parser.read(new JTEX("'12.1' = 12.1"));
 		assertEquals(true, relationalExpression.eval(null));
 	}
+
+	@Test
+	public void testEvaluateExpression7() {
+		ExpressionParser expressionParser = new ExpressionParser();
+		RelationalExpressionParser parser = expressionParser.relationalExpressionParser;
+		RelationalExpression relationalExpression = parser.read(new JTEX("false = if true then false else true"));
+		assertEquals(true, relationalExpression.eval(null));
+	}
 }

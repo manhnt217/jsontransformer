@@ -45,7 +45,7 @@ public class LogicalExpression extends BaseExpression {
 		return result;
 	}
 
-	private boolean convertToBoolean(Object val) {
+	public static boolean convertToBoolean(Object val) {
 		if (val == null || "null".equals(val.toString())) return false;
 		if (val instanceof Boolean) return (boolean)val;
 		if (val instanceof Number) {

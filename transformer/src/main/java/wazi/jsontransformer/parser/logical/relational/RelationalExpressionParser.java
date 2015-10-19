@@ -4,13 +4,13 @@ import wazi.jsontransformer.exception.parser.ParserException;
 import wazi.jsontransformer.expression.jtex.JTEX;
 import wazi.jsontransformer.expression.logical.relational.RelationalExpression;
 import wazi.jsontransformer.expression.operator.Operator;
-import wazi.jsontransformer.parser.ComplexExpressionParser;
+import wazi.jsontransformer.parser.BaseExpressionParser;
 import wazi.jsontransformer.parser.helper.OperatorParser;
 
 /**
  * Created by wazi on 2015-09-20 020.
  */
-public class RelationalExpressionParser extends ComplexExpressionParser<RelationalExpression> {
+public class RelationalExpressionParser extends BaseExpressionParser<RelationalExpression> {
 
 	@Override
 	public RelationalExpression read0(JTEX jtex) {

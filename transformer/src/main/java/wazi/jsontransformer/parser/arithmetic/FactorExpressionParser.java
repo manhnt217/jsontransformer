@@ -15,13 +15,9 @@ import wazi.jsontransformer.parser.literal.SymbolParser;
  */
 class FactorExpressionParser implements TokenParser<FactorExpression> {
 
-	private final NumberLiteralParser numberLiteralParser;
-	private final SymbolParser symbolExpressionParser;
 	private final ArithmeticExpressionParser arithmeticExpressionParser;
 
 	public FactorExpressionParser(ArithmeticExpressionParser arithmeticExpressionParser) {
-		this.numberLiteralParser = new NumberLiteralParser();
-		symbolExpressionParser = new SymbolParser();
 		this.arithmeticExpressionParser = arithmeticExpressionParser;
 	}
 
@@ -42,30 +38,8 @@ class FactorExpressionParser implements TokenParser<FactorExpression> {
 		factorExpression.setIsPositive(isPositiveFactor);
 
 		jtex.skipBlank();
-		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<>(
-				numberLiteralParser,
-				symbolExpressionParser,
-				//custom arithmetic expression parser
-				jtExp -> {
-					//check parenthesis
-					if (jtExp.retrieveNext() != '(') {
-						throw new UnexpectedCharacterException(jtExp.getNextPosition(), jtExp.retrieveNext(), "Expected open parenthese '('.");
-					}
-					jtExp.next();//parenthese '('
-
-					jtExp.skipBlank();
-					ArithmeticExpression arithmeticExpression = arithmeticExpressionParser.read(jtExp);
-					jtExp.skipBlank();
-
-					if (jtExp.retrieveNext() != ')') {
-						throw new UnexpectedCharacterException(jtExp.getNextPosition(), jtExp.retrieveNext(), "Expected close parenthese ')'.");
-					}
-					jtExp.next();//parenthese ')'
-
-					return arithmeticExpression;
-				}
-		);
-
+		MultiChoiceParser<BaseExpression> multiChoiceParser = new MultiChoiceParser<>();
+		multiChoiceParser.addParsers(arithmeticExpressionParser.getSubParsers());
 		factorExpression.setBaseExpression(multiChoiceParser.read(jtex));
 		factorExpression.setEnd(jtex.getNextPosition() - 1);
 		return factorExpression;

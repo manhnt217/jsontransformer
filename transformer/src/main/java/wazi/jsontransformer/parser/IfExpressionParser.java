@@ -4,17 +4,21 @@ import wazi.jsontransformer.exception.parser.UnexpectedCharacterException;
 import wazi.jsontransformer.expression.BaseExpression;
 import wazi.jsontransformer.expression.IfExpression;
 import wazi.jsontransformer.expression.jtex.JTEX;
-import wazi.jsontransformer.parser.logical.LogicalExpressionParser;
+import wazi.jsontransformer.parser.helper.MultiChoiceParser;
 
 /**
  * Created by wazi on 10/17/15.
  */
-public class IfExpressionParser extends ComplexExpressionParser<IfExpression> {
+public class IfExpressionParser extends BaseExpressionParser<IfExpression> {
 
-	private final LogicalExpressionParser logicalExpressionParser;
+	private final MultiChoiceParser<BaseExpression> ifClauseParser;
 
-	public IfExpressionParser(LogicalExpressionParser logicalExpressionParser) {
-		this.logicalExpressionParser = logicalExpressionParser;
+	public IfExpressionParser() {
+		ifClauseParser = new MultiChoiceParser<>();
+	}
+
+	public void addIfClauseParsers(TokenParser<? extends BaseExpression>... parsers) {
+		ifClauseParser.addParsers(parsers);
 	}
 
 	@Override
@@ -29,7 +33,7 @@ public class IfExpressionParser extends ComplexExpressionParser<IfExpression> {
 
 		jtex.skipBlank();
 
-		ifExpression.setIfClause(logicalExpressionParser.read(jtex));
+		ifExpression.setIfClause(ifClauseParser.read(jtex));
 
 		jtex.skipBlank();
 

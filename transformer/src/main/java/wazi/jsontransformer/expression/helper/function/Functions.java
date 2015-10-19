@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Functions {
 
-	public static final List<String> SOURCE_PROCESSING_FUNCTIONS = new LinkedList<String>(){{
+	public static final List<String> INPUT_JSON_FUNCTIONS = new LinkedList<String>(){{
 		add("wazi.jsontransformer.expression.helper.function.Functions.p");
 	}};
 

@@ -25,9 +25,9 @@ public class LogicalExpressionParserTest {
 	public void testReadExpression2() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("3 > 5"));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("3 > 5 or 6 < 7"));
 		assertEquals(0, logicalExpression.getStart());
-		assertEquals(4, logicalExpression.getEnd());
+		assertEquals(13, logicalExpression.getEnd());
 	}
 
 	@Test
@@ -42,9 +42,9 @@ public class LogicalExpressionParserTest {
 	public void testEvaluateExpression2() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("(((((2 - 5 < 6) != true))))"));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("(((((2 - 5 < 6) != true)))) and 1"));
 		assertEquals(0, logicalExpression.getStart());
-		assertEquals(26, logicalExpression.getEnd());
+		assertEquals(32, logicalExpression.getEnd());
 		assertEquals(false, logicalExpression.eval(null));
 	}
 
@@ -52,23 +52,23 @@ public class LogicalExpressionParserTest {
 	public void testEvaluateExpression3() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("18"));
-		assertEquals(true, logicalExpression.eval(null));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("18 and 0"));
+		assertEquals(false, logicalExpression.eval(null));
 	}
 
 	@Test
 	public void testEvaluateExpression4() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("0.0"));
-		assertEquals(false, logicalExpression.eval(null));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("0.0 or 1"));
+		assertEquals(true, logicalExpression.eval(null));
 	}
 
 	@Test
 	public void testEvaluateExpression5() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("0"));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("0 and 0"));
 		assertEquals(false, logicalExpression.eval(null));
 	}
 
@@ -76,23 +76,23 @@ public class LogicalExpressionParserTest {
 	public void testEvaluateExpression6() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("11.5"));
-		assertEquals(true, logicalExpression.eval(null));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("11.5 and false"));
+		assertEquals(false, logicalExpression.eval(null));
 	}
 
 	@Test
 	public void testEvaluateExpression7() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("'false'"));
-		assertEquals(false, logicalExpression.eval(null));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("'false' or true"));
+		assertEquals(true, logicalExpression.eval(null));
 	}
 
 	@Test
 	public void testEvaluateExpression8() throws Exception {
 		ExpressionParser expressionParser = new ExpressionParser();
 		LogicalExpressionParser logicalExpressionParser = expressionParser.logicalExpressionParser;
-		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("null"));
+		LogicalExpression logicalExpression = logicalExpressionParser.read(new JTEX("null or null"));
 		assertEquals(false, logicalExpression.eval(null));
 	}
 }

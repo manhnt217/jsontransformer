@@ -11,7 +11,7 @@ import wazi.jsontransformer.expression.jtex.JTEX;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FunctionExpressionParser extends ComplexExpressionParser<FunctionExpression> {
+public class FunctionExpressionParser extends BaseExpressionParser<FunctionExpression> {
 
 	@Override
 	public FunctionExpression read0(JTEX jtex) {
@@ -34,7 +34,8 @@ public class FunctionExpressionParser extends ComplexExpressionParser<FunctionEx
 
 		functionExpression.setArguments(readArgumentList(jtex));
 
-		if (Functions.SOURCE_PROCESSING_FUNCTIONS.contains(functionExpression.getClassName() + "." + functionExpression.getMethodName())) {
+		//for all the functions that process source json document
+		if (Functions.INPUT_JSON_FUNCTIONS.contains(functionExpression.getClassName() + "." + functionExpression.getMethodName())) {
 			functionExpression.addArgument(new SymbolLiteral(FunctionExpression.SRC_JSON_SYMBOL, -1, -1));
 		}
 
